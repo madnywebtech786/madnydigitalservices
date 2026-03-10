@@ -5,7 +5,8 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
 
-export default function CTA() {
+export default function CTA({ data }) {
+  const d = data || {};
   return (
     <section className="py-20 relative overflow-hidden">
       <Container>
@@ -55,7 +56,7 @@ export default function CTA() {
             >
               <Sparkles className="w-4 h-4 text-white" />
               <span className="text-sm font-medium text-white">
-                Ready to Transform Your Business?
+                {d.badge || 'Ready to Transform Your Business?'}
               </span>
             </motion.div>
 
@@ -66,24 +67,7 @@ export default function CTA() {
               transition={{ delay: 0.3 }}
               className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 max-w-3xl mx-auto"
             >
-              Let&apos;s Create Something{' '}
-              <span className="relative">
-                Extraordinary
-                <svg
-                  className="absolute -bottom-2 left-0 w-full"
-                  viewBox="0 0 200 12"
-                  fill="none"
-                >
-                  <path
-                    d="M2 10C50 4 150 4 198 10"
-                    stroke="white"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeOpacity="0.5"
-                  />
-                </svg>
-              </span>{' '}
-              Together
+              {d.heading || "Let's Create Something Extraordinary Together"}
             </motion.h2>
 
             <motion.p
@@ -93,8 +77,7 @@ export default function CTA() {
               transition={{ delay: 0.4 }}
               className="text-lg text-white/80 max-w-2xl mx-auto mb-8"
             >
-              Whether you need a stunning website, a powerful e-commerce platform, or
-              a complete digital transformation, we&apos;re here to make it happen.
+              {d.description || "Whether you need a stunning website, a powerful e-commerce platform, or a complete digital transformation, we're here to make it happen."}
             </motion.p>
 
             <motion.div
@@ -110,14 +93,14 @@ export default function CTA() {
                 className="bg-white text-primary border-white hover:bg-white/90 hover:text-primary"
                 icon={<ArrowRight className="w-5 h-5" />}
               >
-                Start Your Project
+                {d.ctaPrimary || 'Start Your Project'}
               </Button>
               <Button
                 variant="ghost"
                 size="lg"
                 className="text-white border-2 border-white/30 hover:bg-white/10"
               >
-                Schedule a Call
+                {d.ctaSecondary || 'Schedule a Call'}
               </Button>
             </motion.div>
           </div>

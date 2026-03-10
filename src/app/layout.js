@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SocialMediaWidget from "@/components/sections/SocialMediaWidget";
+import { getGlobalContent } from "@/lib/content";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,14 +32,16 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const globalContent = await getGlobalContent();
+
   return (
     <html lang="en" className="scroll-smooth">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <SocialMediaWidget />
+        <SocialMediaWidget data={globalContent?.socialWidget} />
       </body>
     </html>
   );

@@ -15,38 +15,38 @@ import Container from '@/components/ui/Container';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Button from '@/components/ui/Button';
 
-const values = [
-  {
-    icon: Target,
-    title: 'Mission',
-    description:
-      'To empower businesses in Calgary and beyond with innovative digital solutions that drive growth and success in the modern marketplace.',
-  },
-  {
-    icon: Eye,
-    title: 'Vision',
-    description:
-      'To be the leading digital agency in Canada, known for exceptional creativity, technical excellence, and unwavering commitment to client success.',
-  },
-];
+export default function About({ data }) {
+  const d = data || {};
 
-const achievements = [
-  { number: '150+', label: 'Projects Completed' },
-  { number: '50+', label: 'Happy Clients' },
-  { number: '10+', label: 'Years Experience' },
-  { number: '25+', label: 'Team Members' },
-];
+  const values = d.values ?? [
+    { title: 'Mission', description: 'To empower businesses in Calgary and beyond with innovative digital solutions that drive growth and success in the modern marketplace.' },
+    { title: 'Vision', description: 'To be the leading digital agency in Canada, known for exceptional creativity, technical excellence, and unwavering commitment to client success.' },
+  ];
 
-const features = [
-  'Custom solutions tailored to your business',
-  'Cutting-edge technologies and frameworks',
-  'Transparent communication throughout',
-  'On-time delivery guaranteed',
-  'Post-launch support and maintenance',
-  'SEO and performance optimization',
-];
+  // Map title to icon if not provided
+  const getIconForValue = (title) => {
+    switch(title.toLowerCase()) {
+      case 'mission': return Target;
+      case 'vision': return Eye;
+      default: return Award;
+    }
+  };
 
-export default function About() {
+  const achievements = d.achievements ?? [
+    { number: '150+', label: 'Projects Completed' },
+    { number: '50+', label: 'Happy Clients' },
+    { number: '10+', label: 'Years Experience' },
+    { number: '25+', label: 'Team Members' },
+  ];
+
+  const features = d.features ?? [
+    'Custom solutions tailored to your business',
+    'Cutting-edge technologies and frameworks',
+    'Transparent communication throughout',
+    'On-time delivery guaranteed',
+    'Post-launch support and maintenance',
+    'SEO and performance optimization',
+  ];
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
   const isInView = useInView(contentRef, { once: true, amount: 0.1 });
@@ -176,10 +176,10 @@ export default function About() {
                         transition={{ delay: 0.8 }}
                         className="text-3xl font-bold text-gradient"
                       >
-                        10+
+                        {d.floatingCard1Value || '10+'}
                       </motion.div>
                       <div className="text-sm text-muted-foreground">
-                        Years of Excellence
+                        {d.floatingCard1Label || 'Years of Excellence'}
                       </div>
                     </div>
                   </div>
@@ -221,10 +221,10 @@ export default function About() {
                         transition={{ delay: 1 }}
                         className="text-3xl font-bold text-gradient"
                       >
-                        50+
+                        {d.floatingCard2Value || '50+'}
                       </motion.div>
                       <div className="text-sm text-muted-foreground">
-                        Happy Clients
+                        {d.floatingCard2Label || 'Happy Clients'}
                       </div>
                     </div>
                   </div>
@@ -255,7 +255,7 @@ export default function About() {
               className="inline-flex items-center gap-2 px-4 py-1.5 mb-4 text-sm font-medium rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 text-primary border border-primary/20 shadow-lg"
             >
               <Sparkles className="w-4 h-4" />
-              About Us
+              {d.badge || 'About Us'}
             </motion.span>
 
             <motion.h2
@@ -264,14 +264,14 @@ export default function About() {
               transition={{ delay: 0.4, duration: 0.8 }}
               className="text-4xl md:text-5xl font-bold tracking-tight mb-6"
             >
-              We Are{' '}
+              {d.titlePrefix || 'We Are'}{' '}
               <motion.span
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ delay: 0.6, type: 'spring' }}
                 className="text-gradient inline-block"
               >
-                Madeny Digital Services
+                {d.title || 'Madeny Digital Services'}
               </motion.span>
             </motion.h2>
 
@@ -281,10 +281,7 @@ export default function About() {
               transition={{ delay: 0.7, duration: 0.6 }}
               className="text-lg text-muted-foreground leading-relaxed mb-6"
             >
-              Based in Calgary, Canada, we are a full-service digital agency
-              specializing in creating exceptional digital experiences. With over
-              a decade of experience, we&apos;ve helped businesses in the mobile,
-              laptop, and accessories industry establish powerful online presences.
+              {d.paragraph1 || "Based in Calgary, Canada, we are a full-service digital agency specializing in creating exceptional digital experiences. With over a decade of experience, we've helped businesses in the mobile, laptop, and accessories industry establish powerful online presences."}
             </motion.p>
 
             <motion.p
@@ -293,10 +290,7 @@ export default function About() {
               transition={{ delay: 0.8, duration: 0.6 }}
               className="text-muted-foreground leading-relaxed mb-8"
             >
-              Our team of designers, developers, and strategists work together to
-              deliver solutions that not only look stunning but also drive real
-              business results. We believe in the power of technology to transform
-              businesses and create meaningful connections with customers.
+              {d.paragraph2 || 'Our team of designers, developers, and strategists work together to deliver solutions that not only look stunning but also drive real business results. We believe in the power of technology to transform businesses and create meaningful connections with customers.'}
             </motion.p>
 
             {/* Features list with 3D flip animation */}
@@ -399,7 +393,10 @@ export default function About() {
                     className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shrink-0 shadow-lg"
                     style={{ transformStyle: 'preserve-3d' }}
                   >
-                    <value.icon className="w-8 h-8 text-white" />
+                    {(() => {
+                      const Icon = value.icon || getIconForValue(value.title);
+                      return <Icon className="w-8 h-8 text-white" />;
+                    })()}
                   </motion.div>
                   <div>
                     <motion.h3

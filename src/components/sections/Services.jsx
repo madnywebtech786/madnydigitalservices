@@ -17,54 +17,41 @@ import {
 import Container from '@/components/ui/Container';
 import SectionHeader from '@/components/ui/SectionHeader';
 
-const services = [
+const iconMap = {
+  'computer-repair': { icon: Monitor, secondaryIcon: Wrench, color: 'from-primary to-primary-dark', bgPattern: 'radial-gradient(circle at 20% 80%, rgba(159, 35, 33, 0.15) 0%, transparent 50%)' },
+  'cell-phone-repair': { icon: Smartphone, secondaryIcon: Unlock, color: 'from-secondary to-secondary-dark', bgPattern: 'radial-gradient(circle at 80% 20%, rgba(19, 81, 128, 0.15) 0%, transparent 50%)' },
+  'device-sales': { icon: ShoppingBag, secondaryIcon: Cpu, color: 'from-primary to-secondary', bgPattern: 'radial-gradient(circle at 50% 50%, rgba(159, 35, 33, 0.1) 0%, rgba(19, 81, 128, 0.1) 50%, transparent 70%)' },
+  'web-development': { icon: Code2, secondaryIcon: Monitor, color: 'from-secondary to-primary', bgPattern: 'radial-gradient(circle at 80% 80%, rgba(19, 81, 128, 0.15) 0%, transparent 50%)' },
+};
+
+const defaultServices = [
   {
     id: 'computer-repair',
-    icon: Monitor,
-    secondaryIcon: Wrench,
     title: 'Computer Repair',
     shortDesc: 'Expert diagnostics & repair',
-    description:
-      'Professional computer repair services for all brands. From hardware issues to software problems, virus removal to data recovery, we fix it all with quick turnaround times.',
+    description: 'Professional computer repair services for all brands. From hardware issues to software problems, virus removal to data recovery, we fix it all with quick turnaround times.',
     features: ['Hardware Repair', 'Virus Removal', 'Data Recovery', 'Upgrades'],
-    color: 'from-primary to-primary-dark',
-    bgPattern: 'radial-gradient(circle at 20% 80%, rgba(159, 35, 33, 0.15) 0%, transparent 50%)',
   },
   {
     id: 'cell-phone-repair',
-    icon: Smartphone,
-    secondaryIcon: Unlock,
     title: 'Cell Phone Repair & Unlocking',
     shortDesc: 'Screen repair & carrier unlock',
-    description:
-      'Fast and reliable cell phone repair services. Screen replacements, battery changes, water damage repair, and professional carrier unlocking for all phone models.',
+    description: 'Fast and reliable cell phone repair services. Screen replacements, battery changes, water damage repair, and professional carrier unlocking for all phone models.',
     features: ['Screen Repair', 'Battery Replacement', 'Unlocking', 'Water Damage'],
-    color: 'from-secondary to-secondary-dark',
-    bgPattern: 'radial-gradient(circle at 80% 20%, rgba(19, 81, 128, 0.15) 0%, transparent 50%)',
   },
   {
     id: 'device-sales',
-    icon: ShoppingBag,
-    secondaryIcon: Cpu,
     title: 'Mobile & Computer Sales',
     shortDesc: 'Quality devices & accessories',
-    description:
-      'Wide selection of new and refurbished mobile phones, laptops, and computers. Quality accessories including cases, chargers, and peripherals at competitive prices.',
+    description: 'Wide selection of new and refurbished mobile phones, laptops, and computers. Quality accessories including cases, chargers, and peripherals at competitive prices.',
     features: ['New Devices', 'Refurbished', 'Accessories', 'Best Prices'],
-    color: 'from-primary to-secondary',
-    bgPattern: 'radial-gradient(circle at 50% 50%, rgba(159, 35, 33, 0.1) 0%, rgba(19, 81, 128, 0.1) 50%, transparent 70%)',
   },
   {
     id: 'web-development',
-    icon: Code2,
-    secondaryIcon: Monitor,
     title: 'Web Development',
     shortDesc: 'Custom websites & apps',
-    description:
-      'Professional web development services from stunning business websites to powerful e-commerce platforms. Modern, responsive designs that drive results.',
+    description: 'Professional web development services from stunning business websites to powerful e-commerce platforms. Modern, responsive designs that drive results.',
     features: ['Custom Websites', 'E-Commerce', 'SEO Optimized', 'Responsive'],
-    color: 'from-secondary to-primary',
-    bgPattern: 'radial-gradient(circle at 80% 80%, rgba(19, 81, 128, 0.15) 0%, transparent 50%)',
   },
 ];
 
@@ -101,7 +88,7 @@ function ServiceCard({ service, index }) {
           {/* Card */}
           <div
             className="relative h-full p-8 rounded-3xl bg-white border border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden"
-            style={{ background: service.bgPattern }}
+            style={{ background: (iconMap[service.id] || iconMap['web-development']).bgPattern }}
           >
             {/* Animated gradient border on hover */}
             <motion.div
@@ -138,10 +125,10 @@ function ServiceCard({ service, index }) {
                   animate={isInView ? { scale: 1, rotate: 0 } : {}}
                   transition={{ delay: index * 0.1 + 0.2, duration: 0.5, type: 'spring' }}
                   whileHover={{ rotate: 15, scale: 1.15 }}
-                  className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-shadow duration-300 shrink-0`}
+                  className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${(iconMap[service.id] || iconMap['web-development']).color} flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-shadow duration-300 shrink-0`}
                   style={{ transformStyle: 'preserve-3d' }}
                 >
-                  <service.icon className="w-8 h-8 text-white shrink-0" />
+                  {(() => { const IconComp = (iconMap[service.id] || iconMap['web-development']).icon; return <IconComp className="w-8 h-8 text-white shrink-0" />; })()}
                 </motion.div>
 
                 <motion.div
@@ -154,7 +141,7 @@ function ServiceCard({ service, index }) {
                     whileHover={{ rotate: 360 }}
                     transition={{ duration: 0.5 }}
                   >
-                    <service.secondaryIcon className="w-5 h-5 text-gray-500 group-hover:text-primary transition-colors duration-300 shrink-0" />
+                    {(() => { const SecIcon = (iconMap[service.id] || iconMap['web-development']).secondaryIcon; return <SecIcon className="w-5 h-5 text-gray-500 group-hover:text-primary transition-colors duration-300 shrink-0" />; })()}
                   </motion.div>
                 </motion.div>
               </div>
@@ -189,7 +176,7 @@ function ServiceCard({ service, index }) {
 
               {/* Features with sequential entrance */}
               <div className="flex flex-wrap gap-2 mb-6">
-                {service.features.map((feature, idx) => (
+                {service.features?.map((feature, idx) => (
                   <motion.span
                     key={feature}
                     initial={{ opacity: 0, y: 20, scale: 0, rotateX: -90 }}
@@ -244,7 +231,7 @@ function ServiceCard({ service, index }) {
 
             {/* Decorative corner accent with animation */}
             <motion.div
-              className={`absolute -bottom-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-br ${service.color} opacity-10`}
+              className={`absolute -bottom-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-br ${(iconMap[service.id] || iconMap['web-development']).color} opacity-10`}
               animate={{
                 scale: [1, 1.2, 1],
                 rotate: [0, 180, 360]
@@ -260,7 +247,7 @@ function ServiceCard({ service, index }) {
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
-                className={`absolute w-1 h-1 rounded-full bg-gradient-to-r ${service.color} opacity-0 group-hover:opacity-40`}
+                className={`absolute w-1 h-1 rounded-full bg-gradient-to-r ${(iconMap[service.id] || iconMap['web-development']).color} opacity-0 group-hover:opacity-40`}
                 style={{
                   left: `${20 + i * 30}%`,
                   top: `${30 + i * 20}%`,
@@ -285,9 +272,15 @@ function ServiceCard({ service, index }) {
   );
 }
 
-export default function Services() {
+export default function Services({ data }) {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
+
+  const d = data || {};
+  const services = (d.items ?? defaultServices).map(item => ({
+    ...item,
+    ...(iconMap[item.id] || iconMap['web-development']),
+  }));
 
   return (
     <section
@@ -388,9 +381,9 @@ export default function Services() {
           style={{ transformStyle: 'preserve-3d' }}
         >
           <SectionHeader
-            badge="Our Services"
-            title="What We Offer"
-            subtitle="From device repairs to web solutions, we provide comprehensive tech services to keep you connected and your business growing."
+            badge={d.badge || 'Our Services'}
+            title={d.title || 'What We Offer'}
+            subtitle={d.subtitle || 'From device repairs to web solutions, we provide comprehensive tech services to keep you connected and your business growing.'}
           />
         </motion.div>
 

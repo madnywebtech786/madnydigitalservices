@@ -19,11 +19,18 @@ export const projects = [
     demoUrl: '#',
     githubUrl: '#',
     featured: true,
-    stats: {
-      users: '50K+',
-      rating: '4.8/5',
-      performance: '98/100'
-    }
+    stats: { users: '50K+', rating: '4.8/5', performance: '98/100' },
+    features: [
+      'Responsive design for all devices',
+      'Real-time inventory management',
+      'Secure Stripe payment integration',
+      'Product filtering and wishlist',
+      'Order tracking and admin dashboard',
+    ],
+    projectImpact: {
+      title: 'Project Impact',
+      description: 'This platform increased client revenue by 40% in the first quarter, with a 60% reduction in cart abandonment rate and seamless shopping across all devices.',
+    },
   },
   {
     id: 2,
@@ -36,11 +43,18 @@ export const projects = [
     demoUrl: '#',
     githubUrl: '#',
     featured: true,
-    stats: {
-      users: '30K+',
-      rating: '4.9/5',
-      performance: '95/100'
-    }
+    stats: { users: '30K+', rating: '4.9/5', performance: '95/100' },
+    features: [
+      'Real-time order tracking with Socket.io',
+      'Online ordering and table reservations',
+      'Kitchen display system integration',
+      'Customer reviews and ratings',
+      'Integrated delivery management',
+    ],
+    projectImpact: {
+      title: 'Project Impact',
+      description: 'Streamlined restaurant operations reduced order processing time by 50%, increased customer satisfaction scores by 35%, and enabled seamless delivery management.',
+    },
   },
   {
     id: 3,
@@ -53,11 +67,18 @@ export const projects = [
     demoUrl: '#',
     githubUrl: '#',
     featured: false,
-    stats: {
-      users: '100K+',
-      rating: '4.7/5',
-      performance: '96/100'
-    }
+    stats: { users: '100K+', rating: '4.7/5', performance: '96/100' },
+    features: [
+      'Easy appointment scheduling',
+      'Secure telemedicine video consultations',
+      'HIPAA-compliant data storage',
+      'Secure patient-doctor messaging',
+      'Medical record management',
+    ],
+    projectImpact: {
+      title: 'Project Impact',
+      description: 'Reduced patient wait times by 45% and enabled over 100K patients to access healthcare remotely, dramatically improving care accessibility and clinic efficiency.',
+    },
   },
   {
     id: 4,
@@ -70,11 +91,18 @@ export const projects = [
     demoUrl: '#',
     githubUrl: '#',
     featured: true,
-    stats: {
-      users: '75K+',
-      rating: '4.6/5',
-      performance: '94/100'
-    }
+    stats: { users: '75K+', rating: '4.6/5', performance: '94/100' },
+    features: [
+      'Advanced property search and filters',
+      'Interactive 3D virtual property tours',
+      'Mortgage calculator and affordability tools',
+      'Direct agent communication system',
+      'Neighborhood insights and analytics',
+    ],
+    projectImpact: {
+      title: 'Project Impact',
+      description: 'Helped 75K+ buyers find their dream homes with 3D virtual tours reducing in-person visits by 30%, saving time for both buyers and agents while accelerating sales.',
+    },
   },
   {
     id: 5,
@@ -87,11 +115,18 @@ export const projects = [
     demoUrl: '#',
     githubUrl: '#',
     featured: false,
-    stats: {
-      users: '200K+',
-      rating: '4.8/5',
-      performance: '97/100'
-    }
+    stats: { users: '200K+', rating: '4.8/5', performance: '97/100' },
+    features: [
+      'Personalized AI workout recommendations',
+      'Nutrition planning and calorie tracking',
+      'Wearable device integration (Apple Watch, Fitbit)',
+      'Video tutorials and exercise library',
+      'Progress analytics and goal tracking',
+    ],
+    projectImpact: {
+      title: 'Project Impact',
+      description: 'With 200K+ active users, this app has helped people achieve their fitness goals with 78% of users reporting improved health outcomes within 3 months of use.',
+    },
   },
   {
     id: 6,
@@ -104,11 +139,18 @@ export const projects = [
     demoUrl: '#',
     githubUrl: '#',
     featured: true,
-    stats: {
-      users: '15K+',
-      rating: '4.9/5',
-      performance: '93/100'
-    }
+    stats: { users: '15K+', rating: '4.9/5', performance: '93/100' },
+    features: [
+      'GPT-4 powered blog and article generation',
+      'DALL-E image creation for marketing',
+      'Brand voice consistency controls',
+      'Social media content scheduler',
+      'Multi-language content support',
+    ],
+    projectImpact: {
+      title: 'Project Impact',
+      description: 'Marketing teams using this platform produce content 10x faster, reducing content creation costs by 65% while maintaining brand consistency across all channels.',
+    },
   },
   {
     id: 7,
@@ -121,11 +163,18 @@ export const projects = [
     demoUrl: '#',
     githubUrl: '#',
     featured: false,
-    stats: {
-      users: '45K+',
-      rating: '4.7/5',
-      performance: '99/100'
-    }
+    stats: { users: '45K+', rating: '4.7/5', performance: '99/100' },
+    features: [
+      'Real-time market data via WebSocket',
+      'Advanced technical indicators and charts',
+      'Automated trading bot integration',
+      'Multi-exchange portfolio management',
+      'Risk management and stop-loss alerts',
+    ],
+    projectImpact: {
+      title: 'Project Impact',
+      description: 'Traders using this dashboard reported a 25% improvement in trade execution speed and better portfolio diversification, managing over $50M in combined assets.',
+    },
   },
   {
     id: 8,
@@ -138,11 +187,18 @@ export const projects = [
     demoUrl: '#',
     githubUrl: '#',
     featured: true,
-    stats: {
-      users: '120K+',
-      rating: '4.8/5',
-      performance: '96/100'
-    }
+    stats: { users: '120K+', rating: '4.8/5', performance: '96/100' },
+    features: [
+      'Live video classes with Zoom integration',
+      'Interactive quizzes and assessments',
+      'Student discussion forums and collaboration',
+      'Progress tracking and certificates',
+      'Subscription billing with Stripe',
+    ],
+    projectImpact: {
+      title: 'Project Impact',
+      description: 'Over 120K students have completed courses, with an 85% course completion rate — far above the industry average of 10% — driving significant educational impact globally.',
+    },
   },
   {
     id: 9,
@@ -155,11 +211,18 @@ export const projects = [
     demoUrl: '#',
     githubUrl: '#',
     featured: false,
-    stats: {
-      users: '80K+',
-      rating: '4.6/5',
-      performance: '95/100'
-    }
+    stats: { users: '80K+', rating: '4.6/5', performance: '95/100' },
+    features: [
+      'Kanban and Gantt chart project views',
+      'Real-time team collaboration and updates',
+      'Time tracking and productivity analytics',
+      'Cross-platform iOS and Android support',
+      'Offline mode with automatic sync',
+    ],
+    projectImpact: {
+      title: 'Project Impact',
+      description: 'Teams using this app report a 30% increase in on-time project delivery and significant improvement in team communication, boosting overall productivity.',
+    },
   },
   {
     id: 10,
@@ -172,11 +235,18 @@ export const projects = [
     demoUrl: '#',
     githubUrl: '#',
     featured: false,
-    stats: {
-      users: '25K+',
-      rating: '4.7/5',
-      performance: '92/100'
-    }
+    stats: { users: '25K+', rating: '4.7/5', performance: '92/100' },
+    features: [
+      'Unified control for lights, thermostats, and appliances',
+      'AI-powered energy optimization routines',
+      'Security camera monitoring and alerts',
+      'Voice assistant compatibility',
+      'Energy usage analytics and cost savings',
+    ],
+    projectImpact: {
+      title: 'Project Impact',
+      description: 'Homeowners using this dashboard save an average of 25% on energy bills monthly, with AI routines automatically adapting to their lifestyle for maximum comfort and efficiency.',
+    },
   },
   {
     id: 11,
@@ -189,11 +259,18 @@ export const projects = [
     demoUrl: '#',
     githubUrl: '#',
     featured: false,
-    stats: {
-      users: '90K+',
-      rating: '4.5/5',
-      performance: '94/100'
-    }
+    stats: { users: '90K+', rating: '4.5/5', performance: '94/100' },
+    features: [
+      'Real-time flight and hotel availability',
+      'Price comparison across multiple providers',
+      'Itinerary planning and trip builder',
+      'Integrated payment with multi-currency support',
+      'Travel alerts and booking management',
+    ],
+    projectImpact: {
+      title: 'Project Impact',
+      description: 'Travelers booked over $10M in trips through this platform, saving an average of 18% compared to traditional booking sites with a streamlined, stress-free experience.',
+    },
   },
   {
     id: 12,
@@ -206,12 +283,19 @@ export const projects = [
     demoUrl: '#',
     githubUrl: '#',
     featured: false,
-    stats: {
-      users: '35K+',
-      rating: '4.7/5',
-      performance: '93/100'
-    }
-  }
+    stats: { users: '35K+', rating: '4.7/5', performance: '93/100' },
+    features: [
+      'Real-time stock level tracking',
+      'Automated low-stock reorder alerts',
+      'Multi-warehouse management',
+      'Detailed inventory reports and analytics',
+      'Barcode scanning and supplier integration',
+    ],
+    projectImpact: {
+      title: 'Project Impact',
+      description: 'Businesses using this system reduced stockouts by 70% and overstock by 45%, cutting inventory costs significantly while improving order fulfillment speed.',
+    },
+  },
 ];
 
 export function getProjectsByCategory(category) {

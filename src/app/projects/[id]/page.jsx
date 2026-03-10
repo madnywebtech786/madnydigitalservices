@@ -280,15 +280,9 @@ export default function ProjectDetailPage({ params }) {
               {/* Key Features */}
               <h3 className="text-xl font-bold mb-4">Key Features</h3>
               <div className="space-y-3">
-                {[
-                  'Responsive design for all devices',
-                  'Optimized performance and loading speeds',
-                  'Modern UI/UX best practices',
-                  'Secure and scalable architecture',
-                  'Cross-browser compatibility',
-                ].map((feature, index) => (
+                {(project.features || []).map((feature, index) => (
                   <motion.div
-                    key={feature}
+                    key={index}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -339,10 +333,9 @@ export default function ProjectDetailPage({ params }) {
                     <TrendingUp className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-lg mb-1">Project Impact</h4>
+                    <h4 className="font-bold text-lg mb-1">{project.projectImpact?.title || 'Project Impact'}</h4>
                     <p className="text-sm text-muted-foreground">
-                      This project has helped transform the way users interact with digital platforms,
-                      providing seamless experiences and driving business growth.
+                      {project.projectImpact?.description || 'This project has helped transform the way users interact with digital platforms, providing seamless experiences and driving business growth.'}
                     </p>
                   </div>
                 </div>

@@ -8,7 +8,7 @@ import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
 import { services } from '@/data/services';
 
-const navLinks = [
+const defaultNavLinks = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
   { name: 'Services', href: '#services', hasDropdown: true },
@@ -16,7 +16,13 @@ const navLinks = [
   { name: 'Contact', href: '/contact' },
 ];
 
-export default function Header() {
+export default function Header({ data }) {
+  const d = data || {};
+  // Merge default hasDropdown logic with dynamic links
+  const navLinks = (d.navLinks || defaultNavLinks).map(link => ({
+    ...link,
+    hasDropdown: link.name.toLowerCase() === 'services' || link.hasDropdown
+  }));
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
@@ -55,7 +61,7 @@ export default function Header() {
           <nav className="flex items-center justify-between h-20">
             {/* Logo */}
             <motion.a
-              href="#"
+              href="/"
               className="flex items-center gap-2"
               whileHover={{ scale: 1.02 }}
             >
@@ -63,9 +69,11 @@ export default function Header() {
                 <span className="text-white font-bold text-xl">M</span>
               </div>
               <div className="hidden sm:block">
-                <span className="text-xl font-bold text-gradient">Madeny</span>
+                <span className="text-xl font-bold text-gradient">
+                  {d.brandName ? d.brandName.split(' ')[0] : 'Madeny'}
+                </span>
                 <span className="text-xl font-bold text-foreground ml-1">
-                  Digital
+                  {d.brandName && d.brandName.split(' ').length > 1 ? d.brandName.split(' ').slice(1).join(' ') : 'Digital'}
                 </span>
               </div>
             </motion.a>
@@ -210,7 +218,9 @@ export default function Header() {
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
                       <span className="text-white font-bold text-xl">M</span>
                     </div>
-                    <span className="text-xl font-bold text-gradient">Madeny</span>
+                    <span className="text-xl font-bold text-gradient">
+                      {d.brandName ? d.brandName.split(' ')[0] : 'Madeny'}
+                    </span>
                   </div>
                   <motion.button
                     whileTap={{ scale: 0.95 }}

@@ -12,11 +12,12 @@ import {
   Smartphone,
   Wrench,
   Star,
+  CloudCog,
 } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import Container from '@/components/ui/Container';
 
-export default function Hero() {
+export default function Hero({ data }) {
   const sectionRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -28,13 +29,22 @@ export default function Hero() {
   const opacity = useTransform(smoothProgress, [0, 0.5], [1, 0]);
   const scale = useTransform(smoothProgress, [0, 0.5], [1, 0.95]);
 
-  const stats = [
-    { value: '500+', label: 'Devices Repaired', icon: Wrench },
-    { value: '50+', label: 'Web Projects', icon: Monitor },
-    { value: '1000+', label: 'Happy Customers', icon: Star },
-    { value: '24/7', label: 'Support', icon: Shield },
-  ];
+  const d = data || {};
+  const defaultIcons = [Wrench, Monitor, Star, Shield, Zap, Sparkles, CloudCog];
+  const stats = d.stats && Array.isArray(d.stats)
+    ? d.stats.map((stat, i) => ({
+        value: stat.value,
+        label: stat.label,
+        icon: defaultIcons[i % defaultIcons.length]
+      }))
+    : [
+        { value: '500+', label: 'Devices Repaired', icon: Wrench },
+        { value: '50+', label: 'Web Projects', icon: Monitor },
+        { value: '1000+', label: 'Happy Customers', icon: Star },
+        { value: '24/7', label: 'Support', icon: Shield },
+      ];
 
+  console.log(stats);
   return (
     <section
       ref={sectionRef}
@@ -240,7 +250,7 @@ export default function Hero() {
                 <Sparkles className="w-4 h-4 text-primary" />
               </motion.div>
               <span className="text-sm font-semibold text-gradient">
-                Calgary&apos;s Trusted Tech Partner
+                {d.badge || "Calgary's Trusted Tech Partner"}
               </span>
             </motion.div>
 
@@ -254,7 +264,7 @@ export default function Hero() {
                 animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
                 transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
               >
-                Your One-Stop
+                {d.headingLine1 || 'Your One-Stop'}
               </motion.span>
               <motion.span
                 className="block text-gradient"
@@ -262,7 +272,7 @@ export default function Hero() {
                 animate={{ opacity: 1, x: 0, scale: 1, filter: 'blur(0px)' }}
                 transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
               >
-                Tech Solution
+                {d.headingLine2 || 'Tech Solution'}
               </motion.span>
               <motion.span
                 className="block text-foreground"
@@ -270,7 +280,7 @@ export default function Hero() {
                 animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
                 transition={{ duration: 0.6, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
               >
-                Center
+                {d.headingLine3 || 'Center'}
               </motion.span>
             </motion.h1>
 
@@ -281,8 +291,7 @@ export default function Hero() {
               transition={{ delay: 0.9, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed"
             >
-              Expert computer & cell phone repair, quality device sales, and professional
-              web development services. All under one roof in Calgary, Alberta.
+              {d.subheading || 'Expert computer & cell phone repair, quality device sales, and professional web development services. All under one roof in Calgary, Alberta.'}
             </motion.p>
 
             {/* CTA Buttons with 3D effect */}
@@ -302,7 +311,7 @@ export default function Hero() {
                   icon={<ArrowRight className="w-5 h-5" />}
                   className="shadow-xl shadow-primary/25"
                 >
-                  Get Free Quote
+                  {d.ctaPrimary || 'Get Free Quote'}
                 </Button>
               </motion.div>
               <motion.div
@@ -316,7 +325,7 @@ export default function Hero() {
                   icon={<Phone className="w-5 h-5" />}
                   iconPosition="left"
                 >
-                  (403) 555-0123
+                  {d.ctaSecondary || '(403) 555-0123'}
                 </Button>
               </motion.div>
             </motion.div>
@@ -401,8 +410,8 @@ export default function Hero() {
                       <Monitor className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <div className="text-sm font-bold">Computer Repair</div>
-                      <div className="text-xs text-muted-foreground">Same-day service</div>
+                      <div className="text-sm font-bold">{d.floatingCard1Title || 'Computer Repair'}</div>
+                      <div className="text-xs text-muted-foreground">{d.floatingCard1Subtitle || 'Same-day service'}</div>
                     </div>
                   </div>
                 </motion.div>
@@ -426,8 +435,8 @@ export default function Hero() {
                       <Smartphone className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <div className="text-sm font-bold">Phone Repair</div>
-                      <div className="text-xs text-muted-foreground">While you wait</div>
+                      <div className="text-sm font-bold">{d.floatingCard2Title || 'Phone Repair'}</div>
+                      <div className="text-xs text-muted-foreground">{d.floatingCard2Subtitle || 'While you wait'}</div>
                     </div>
                   </div>
                 </motion.div>

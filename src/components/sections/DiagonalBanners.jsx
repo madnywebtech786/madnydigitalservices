@@ -2,9 +2,10 @@
 
 import { motion } from 'framer-motion';
 
-export default function DiagonalBanners() {
-  const bannerText1 = 'Best in Canada • Website Development • Cell Phone Repair •  ';
-  const bannerText2 = 'Premium Products • Premium Services • Best Prices •';
+export default function DiagonalBanners({ data }) {
+  const d = data || {};
+  const bannerText1 = d.text1 || 'Best in Canada • Website Development • Cell Phone Repair •  ';
+  const bannerText2 = d.text2 || 'Premium Products • Premium Services • Best Prices •';
 
   // Repeat the text to create seamless loop
   const repeatedText1 = bannerText1.repeat(10);

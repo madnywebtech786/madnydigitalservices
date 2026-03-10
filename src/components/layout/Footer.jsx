@@ -44,8 +44,17 @@ const socialLinks = [
   { icon: Facebook, href: '#', label: 'Facebook' },
 ];
 
-export default function Footer() {
+export default function Footer({ data }) {
   const currentYear = new Date().getFullYear();
+  const d = data || {};
+
+  const companyLinks = d.companyLinks || footerLinks.company;
+  const servicesLinks = d.serviceLinks || footerLinks.services;
+  const supportLinks = d.supportLinks || footerLinks.support;
+  const resolvedSocialLinks = (d.socialLinks || socialLinks).map(link => {
+    const iconMap = { LinkedIn: Linkedin, Twitter: Twitter, Instagram: Instagram, Facebook: Facebook };
+    return { ...link, icon: iconMap[link.platform] || Linkedin };
+  });
 
   return (
     <footer className="bg-foreground text-white relative overflow-hidden">
@@ -76,40 +85,38 @@ export default function Footer() {
             </motion.a>
 
             <p className="text-white/70 leading-relaxed mb-6 max-w-sm">
-              Calgary&apos;s premier digital agency specializing in web development,
-              e-commerce solutions, and digital marketing for businesses in the
-              tech and retail industry.
+              {d.description || "Calgary's premier digital agency specializing in web development, e-commerce solutions, and digital marketing."}
             </p>
 
             {/* Contact Info */}
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-white/70">
                 <MapPin className="w-4 h-4 text-primary" />
-                <span className="text-sm">Calgary, AB T2P 1J9, Canada</span>
+                <span className="text-sm">{d.address || 'Calgary, AB T2P 1J9, Canada'}</span>
               </div>
               <div className="flex items-center gap-3 text-white/70">
                 <Mail className="w-4 h-4 text-primary" />
                 <a
-                  href="mailto:hello@madeneydigital.ca"
+                  href={`mailto:${d.email || 'hello@madenydigital.ca'}`}
                   className="text-sm hover:text-primary transition-colors"
                 >
-                  hello@madeneydigital.ca
+                  {d.email || 'hello@madenydigital.ca'}
                 </a>
               </div>
               <div className="flex items-center gap-3 text-white/70">
                 <Phone className="w-4 h-4 text-primary" />
                 <a
-                  href="tel:+14035550123"
+                  href={`tel:${d.phone || '+14035550123'}`}
                   className="text-sm hover:text-primary transition-colors"
                 >
-                  +1 (403) 555-0123
+                  {d.phone || '+1 (403) 555-0123'}
                 </a>
               </div>
             </div>
 
             {/* Social Links */}
             <div className="flex gap-3 mt-6">
-              {socialLinks.map((social) => (
+              {resolvedSocialLinks.map((social) => (
                 <motion.a
                   key={social.label}
                   href={social.href}
@@ -128,7 +135,7 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold text-lg mb-4">Services</h4>
             <ul className="space-y-3">
-              {footerLinks.services.map((link) => (
+              {servicesLinks.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
@@ -146,7 +153,7 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold text-lg mb-4">Company</h4>
             <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
+              {companyLinks.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
@@ -164,7 +171,7 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold text-lg mb-4">Support</h4>
             <ul className="space-y-3">
-              {footerLinks.support.map((link) => (
+              {supportLinks.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
@@ -202,7 +209,7 @@ export default function Footer() {
         <div className="py-6 border-t border-white/10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-white/60 text-sm text-center md:text-left">
-              &copy; {currentYear} Madeny Digital Services. All rights reserved.
+              &copy; {currentYear} {d.copyright || 'Madeny Digital Services. All rights reserved.'}
             </p>
             <p className="text-white/60 text-sm flex items-center gap-1">
               Made with <Heart className="w-4 h-4 text-primary fill-primary" /> in

@@ -1,6 +1,7 @@
 'use client';
 
-export default function SocialMediaWidget() {
+export default function SocialMediaWidget({ data }) {
+  const d = data || {};
   return (
     <div className="fixed right-0 top-1/2 -translate-y-1/2 z-50">
       {/* Main Widget Container */}
@@ -20,7 +21,7 @@ export default function SocialMediaWidget() {
             <div className="flex flex-col gap-3">
               {/* Facebook */}
               <a
-                href="https://facebook.com"
+                href={d.facebook || 'https://facebook.com'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative"
@@ -45,7 +46,7 @@ export default function SocialMediaWidget() {
 
               {/* Instagram */}
               <a
-                href="https://instagram.com"
+                href={d.instagram || 'https://instagram.com'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative"
@@ -70,7 +71,7 @@ export default function SocialMediaWidget() {
 
               {/* WhatsApp */}
               <a
-                href="https://wa.me/1234567890"
+                href={d.whatsapp || 'https://wa.me/1234567890'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative"
