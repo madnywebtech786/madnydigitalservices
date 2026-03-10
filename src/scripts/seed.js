@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-const MONGODB_URI = 'mongodb+srv://FahadJawad:programerno1@nest.odjrs8k.mongodb.net/madney-webtech?retryWrites=true&w=majority&appName=NEST';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 async function seed() {
   await mongoose.connect(MONGODB_URI, { bufferCommands: false });
