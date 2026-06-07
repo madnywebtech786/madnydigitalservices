@@ -1,20 +1,21 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import {
   Mail,
   Phone,
   MapPin,
-  Send,
   Linkedin,
   Twitter,
   Instagram,
   Facebook,
+  Send,
+  CheckCircle2,
 } from 'lucide-react';
 import Container from '@/components/ui/Container';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Button from '@/components/ui/Button';
+import { useInView } from '@/hooks/useInView';
 
 const defaultContactInfo = [
   {
@@ -35,13 +36,15 @@ const defaultContactInfo = [
 ];
 
 const socialLinks = [
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Twitter, href: '#', label: 'Twitter' },
+  { icon: Linkedin,  href: '#', label: 'LinkedIn' },
+  { icon: Twitter,   href: '#', label: 'Twitter' },
   { icon: Instagram, href: '#', label: 'Instagram' },
-  { icon: Facebook, href: '#', label: 'Facebook' },
+  { icon: Facebook,  href: '#', label: 'Facebook' },
 ];
 
 const iconMap = { 'Visit Us': MapPin, 'Email Us': Mail, 'Call Us': Phone };
+
+const infoDelays = ['anim-delay-3', 'anim-delay-5', 'anim-delay-7'];
 
 export default function Contact({ data }) {
   const d = data || {};
@@ -50,23 +53,21 @@ export default function Contact({ data }) {
     ...info,
     icon: info.icon || iconMap[info.title] || MapPin,
   }));
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    service: '',
-    message: '',
-  });
 
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const [sectionRef, inView] = useInView('-60px');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     await new Promise((resolve) => setTimeout(resolve, 1500));
     setIsSubmitting(false);
-    alert('Thank you for your message! We will get back to you soon.');
-    setFormData({ name: '', email: '', phone: '', service: '', message: '' });
+    setIsSubmitted(true);
+    setFormData({ name: '', email: '', message: '' });
+    setTimeout(() => setIsSubmitted(false), 4000);
   };
 
   const handleChange = (e) => {
@@ -74,32 +75,39 @@ export default function Contact({ data }) {
   };
 
   return (
-    <section id="contact" className="section bg-white relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-linear-to-l from-muted/50 to-transparent" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-linear-to-tr from-primary/5 to-transparent rounded-full blur-3xl" />
+    <section
+      id="contact"
+      ref={sectionRef}
+      className="section relative overflow-hidden"
+    >
+      {/* Subtle side tint — lets page-flow canvas breathe through */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-linear-to-l from-muted/30 to-transparent" />
+      </div>
 
       <Container className="relative z-10">
         <SectionHeader
-          badge={d.badge || "Get In Touch"}
+          inView={inView}
+          badge={d.badge || 'Get In Touch'}
           title={d.title || "Let's Build Something Amazing"}
           subtitle={d.subtitle || "Ready to start your project? Contact us today and let's discuss how we can help transform your digital presence."}
         />
 
         <div className="grid lg:grid-cols-5 gap-12">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-2"
+
+          {/* Left — contact info + socials */}
+          <div
+            data-inview={inView ? 'true' : ''}
+            className="reveal-left anim-delay-2 lg:col-span-2"
           >
-            <div className="space-y-6">
+            <div className="space-y-3">
               {contactInfo.map((info, index) => (
                 <div
                   key={info.title}
-                  className="flex gap-4 p-4 rounded-2xl hover:bg-muted/50 transition-colors duration-300"
+                  data-inview={inView ? 'true' : ''}
+                  className={`reveal-left ${infoDelays[index]} contact-info-row flex gap-4 p-4 rounded-2xl`}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-linear-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0">
+                  <div className="contact-info-icon w-12 h-12 rounded-xl bg-linear-to-br from-primary to-secondary flex items-center justify-center shrink-0 shadow-md">
                     <info.icon className="w-6 h-6 text-white" />
                   </div>
                   <div>
@@ -112,14 +120,18 @@ export default function Contact({ data }) {
               ))}
             </div>
 
-            <div className="mt-8 pt-8 border-t border-border">
+            {/* Socials */}
+            <div
+              data-inview={inView ? 'true' : ''}
+              className="reveal-up anim-delay-9 mt-8 pt-8 border-t border-border"
+            >
               <h4 className="font-semibold text-foreground mb-4">Follow Us</h4>
               <div className="flex gap-3">
                 {socialLinks.map((social) => (
                   <a
                     key={social.label}
                     href={social.href}
-                    className="w-11 h-11 rounded-xl bg-muted flex items-center justify-center hover:bg-linear-to-br hover:from-primary hover:to-secondary hover:text-white transition-all duration-300"
+                    className="contact-social w-11 h-11 rounded-xl bg-muted flex items-center justify-center"
                     aria-label={social.label}
                   >
                     <social.icon className="w-5 h-5" />
@@ -127,37 +139,88 @@ export default function Contact({ data }) {
                 ))}
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-3"
+          {/* Right — form */}
+          <div
+            data-inview={inView ? 'true' : ''}
+            className="reveal-right anim-delay-4 lg:col-span-3"
           >
-            <div className="glass-card rounded-3xl p-8 md:p-10">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Full Name *</label>
-                    <input type="text" name="name" value={formData.name} onChange={handleChange} required className="w-full px-4 py-3 rounded-xl border border-border bg-white" />
+            <div className="contact-form-card glass-card rounded-3xl p-8 md:p-10">
+
+              {/* Success state */}
+              {isSubmitted ? (
+                <div className="contact-success-pop flex flex-col items-center justify-center py-16 text-center gap-4">
+                  <div className="w-16 h-16 rounded-full bg-linear-to-br from-primary to-secondary flex items-center justify-center shadow-lg">
+                    <CheckCircle2 className="w-8 h-8 text-white" />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Email Address *</label>
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} required className="w-full px-4 py-3 rounded-xl border border-border bg-white" />
+                  <h3 className="text-2xl font-bold">Message Sent!</h3>
+                  <p className="text-muted-foreground max-w-xs">
+                    Thank you for reaching out. We'll get back to you shortly.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Full Name *</label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        placeholder="John Smith"
+                        className="contact-input w-full px-4 py-3 rounded-xl border border-border bg-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Email Address *</label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        placeholder="john@example.com"
+                        className="contact-input w-full px-4 py-3 rounded-xl border border-border bg-white"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Your Message *</label>
-                  <textarea name="message" value={formData.message} onChange={handleChange} required rows={5} className="w-full px-4 py-3 rounded-xl border border-border bg-white" />
-                </div>
-                <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
-                </Button>
-              </form>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Your Message *</label>
+                    <textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={5}
+                      placeholder="Tell us about your project..."
+                      className="contact-input w-full px-4 py-3 rounded-xl border border-border bg-white resize-none"
+                    />
+                  </div>
+
+                  <div className="hover-lift">
+                    <Button
+                      type="submit"
+                      size="lg"
+                      className="w-full"
+                      disabled={isSubmitting}
+                      icon={isSubmitting ? null : <Send className="w-4 h-4" />}
+                    >
+                      {isSubmitting ? (
+                        <span className="flex items-center gap-2">
+                          <span className="w-4 h-4 rounded-full border-2 border-white/40 border-t-white animate-spin" />
+                          Sending…
+                        </span>
+                      ) : 'Send Message'}
+                    </Button>
+                  </div>
+                </form>
+              )}
             </div>
-          </motion.div>
+          </div>
         </div>
       </Container>
     </section>

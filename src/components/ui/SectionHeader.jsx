@@ -1,6 +1,3 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 export default function SectionHeader({
@@ -9,6 +6,7 @@ export default function SectionHeader({
   subtitle,
   align = 'center',
   className,
+  inView = true,
 }) {
   const alignments = {
     left: 'text-left items-start',
@@ -17,32 +15,29 @@ export default function SectionHeader({
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={cn('flex flex-col mb-16', alignments[align], className)}
-    >
+    <div className={cn('flex flex-col mb-16', alignments[align], className)}>
       {badge && (
-        <motion.span
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.1 }}
-          className="inline-flex items-center px-4 py-1.5 mb-4 text-sm font-medium rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 text-primary border border-primary/20"
+        <span
+          data-inview={inView ? 'true' : ''}
+          className="reveal-scale anim-delay-1 inline-flex items-center px-4 py-1.5 mb-4 text-sm font-medium rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 text-primary border border-primary/20"
         >
           {badge}
-        </motion.span>
+        </span>
       )}
-      <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+      <h2
+        data-inview={inView ? 'true' : ''}
+        className="reveal-up anim-delay-2 text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight"
+      >
         <span className="text-gradient">{title}</span>
       </h2>
       {subtitle && (
-        <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
+        <p
+          data-inview={inView ? 'true' : ''}
+          className="reveal-blur anim-delay-4 mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed"
+        >
           {subtitle}
         </p>
       )}
-    </motion.div>
+    </div>
   );
 }

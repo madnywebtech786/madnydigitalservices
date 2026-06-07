@@ -11,6 +11,8 @@ import CTA from '@/components/sections/CTA';
 import DiagonalBanners from '@/components/sections/DiagonalBanners';
 import { getPageContent, getGlobalContent } from '@/lib/content';
 
+export const revalidate = 3600;
+
 export async function generateMetadata() {
   const page = await getPageContent('home');
   if (!page?.meta) return {};
@@ -18,9 +20,11 @@ export async function generateMetadata() {
     title: page.meta.title,
     description: page.meta.description,
     keywords: page.meta.keywords,
+    alternates: { canonical: 'https://madenydigital.com' },
     openGraph: {
       title: page.meta.ogTitle || page.meta.title,
       description: page.meta.ogDescription || page.meta.description,
+      url: 'https://madenydigital.com',
       type: 'website',
       locale: 'en_CA',
       siteName: 'Madeny Digital Services',
@@ -53,7 +57,7 @@ export default async function Home() {
   return (
     <>
       <Header data={globalContent?.header} />
-      <main>
+      <main className="page-flow">
         <Hero data={sections.hero} />
         <Services data={sections.services} />
         <About data={sections.about} />

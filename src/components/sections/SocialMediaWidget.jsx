@@ -15,10 +15,10 @@ export default function SocialMediaWidget({ data }) {
           <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary-400 to-secondary rounded-3xl opacity-50 blur-sm animate-pulse"></div>
 
           {/* Content */}
-          <div className="relative pl-3 pr-2 py-4 flex flex-col gap-3">
+          <div className="relative pl-2 sm:pl-3 pr-1.5 sm:pr-2 py-3 sm:py-4 flex flex-col gap-2 sm:gap-3">
 
             {/* Social Media Icons */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2 sm:gap-3">
               {/* Facebook */}
               <a
                 href={d.facebook || 'https://facebook.com'}
@@ -27,9 +27,9 @@ export default function SocialMediaWidget({ data }) {
                 className="group relative"
                 aria-label="Visit our Facebook page"
               >
-                <div className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:bg-white/30 hover:scale-110 hover:shadow-lg border border-white/30">
+                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:bg-white/30 hover:scale-110 hover:shadow-lg border border-white/30">
                   <svg
-                    className="w-5 h-5 text-white transition-transform duration-300 group-hover:scale-110"
+                    className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-white transition-transform duration-300 group-hover:scale-110"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -52,9 +52,9 @@ export default function SocialMediaWidget({ data }) {
                 className="group relative"
                 aria-label="Visit our Instagram page"
               >
-                <div className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:bg-white/30 hover:scale-110 hover:shadow-lg border border-white/30">
+                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:bg-white/30 hover:scale-110 hover:shadow-lg border border-white/30">
                   <svg
-                    className="w-5 h-5 text-white transition-transform duration-300 group-hover:scale-110"
+                    className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-white transition-transform duration-300 group-hover:scale-110"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -77,9 +77,9 @@ export default function SocialMediaWidget({ data }) {
                 className="group relative"
                 aria-label="Contact us on WhatsApp"
               >
-                <div className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:bg-white/30 hover:scale-110 hover:shadow-lg border border-white/30">
+                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:bg-white/30 hover:scale-110 hover:shadow-lg border border-white/30">
                   <svg
-                    className="w-5 h-5 text-white transition-transform duration-300 group-hover:scale-110"
+                    className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-white transition-transform duration-300 group-hover:scale-110"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >

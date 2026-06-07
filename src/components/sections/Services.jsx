@@ -1,27 +1,44 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
 import Link from 'next/link';
-import { useRef } from 'react';
 import {
-  Monitor,
-  Smartphone,
-  ShoppingBag,
-  Code2,
-  ArrowRight,
-  Wrench,
-  Unlock,
-  Cpu,
-  Sparkles,
+  Monitor, Smartphone, ShoppingBag, Code2,
+  ArrowUpRight, Wrench, Unlock, Cpu, Star,
+  Check,
 } from 'lucide-react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Container from '@/components/ui/Container';
-import SectionHeader from '@/components/ui/SectionHeader';
+import { useInView } from '@/hooks/useInView';
 
-const iconMap = {
-  'computer-repair': { icon: Monitor, secondaryIcon: Wrench, color: 'from-primary to-primary-dark', bgPattern: 'radial-gradient(circle at 20% 80%, rgba(159, 35, 33, 0.15) 0%, transparent 50%)' },
-  'cell-phone-repair': { icon: Smartphone, secondaryIcon: Unlock, color: 'from-secondary to-secondary-dark', bgPattern: 'radial-gradient(circle at 80% 20%, rgba(19, 81, 128, 0.15) 0%, transparent 50%)' },
-  'device-sales': { icon: ShoppingBag, secondaryIcon: Cpu, color: 'from-primary to-secondary', bgPattern: 'radial-gradient(circle at 50% 50%, rgba(159, 35, 33, 0.1) 0%, rgba(19, 81, 128, 0.1) 50%, transparent 70%)' },
-  'web-development': { icon: Code2, secondaryIcon: Monitor, color: 'from-secondary to-primary', bgPattern: 'radial-gradient(circle at 80% 80%, rgba(19, 81, 128, 0.15) 0%, transparent 50%)' },
+const servicesMeta = {
+  'computer-repair': {
+    icon: Monitor,
+    secondaryIcon: Wrench,
+    gradient: 'from-primary to-primary-dark',
+    panelGrad: 'linear-gradient(135deg, #9f2321 0%, #7a1b19 100%)',
+    accentColor: '#9f2321',
+  },
+  'cell-phone-repair': {
+    icon: Smartphone,
+    secondaryIcon: Unlock,
+    gradient: 'from-secondary to-secondary-dark',
+    panelGrad: 'linear-gradient(135deg, #135180 0%, #0e3d5f 100%)',
+    accentColor: '#135180',
+  },
+  'device-sales': {
+    icon: ShoppingBag,
+    secondaryIcon: Cpu,
+    gradient: 'from-primary to-secondary',
+    panelGrad: 'linear-gradient(135deg, #9f2321 0%, #135180 100%)',
+    accentColor: '#9f2321',
+  },
+  'web-development': {
+    icon: Code2,
+    secondaryIcon: Monitor,
+    gradient: 'from-secondary to-primary',
+    panelGrad: 'linear-gradient(135deg, #135180 0%, #9f2321 100%)',
+    accentColor: '#135180',
+  },
 };
 
 const defaultServices = [
@@ -29,378 +46,292 @@ const defaultServices = [
     id: 'computer-repair',
     title: 'Computer Repair',
     shortDesc: 'Expert diagnostics & repair',
-    description: 'Professional computer repair services for all brands. From hardware issues to software problems, virus removal to data recovery, we fix it all with quick turnaround times.',
+    description: 'Professional computer repair for all brands. Hardware issues, software problems, virus removal to data recovery — fixed with quick turnaround.',
     features: ['Hardware Repair', 'Virus Removal', 'Data Recovery', 'Upgrades'],
   },
   {
     id: 'cell-phone-repair',
-    title: 'Cell Phone Repair & Unlocking',
+    title: 'Cell Phone Repair',
     shortDesc: 'Screen repair & carrier unlock',
-    description: 'Fast and reliable cell phone repair services. Screen replacements, battery changes, water damage repair, and professional carrier unlocking for all phone models.',
+    description: 'Fast and reliable cell phone repair. Screen replacements, battery changes, water damage repair, and professional carrier unlocking for all models.',
     features: ['Screen Repair', 'Battery Replacement', 'Unlocking', 'Water Damage'],
   },
   {
     id: 'device-sales',
-    title: 'Mobile & Computer Sales',
+    title: 'Device Sales',
     shortDesc: 'Quality devices & accessories',
-    description: 'Wide selection of new and refurbished mobile phones, laptops, and computers. Quality accessories including cases, chargers, and peripherals at competitive prices.',
+    description: 'New and refurbished mobiles, laptops, and computers. Quality accessories including cases, chargers, and peripherals at competitive prices.',
     features: ['New Devices', 'Refurbished', 'Accessories', 'Best Prices'],
   },
   {
     id: 'web-development',
     title: 'Web Development',
     shortDesc: 'Custom websites & apps',
-    description: 'Professional web development services from stunning business websites to powerful e-commerce platforms. Modern, responsive designs that drive results.',
+    description: 'From stunning business websites to powerful e-commerce platforms. Modern, responsive designs built for performance and results.',
     features: ['Custom Websites', 'E-Commerce', 'SEO Optimized', 'Responsive'],
   },
 ];
 
-function ServiceCard({ service, index }) {
-  const cardRef = useRef(null);
-  const isInView = useInView(cardRef, { once: true, margin: '-100px' });
-
+/* ── Progress bar that fills over 5s ── */
+function ProgressBar({ active, duration }) {
   return (
-    <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0, y: 100, scale: 0.8, rotateX: -45 }}
-      animate={isInView ? {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        rotateX: 0
-      } : {}}
-      transition={{
-        duration: 0.8,
-        delay: index * 0.15,
-        type: 'spring',
-        stiffness: 100,
-        damping: 20
-      }}
-      style={{ transformStyle: 'preserve-3d' }}
-    >
-      <Link href={`/services/${service.id}`}>
-        <motion.div
-          whileHover={{ y: -12, scale: 1.03, rotateY: 2 }}
-          transition={{ duration: 0.4, type: 'spring', stiffness: 300 }}
-          className="group relative h-full"
-          style={{ transformStyle: 'preserve-3d' }}
-        >
-          {/* Card */}
-          <div
-            className="relative h-full p-8 rounded-3xl bg-white border border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden"
-            style={{ background: (iconMap[service.id] || iconMap['web-development']).bgPattern }}
-          >
-            {/* Animated gradient border on hover */}
-            <motion.div
-              className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
-            >
-              <motion.div
-                className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary via-secondary to-primary p-[2px]"
-                animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-                style={{ backgroundSize: '200% 100%' }}
-              >
-                <div className="w-full h-full rounded-3xl bg-white" />
-              </motion.div>
-            </motion.div>
-
-            {/* Sparkle effect on hover */}
-            <motion.div
-              className="absolute top-4 right-4 opacity-0 group-hover:opacity-100"
-              initial={{ scale: 0, rotate: 0 }}
-              whileHover={{ scale: 1, rotate: 180 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Sparkles className="w-5 h-5 text-primary" />
-            </motion.div>
-
-            {/* Content */}
-            <div className="relative z-10">
-              {/* Icons with 3D entrance */}
-              <div className="flex items-center gap-4 mb-6">
-                <motion.div
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={isInView ? { scale: 1, rotate: 0 } : {}}
-                  transition={{ delay: index * 0.1 + 0.2, duration: 0.5, type: 'spring' }}
-                  whileHover={{ rotate: 15, scale: 1.15 }}
-                  className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${(iconMap[service.id] || iconMap['web-development']).color} flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-shadow duration-300 shrink-0`}
-                  style={{ transformStyle: 'preserve-3d' }}
-                >
-                  {(() => { const IconComp = (iconMap[service.id] || iconMap['web-development']).icon; return <IconComp className="w-8 h-8 text-white shrink-0" />; })()}
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, x: -30, scale: 0 }}
-                  animate={isInView ? { opacity: 1, x: 0, scale: 1 } : {}}
-                  transition={{ delay: index * 0.1 + 0.3, duration: 0.4 }}
-                  className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-primary/10 group-hover:to-secondary/10 transition-all duration-300 shrink-0"
-                >
-                  <motion.div
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {(() => { const SecIcon = (iconMap[service.id] || iconMap['web-development']).secondaryIcon; return <SecIcon className="w-5 h-5 text-gray-500 group-hover:text-primary transition-colors duration-300 shrink-0" />; })()}
-                  </motion.div>
-                </motion.div>
-              </div>
-
-              {/* Title & Description with staggered reveal */}
-              <motion.h3
-                initial={{ opacity: 0, x: -20, filter: 'blur(10px)' }}
-                animate={isInView ? { opacity: 1, x: 0, filter: 'blur(0px)' } : {}}
-                transition={{ delay: index * 0.1 + 0.4, duration: 0.5 }}
-                className="text-2xl font-bold mb-2 group-hover:text-gradient transition-all duration-300"
-              >
-                {service.title}
-              </motion.h3>
-
-              <motion.p
-                initial={{ opacity: 0, x: -20 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: index * 0.1 + 0.5, duration: 0.5 }}
-                className="text-primary/70 font-medium text-sm mb-4"
-              >
-                {service.shortDesc}
-              </motion.p>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: index * 0.1 + 0.6, duration: 0.5 }}
-                className="text-muted-foreground leading-relaxed mb-6"
-              >
-                {service.description}
-              </motion.p>
-
-              {/* Features with sequential entrance */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {service.features?.map((feature, idx) => (
-                  <motion.span
-                    key={feature}
-                    initial={{ opacity: 0, y: 20, scale: 0, rotateX: -90 }}
-                    animate={isInView ? { opacity: 1, y: 0, scale: 1, rotateX: 0 } : {}}
-                    transition={{
-                      delay: index * 0.1 + 0.7 + idx * 0.08,
-                      duration: 0.5,
-                      type: 'spring',
-                      stiffness: 150
-                    }}
-                    whileHover={{
-                      scale: 1.15,
-                      y: -4,
-                      boxShadow: '0 4px 12px rgba(159, 35, 33, 0.2)',
-                      background: 'linear-gradient(135deg, rgba(159, 35, 33, 0.1), rgba(19, 81, 128, 0.1))',
-                    }}
-                    className="px-3 py-1.5 text-xs font-medium rounded-full bg-gradient-to-r from-primary/5 to-secondary/5 text-foreground border border-primary/10 cursor-default"
-                    style={{ transformStyle: 'preserve-3d' }}
-                  >
-                    <motion.span
-                      animate={{
-                        backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: 'linear'
-                      }}
-                    >
-                      {feature}
-                    </motion.span>
-                  </motion.span>
-                ))}
-              </div>
-
-              {/* CTA with magnetic effect */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: index * 0.15 + 1.2, duration: 0.5 }}
-                className="flex items-center gap-2 text-primary font-semibold"
-              >
-                <span>Learn More</span>
-                <motion.div
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-                >
-                  <ArrowRight className="w-4 h-4" />
-                </motion.div>
-              </motion.div>
-            </div>
-
-            {/* Decorative corner accent with animation */}
-            <motion.div
-              className={`absolute -bottom-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-br ${(iconMap[service.id] || iconMap['web-development']).color} opacity-10`}
-              animate={{
-                scale: [1, 1.2, 1],
-                rotate: [0, 180, 360]
-              }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                ease: 'linear'
-              }}
-            />
-
-            {/* Floating particles */}
-            {[...Array(3)].map((_, i) => (
-              <motion.div
-                key={i}
-                className={`absolute w-1 h-1 rounded-full bg-gradient-to-r ${(iconMap[service.id] || iconMap['web-development']).color} opacity-0 group-hover:opacity-40`}
-                style={{
-                  left: `${20 + i * 30}%`,
-                  top: `${30 + i * 20}%`,
-                }}
-                animate={{
-                  y: [0, -20, -40],
-                  opacity: [0, 0.4, 0],
-                  scale: [1, 1.5, 0]
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  delay: i * 0.4,
-                  ease: 'easeOut'
-                }}
-              />
-            ))}
-          </div>
-        </motion.div>
-      </Link>
-    </motion.div>
+    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/10">
+      <div
+        key={active}
+        className="srv-progress-bar h-full bg-white/60"
+        style={{ animationDuration: `${duration}ms` }}
+      />
+    </div>
   );
 }
 
+/* ── Active Service Panel ── */
+function ServicePanel({ service, paused }) {
+  const meta = servicesMeta[service.id] || servicesMeta['web-development'];
+  const Icon = meta.icon;
+
+  return (
+    <div
+      key={service.id}
+      className="srv-panel h-full rounded-[32px] overflow-hidden relative flex flex-col justify-between p-8 sm:p-10 lg:p-12 min-h-105 sm:min-h-125"
+      style={{ background: meta.panelGrad }}
+    >
+      {/* Dot grid */}
+      <div
+        className="absolute inset-0 opacity-[0.07] pointer-events-none"
+        style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '22px 22px' }}
+        aria-hidden="true"
+      />
+
+      {/* Orbiting decorations */}
+      <div className="absolute top-1/2 right-16 -translate-y-1/2 pointer-events-none" aria-hidden="true">
+        <div className="relative w-0 h-0">
+          <div className="srv-orbit-dot absolute w-3 h-3 rounded-full bg-white/30" />
+          <div className="srv-orbit-dot-2 absolute w-2 h-2 rounded-full bg-white/20" />
+        </div>
+      </div>
+
+      {/* Large bg icon */}
+      <div className="absolute -bottom-8 -right-8 opacity-[0.08] pointer-events-none" aria-hidden="true">
+        <Icon className="w-48 h-48 sm:w-64 sm:h-64 text-white" />
+      </div>
+
+      {/* Top: icon + tag */}
+      <div className="relative z-10">
+        <div className="flex items-start justify-between mb-8 sm:mb-10">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/15 backdrop-blur-sm border border-white/20 flex items-center justify-center shadow-xl">
+            <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+          </div>
+          <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/50 border border-white/20 px-3 py-1.5 rounded-full">
+            {service.shortDesc}
+          </span>
+        </div>
+
+        <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-[0.9] tracking-tighter mb-4 sm:mb-5">
+          {service.title}
+        </h3>
+
+        <p className="text-white/70 leading-relaxed text-sm sm:text-base mb-6 sm:mb-8 max-w-sm">
+          {service.description}
+        </p>
+
+        {/* Feature tags */}
+        <div className="flex flex-wrap gap-2 mb-8 sm:mb-10">
+          {service.features?.map(f => (
+            <div key={f} className="srv-tag flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/12 border border-white/20 backdrop-blur-sm">
+              <Check className="w-3 h-3 text-white/70 shrink-0" />
+              <span className="text-white text-xs font-semibold">{f}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Bottom CTA */}
+      <div className="relative z-10">
+        <div className="h-px bg-white/15 mb-6 sm:mb-8" />
+        <Link
+          href={`/services/${service.id}`}
+          className="srv-cta inline-flex items-center gap-3 group"
+        >
+          <span className="text-sm font-black uppercase tracking-[0.2em] text-white">
+            View Service
+          </span>
+          <div className="srv-cta-arrow w-9 h-9 rounded-full bg-white/15 border border-white/25 flex items-center justify-center">
+            <ArrowUpRight className="w-4 h-4 text-white" />
+          </div>
+        </Link>
+      </div>
+
+      {/* Auto-play progress bar */}
+      {!paused && <ProgressBar active={service.id} duration={5000} />}
+    </div>
+  );
+}
+
+/* ── Service list row ── */
+function ServiceListItem({ service, index, isActive, onClick }) {
+  const meta = servicesMeta[service.id] || servicesMeta['web-development'];
+  const Icon = meta.icon;
+
+  return (
+    <button
+      onClick={() => onClick(index)}
+      className={`srv-list-item w-full text-left group ${isActive ? 'is-active' : ''}`}
+    >
+      <div className={`flex items-center gap-4 sm:gap-5 py-5 sm:py-6 border-b border-foreground/8 transition-all duration-200 ${isActive ? 'border-primary/20' : ''}`}>
+        {/* Indicator bar */}
+        <div className="srv-indicator h-14 shrink-0" />
+
+        {/* Number */}
+        <span className={`srv-num text-xs font-black tabular-nums shrink-0 transition-colors duration-200 ${isActive ? 'text-primary' : 'text-muted-foreground/40'}`}>
+          0{index + 1}
+        </span>
+
+        {/* Icon */}
+        <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 ${isActive ? `bg-linear-to-br ${meta.gradient} shadow-md` : 'bg-foreground/5'}`}>
+          <Icon className={`w-5 h-5 transition-colors duration-300 ${isActive ? 'text-white' : 'text-muted-foreground'}`} />
+        </div>
+
+        {/* Title + desc */}
+        <div className="flex-1 min-w-0">
+          <div className={`font-black text-base sm:text-lg leading-tight transition-colors duration-200 ${isActive ? 'text-foreground' : 'text-foreground/60'}`}>
+            {service.title}
+          </div>
+          <div className={`text-xs mt-0.5 transition-colors duration-200 ${isActive ? 'text-primary' : 'text-muted-foreground/50'}`}>
+            {service.shortDesc}
+          </div>
+        </div>
+
+        {/* Arrow */}
+        <ArrowUpRight className={`w-4 h-4 shrink-0 transition-all duration-300 ${isActive ? 'text-primary opacity-100 translate-x-0 translate-y-0' : 'text-muted-foreground/20 -translate-x-1 translate-y-1'}`} />
+      </div>
+    </button>
+  );
+}
+
+/* ── Main export ── */
 export default function Services({ data }) {
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
+  const [sectionRef, inView] = useInView('-80px');
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const timerRef = useRef(null);
 
   const d = data || {};
   const services = (d.items ?? defaultServices).map(item => ({
     ...item,
-    ...(iconMap[item.id] || iconMap['web-development']),
+    ...(servicesMeta[item.id] || servicesMeta['web-development']),
   }));
+
+  const advance = useCallback(() => {
+    setActiveIndex(prev => (prev + 1) % services.length);
+  }, [services.length]);
+
+  /* Auto-rotate every 5s, pause on hover/manual click */
+  useEffect(() => {
+    if (paused) return;
+    timerRef.current = setInterval(advance, 5000);
+    return () => clearInterval(timerRef.current);
+  }, [paused, advance]);
+
+  const handleManualSelect = (index) => {
+    setActiveIndex(index);
+    /* Reset the timer so next auto-advance is 5s from now */
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(advance, 5000);
+  };
+
+  const activeService = services[activeIndex];
 
   return (
     <section
       ref={sectionRef}
       id="services"
-      className="py-24 lg:py-32 relative overflow-hidden bg-white"
+      className="py-24 lg:py-32 relative overflow-hidden"
     >
-      {/* Ultra-modern animated background */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Floating gradient orbs with 3D effect */}
-        <motion.div
-          animate={{
-            x: [0, 100, 0],
-            y: [0, -50, 0],
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360]
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-primary/10 to-transparent blur-3xl"
-        />
-        <motion.div
-          animate={{
-            x: [0, -80, 0],
-            y: [0, 80, 0],
-            scale: [1, 1.3, 1],
-            rotate: [0, -180, -360]
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute -bottom-40 -left-40 w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-secondary/10 to-transparent blur-3xl"
-        />
-
-        {/* Animated grid pattern */}
-        <motion.div
-          animate={{ opacity: [0.03, 0.05, 0.03] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-              linear-gradient(90deg, #9f2321 1px, transparent 1px),
-              linear-gradient(#9f2321 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px',
-          }}
-        />
-
-        {/* Energy particles */}
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 rounded-full bg-gradient-to-r from-primary to-secondary"
-            style={{
-              left: `${15 + i * 12}%`,
-              top: `${20 + (i % 3) * 25}%`,
-            }}
-            animate={{
-              y: [0, -30, -60],
-              opacity: [0, 0.7, 0],
-              scale: [1, 1.5, 0],
-            }}
-            transition={{
-              duration: 4 + i * 0.5,
-              repeat: Infinity,
-              delay: i * 0.3,
-              ease: 'easeOut',
-            }}
-          />
-        ))}
-
-        {/* Flowing lines */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none">
-          <defs>
-            <linearGradient id="servicesLineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#9f2321" stopOpacity="0" />
-              <stop offset="50%" stopColor="#135180" stopOpacity="0.2" />
-              <stop offset="100%" stopColor="#9f2321" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          <motion.path
-            d="M0,200 Q400,150 800,200 T1600,200"
-            stroke="url(#servicesLineGradient)"
-            strokeWidth="2"
-            fill="none"
-            animate={{
-              pathLength: [0, 1, 0],
-              opacity: [0, 0.8, 0]
-            }}
-            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        </svg>
-      </div>
-
       <Container className="relative z-10">
-        {/* Section Header with 3D entrance */}
-        <motion.div
-          initial={{ opacity: 0, y: 50, rotateX: -30 }}
-          animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-          transition={{ duration: 0.8, type: 'spring' }}
-          style={{ transformStyle: 'preserve-3d' }}
-        >
-          <SectionHeader
-            badge={d.badge || 'Our Services'}
-            title={d.title || 'What We Offer'}
-            subtitle={d.subtitle || 'From device repairs to web solutions, we provide comprehensive tech services to keep you connected and your business growing.'}
-          />
-        </motion.div>
 
-        {/* Services Grid */}
-        <div className="grid md:grid-cols-2 gap-8 mt-16">
-          {services.map((service, index) => (
-            <ServiceCard key={service.id} service={service} index={index} />
-          ))}
+        {/* ── Section header ── */}
+        <div className="grid lg:grid-cols-12 gap-8 items-end mb-16 lg:mb-20">
+          <div className="lg:col-span-7">
+            <div
+              data-inview={inView ? 'true' : ''}
+              className="reveal-scale anim-delay-1 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/8 border border-primary/15 mb-6 text-[10px] font-black uppercase tracking-[0.25em] text-primary"
+            >
+              <Star className="w-3 h-3 fill-current" />
+              {d.badge || 'Our Services'}
+            </div>
+            <h2
+              data-inview={inView ? 'true' : ''}
+              className="reveal-blur anim-delay-2 text-5xl md:text-6xl lg:text-7xl font-black leading-[0.88] tracking-tighter"
+            >
+              <span className="block text-foreground">{d.titleLine1 || 'What We'}</span>
+              <span className="block text-gradient">{d.titleLine2 || 'Offer'}</span>
+            </h2>
+          </div>
+          <div className="lg:col-span-5">
+            <p
+              data-inview={inView ? 'true' : ''}
+              className="reveal-right anim-delay-3 text-muted-foreground leading-relaxed"
+            >
+              {d.subtitle || 'From device repairs to web solutions — comprehensive tech services to keep you connected and your business growing.'}
+            </p>
+          </div>
         </div>
 
-        {/* Bottom decorative line with animation */}
-        <motion.div
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={isInView ? { scaleX: 1, opacity: 1 } : {}}
-          transition={{ duration: 1.5, delay: 0.8, ease: 'easeInOut' }}
-          className="mt-20 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
+        {/* ── Shared interactive layout (both mobile & desktop) ── */}
+        <div
+          data-inview={inView ? 'true' : ''}
+          className="reveal-up anim-delay-3"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          {/* Mobile: panel on top, list below */}
+          <div className="flex flex-col gap-6 lg:hidden">
+            {/* Panel */}
+            <ServicePanel service={activeService} paused={paused} />
+
+            {/* Service selector list */}
+            <div className="flex flex-col">
+              {services.map((service, i) => (
+                <ServiceListItem
+                  key={service.id}
+                  service={service}
+                  index={i}
+                  isActive={activeIndex === i}
+                  onClick={handleManualSelect}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop: split 5/7 grid */}
+          <div className="hidden lg:grid lg:grid-cols-12 gap-8 items-stretch">
+            {/* Left: list */}
+            <div className="lg:col-span-5 flex flex-col justify-center">
+              {services.map((service, i) => (
+                <ServiceListItem
+                  key={service.id}
+                  service={service}
+                  index={i}
+                  isActive={activeIndex === i}
+                  onClick={handleManualSelect}
+                />
+              ))}
+            </div>
+
+            {/* Right: panel */}
+            <div className="lg:col-span-7">
+              <ServicePanel service={activeService} paused={paused} />
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom rule */}
+        <div
+          data-inview={inView ? 'true' : ''}
+          className="reveal-expand-x anim-delay-10 mt-16 h-px bg-linear-to-r from-transparent via-primary/20 to-transparent"
         />
+
       </Container>
     </section>
   );

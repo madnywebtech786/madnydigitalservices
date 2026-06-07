@@ -1,7 +1,5 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { useRef } from 'react';
 import {
   ArrowRight,
   Phone,
@@ -14,399 +12,203 @@ import {
   Star,
   CloudCog,
 } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 import Button from '@/components/ui/Button';
 import Container from '@/components/ui/Container';
 
+const DOT_POSITIONS = [
+  { left: '15%', top: '35%', dur: 4.0, delay: 0 },
+  { left: '50%', top: '45%', dur: 5.2, delay: 0.8 },
+  { left: '82%', top: '38%', dur: 4.8, delay: 0.4 },
+];
+
 export default function Hero({ data }) {
-  const sectionRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end start'],
-  });
-
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
-  const backgroundY = useTransform(smoothProgress, [0, 1], ['0%', '50%']);
-  const opacity = useTransform(smoothProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(smoothProgress, [0, 0.5], [1, 0.95]);
-
   const d = data || {};
   const defaultIcons = [Wrench, Monitor, Star, Shield, Zap, Sparkles, CloudCog];
   const stats = d.stats && Array.isArray(d.stats)
     ? d.stats.map((stat, i) => ({
         value: stat.value,
         label: stat.label,
-        icon: defaultIcons[i % defaultIcons.length]
+        icon: defaultIcons[i % defaultIcons.length],
       }))
     : [
-        { value: '500+', label: 'Devices Repaired', icon: Wrench },
-        { value: '50+', label: 'Web Projects', icon: Monitor },
-        { value: '1000+', label: 'Happy Customers', icon: Star },
-        { value: '24/7', label: 'Support', icon: Shield },
+        { value: '500+',  label: 'Devices Repaired', icon: Wrench },
+        { value: '50+',   label: 'Web Projects',      icon: Monitor },
+        { value: '1000+', label: 'Happy Customers',   icon: Star },
+        { value: '24/7',  label: 'Support',           icon: Shield },
       ];
 
-  console.log(stats);
+  const statDelays = ['anim-delay-14', 'anim-delay-15', 'anim-delay-16', 'anim-delay-17'];
+
   return (
-    <section
-      ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
-      {/* Ultra-modern animated background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-primary/[0.02] to-white" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-transparent pt-28 pb-12">
 
-        {/* Large animated gradient orbs with 3D effect */}
-        <motion.div
-          style={{ y: backgroundY }}
-          className="absolute -top-40 -right-40 w-[800px] h-[800px]"
-        >
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              rotate: [0, 90, 0],
-            }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-full h-full rounded-full bg-gradient-to-br from-primary/20 via-primary/10 to-transparent blur-3xl"
-          />
-        </motion.div>
+      {/* ── Background ─────────────────────────────────────── */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
 
-        <motion.div
-          style={{ y: backgroundY }}
-          className="absolute -bottom-40 -left-40 w-[700px] h-[700px]"
-        >
-          <motion.div
-            animate={{
-              scale: [1, 1.3, 1],
-              rotate: [0, -90, 0],
-            }}
-            transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-full h-full rounded-full bg-gradient-to-tr from-secondary/20 via-secondary/10 to-transparent blur-3xl"
-          />
-        </motion.div>
+        {/* Orbs — desktop only. Blur is on a static wrapper; only transform animates (GPU composited). */}
+        <div className="hidden md:block absolute -top-40 -right-40 w-125 h-125 blur-3xl">
+          <div className="loop-orb-a w-full h-full rounded-full bg-linear-to-br from-primary/20 via-primary/10 to-transparent" />
+        </div>
+        <div className="hidden md:block absolute -bottom-40 -left-40 w-[700px] h-[700px] blur-3xl">
+          <div className="loop-orb-b w-full h-full rounded-full bg-linear-to-tr from-secondary/20 via-secondary/10 to-transparent" />
+        </div>
+        <div className="hidden md:block absolute top-1/2 left-1/2 w-150 h-150 rounded-full bg-linear-to-br from-primary/8 via-primary/3 to-transparent blur-2xl loop-center" />
 
-        {/* Center pulse effect */}
-        <motion.div
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.3, 0.5, 0.3],
-            rotate: [0, 180, 360]
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-radial from-primary/05 via-transparent to-transparent blur-2xl"
-        />
+        {/* Floating shapes — desktop only */}
+        <div className="hidden md:block anim-fade-up anim-delay-2 absolute top-[20%] left-[10%] w-24 h-24">
+          <div className="loop-float-a w-full h-full rounded-3xl bg-linear-to-br from-primary/10 to-primary/5 border border-primary/10" />
+        </div>
+        <div className="hidden md:block anim-fade-up anim-delay-3 absolute top-[30%] right-[15%] w-16 h-16">
+          <div className="loop-float-b w-full h-full rounded-full bg-linear-to-br from-secondary/10 to-secondary/5 border border-secondary/10" />
+        </div>
+        <div className="hidden md:block anim-fade-up anim-delay-4 absolute bottom-[25%] left-[20%] w-20 h-20">
+          <div className="loop-float-c w-full h-full rounded-2xl bg-linear-to-br from-primary/5 to-secondary/5 border border-primary/5" />
+        </div>
 
-        {/* Animated grid pattern */}
-        <motion.div
-          animate={{ opacity: [0.02, 0.04, 0.02] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-              linear-gradient(90deg, #9f2321 1px, transparent 1px),
-              linear-gradient(#9f2321 1px, transparent 1px)
-            `,
-            backgroundSize: '80px 80px',
-          }}
-        />
-
-        {/* Futuristic floating geometric shapes */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{
-            opacity: 1,
-            scale: 1,
-            y: [0, -30, 0],
-            rotate: [0, 10, 0],
-            rotateX: [0, 15, 0]
-          }}
-          transition={{
-            opacity: { duration: 1 },
-            scale: { duration: 1 },
-            y: { duration: 8, repeat: Infinity, ease: 'easeInOut' },
-            rotate: { duration: 8, repeat: Infinity, ease: 'easeInOut' },
-            rotateX: { duration: 8, repeat: Infinity, ease: 'easeInOut' }
-          }}
-          className="absolute top-[20%] left-[10%] w-24 h-24 rounded-3xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/10 backdrop-blur-sm"
-          style={{ transformStyle: 'preserve-3d' }}
-        />
-        <motion.div
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{
-            opacity: 1,
-            scale: 1,
-            y: [0, 20, 0],
-            rotate: [0, -15, 0]
-          }}
-          transition={{
-            opacity: { duration: 1, delay: 0.2 },
-            scale: { duration: 1, delay: 0.2 },
-            y: { duration: 10, repeat: Infinity, ease: 'easeInOut' },
-            rotate: { duration: 10, repeat: Infinity, ease: 'easeInOut' }
-          }}
-          className="absolute top-[30%] right-[15%] w-16 h-16 rounded-full bg-gradient-to-br from-secondary/10 to-secondary/5 border border-secondary/10"
-        />
-        <motion.div
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{
-            opacity: 1,
-            scale: 1,
-            y: [0, 25, 0],
-            x: [0, 10, 0],
-            rotate: [12, 27, 12]
-          }}
-          transition={{
-            opacity: { duration: 1, delay: 0.4 },
-            scale: { duration: 1, delay: 0.4 },
-            y: { duration: 12, repeat: Infinity, ease: 'easeInOut' },
-            x: { duration: 12, repeat: Infinity, ease: 'easeInOut' },
-            rotate: { duration: 12, repeat: Infinity, ease: 'easeInOut' }
-          }}
-          className="absolute bottom-[25%] left-[20%] w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/5 to-secondary/5 border border-primary/5"
-        />
-
-        {/* Pulsing energy dots */}
-        {[...Array(12)].map((_, i) => (
-          <motion.div
+        {/* Rising dots */}
+        {DOT_POSITIONS.map((pos, i) => (
+          <div
             key={i}
-            className="absolute w-2 h-2 rounded-full bg-gradient-to-r from-primary to-secondary"
+            className="loop-dot-rise absolute w-2 h-2 rounded-full bg-linear-to-r from-primary to-secondary"
             style={{
-              left: `${10 + i * 8}%`,
-              top: `${30 + (i % 4) * 15}%`,
-            }}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{
-              opacity: [0, 0.3, 0.8, 0.3, 0],
-              scale: [0, 1, 1.5, 1, 0],
-              y: [0, -20, -40, -60, -80],
-            }}
-            transition={{
-              duration: 4 + i * 0.3,
-              repeat: Infinity,
-              delay: i * 0.2,
-              ease: 'easeOut',
+              left: pos.left,
+              top: pos.top,
+              animationDuration: `${pos.dur}s`,
+              animationDelay: `${pos.delay}s`,
             }}
           />
         ))}
 
-        {/* Animated flowing lines */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none">
+        {/* SVG lines — desktop only */}
+        <svg className="hidden md:block absolute inset-0 w-full h-full" aria-hidden="true">
           <defs>
-            <linearGradient id="heroLineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#9f2321" stopOpacity="0" />
-              <stop offset="50%" stopColor="#9f2321" stopOpacity="0.3" />
+            <linearGradient id="heroLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stopColor="#9f2321" stopOpacity="0" />
+              <stop offset="50%"  stopColor="#9f2321" stopOpacity="0.3" />
               <stop offset="100%" stopColor="#135180" stopOpacity="0" />
             </linearGradient>
           </defs>
-          <motion.path
+          <path
+            className="animate-[loop-line-draw_4s_ease-in-out_infinite]"
             d="M0,300 Q400,200 800,300 T1600,300"
-            stroke="url(#heroLineGradient)"
-            strokeWidth="2"
-            fill="none"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{
-              pathLength: [0, 1, 0],
-              opacity: [0, 1, 0]
-            }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            stroke="url(#heroLineGrad)" strokeWidth="2" fill="none"
+            strokeDasharray="1600"
           />
-          <motion.path
+          <path
+            className="animate-[loop-line-draw_4s_ease-in-out_1s_infinite]"
             d="M0,500 Q400,400 800,500 T1600,500"
-            stroke="url(#heroLineGradient)"
-            strokeWidth="2"
-            fill="none"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{
-              pathLength: [0, 1, 0],
-              opacity: [0, 0.7, 0]
-            }}
-            transition={{ duration: 4, delay: 1, repeat: Infinity, ease: 'easeInOut' }}
+            stroke="url(#heroLineGrad)" strokeWidth="2" fill="none"
+            strokeDasharray="1600"
           />
         </svg>
       </div>
 
-      <Container className="relative z-10 py-24 lg:py-32">
-        <motion.div
-          style={{ opacity, scale }}
-          className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center"
-        >
-          {/* Left Content */}
-          <motion.div className="text-center lg:text-left">
-            {/* Badge with futuristic entrance */}
-            <motion.div
-              initial={{ opacity: 0, y: -30, rotateX: 90 }}
-              animate={{ opacity: 1, y: 0, rotateX: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.2,
-                type: 'spring',
-                stiffness: 100
-              }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 mb-8 rounded-full bg-white/80 backdrop-blur-sm border border-primary/20 shadow-lg shadow-primary/5"
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              <motion.div
-                animate={{ rotate: [0, 360] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-              >
-                <Sparkles className="w-4 h-4 text-primary" />
-              </motion.div>
-              <span className="text-sm font-semibold text-gradient">
+      {/* ── Main content ───────────────────────────────────── */}
+      <Container className="relative z-10 py-12 sm:py-16 lg:py-20">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+
+          {/* ── Left / text column ── */}
+          <div className="text-left lg:text-left">
+
+            {/* Badge */}
+            <div className="anim-fade-down anim-delay-2 inline-flex items-center gap-2 px-3.5 py-1.5 mb-5 sm:mb-7 rounded-full bg-white/80 backdrop-blur-sm border border-primary/20 shadow-md shadow-primary/5">
+              <span className="loop-spin inline-flex">
+                <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-primary" />
+              </span>
+              <span className="text-[11px] sm:text-sm font-semibold text-gradient">
                 {d.badge || "Calgary's Trusted Tech Partner"}
               </span>
-            </motion.div>
+            </div>
 
-            {/* Headline with staggered character entrance */}
-            <motion.h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6"
-            >
-              <motion.span
-                className="block text-foreground"
-                initial={{ opacity: 0, x: -50, filter: 'blur(10px)' }}
-                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              >
+            {/* Headline */}
+            <h1 className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-4 sm:mb-6">
+              <span className="anim-fade-left anim-delay-3 block text-foreground">
                 {d.headingLine1 || 'Your One-Stop'}
-              </motion.span>
-              <motion.span
-                className="block text-gradient"
-                initial={{ opacity: 0, x: -50, scale: 0.8, filter: 'blur(10px)' }}
-                animate={{ opacity: 1, x: 0, scale: 1, filter: 'blur(0px)' }}
-                transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              >
+              </span>
+              <span className="anim-fade-left anim-delay-5 block text-gradient">
                 {d.headingLine2 || 'Tech Solution'}
-              </motion.span>
-              <motion.span
-                className="block text-foreground"
-                initial={{ opacity: 0, x: -50, filter: 'blur(10px)' }}
-                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.6, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              >
+              </span>
+              <span className="anim-fade-left anim-delay-7 block text-foreground">
                 {d.headingLine3 || 'Center'}
-              </motion.span>
-            </motion.h1>
+              </span>
+            </h1>
 
-            {/* Subheadline */}
-            <motion.p
-              initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              transition={{ delay: 0.9, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed"
-            >
+            {/* Subheading */}
+            <p className="anim-blur-up anim-delay-9 text-sm sm:text-base md:text-lg text-muted-foreground max-w-lg lg:mx-0 mb-6 sm:mb-8 leading-relaxed">
               {d.subheading || 'Expert computer & cell phone repair, quality device sales, and professional web development services. All under one roof in Calgary, Alberta.'}
-            </motion.p>
+            </p>
 
-            {/* CTA Buttons with 3D effect */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.1, duration: 0.6 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-            >
-              <motion.div
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-              >
+            {/* CTAs — stacked on mobile, side by side on sm+ */}
+            <div className="anim-fade-up anim-delay-11 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center lg:justify-start mb-8 sm:mb-10 lg:mb-0">
+              <Link href="/contact">
                 <Button
-                  size="lg"
-                  icon={<ArrowRight className="w-5 h-5" />}
-                  className="shadow-xl shadow-primary/25"
+                  size="default"
+                  icon={<ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />}
+                  className="w-full sm:w-auto text-sm sm:text-base shadow-lg shadow-primary/20"
                 >
                   {d.ctaPrimary || 'Get Free Quote'}
                 </Button>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-              >
+              </Link>
+              <a href={`tel:${d.phone || '+14035550123'}`}>
                 <Button
                   variant="secondary"
-                  size="lg"
-                  icon={<Phone className="w-5 h-5" />}
+                  size="default"
+                  icon={<Phone className="w-4 h-4 sm:w-5 sm:h-5" />}
                   iconPosition="left"
+                  className="w-full sm:w-auto text-sm sm:text-base"
                 >
                   {d.ctaSecondary || '(403) 555-0123'}
                 </Button>
-              </motion.div>
-            </motion.div>
+              </a>
+            </div>
 
-            {/* Stats with sequential reveal */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.3, duration: 0.6 }}
-              className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-12 pt-12 border-t border-primary/10"
-            >
-              {stats.map((stat, index) => {
-                const StatIcon = stat.icon;
-                return (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, y: 30, rotateY: -90 }}
-                    animate={{ opacity: 1, y: 0, rotateY: 0 }}
-                    transition={{
-                      delay: 1.4 + index * 0.1,
-                      duration: 0.5,
-                      type: 'spring',
-                      stiffness: 100
-                    }}
-                    whileHover={{ scale: 1.08, y: -8, rotateY: 5 }}
-                    className="relative group"
-                    style={{ transformStyle: 'preserve-3d' }}
-                  >
-                    <div className="p-4 rounded-2xl bg-white/50 backdrop-blur-sm border border-white/50 shadow-lg group-hover:shadow-2xl group-hover:border-primary/20 transition-all duration-300">
-                      <div className="flex items-center gap-2 mb-1">
-                        <motion.div
-                          animate={{ rotate: [0, 10, 0] }}
-                          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                        >
-                          <StatIcon className="w-4 h-4 text-primary" />
-                        </motion.div>
-                        <span className="text-2xl md:text-3xl font-bold text-gradient">
-                          {stat.value}
-                        </span>
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {stat.label}
-                      </div>
+            {/* Stats — horizontal scrolling row on mobile, grid on sm+ */}
+            <div className="anim-fade-up anim-delay-13 mt-8 sm:mt-10 pt-6 sm:pt-10 lg:py-6 border-t border-primary/10">
+              {/* Mobile: 4-col inline row, no card box */}
+              <div className="grid grid-cols-4 gap-2 sm:hidden">
+                {stats.map((stat, index) => {
+                  const StatIcon = stat.icon;
+                  return (
+                    <div key={stat.label} className={`anim-fade-up ${statDelays[index]} text-center`}>
+                      <StatIcon className="w-4 h-4 text-primary mx-auto mb-1" />
+                      <div className="text-lg font-bold text-gradient leading-none mb-1">{stat.value}</div>
+                      <div className="text-[9px] text-muted-foreground leading-tight">{stat.label}</div>
                     </div>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-          </motion.div>
+                  );
+                })}
+              </div>
+              {/* sm+: card grid */}
+              <div className="hidden sm:grid sm:grid-cols-4 gap-3 py-2 lg:max-w-full overflow-hidden">
+                {stats.map((stat, index) => {
+                  const StatIcon = stat.icon;
+                  return (
+                    <div
+                      key={stat.label}
+                      className={`anim-fade-up ${statDelays[index]} p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-white/50 shadow-md`}
+                    >
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <StatIcon className="w-3.5 h-3.5 text-primary shrink-0" />
+                        <span className="text-2xl md:text-3xl font-bold text-gradient">{stat.value}</span>
+                      </div>
+                      <div className="text-xs text-muted-foreground leading-tight">{stat.label}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
 
-          {/* Right Content - Enhanced 3D Hero Visual */}
-          <motion.div
-            initial={{ opacity: 0, x: 100, scale: 0.8, rotateY: -30 }}
-            animate={{ opacity: 1, x: 0, scale: 1, rotateY: 0 }}
-            transition={{
-              duration: 1,
-              delay: 0.5,
-              ease: [0.22, 1, 0.36, 1],
-              type: 'spring',
-              stiffness: 50
-            }}
-            className="relative"
-            style={{ transformStyle: 'preserve-3d' }}
-          >
+          {/* ── Right / visual column ── */}
+          <div className="anim-fade-right anim-delay-5 relative">
             <div className="relative">
-              {/* Floating service cards with 3D entrance */}
-              <motion.div
-                initial={{ opacity: 0, x: -50, rotateY: -90 }}
-                animate={{ opacity: 1, x: 0, rotateY: 0 }}
-                transition={{ delay: 1, duration: 0.8, type: 'spring' }}
-                className="absolute -top-4 -left-8 z-30"
-              >
-                <motion.div
-                  animate={{ y: [0, -15, 0], x: [0, 5, 0] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                  whileHover={{ scale: 1.1, rotateY: 10 }}
-                  className="bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/50"
-                  style={{ transformStyle: 'preserve-3d' }}
-                >
+
+              {/* Floating card 1 — hidden on mobile to avoid overlap */}
+              <div className="hidden sm:block anim-fade-left anim-delay-10 absolute -top-4 -left-8 z-30">
+                <div className="loop-card-a bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/50">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-lg">
+                    <div className="w-12 h-12 rounded-xl bg-linear-to-br from-primary to-primary-dark flex items-center justify-center shadow-lg shrink-0">
                       <Monitor className="w-6 h-6 text-white" />
                     </div>
                     <div>
@@ -414,24 +216,14 @@ export default function Hero({ data }) {
                       <div className="text-xs text-muted-foreground">{d.floatingCard1Subtitle || 'Same-day service'}</div>
                     </div>
                   </div>
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, x: 50, rotateY: 90 }}
-                animate={{ opacity: 1, x: 0, rotateY: 0 }}
-                transition={{ delay: 1.2, duration: 0.8, type: 'spring' }}
-                className="absolute -bottom-8 -right-4 z-30"
-              >
-                <motion.div
-                  animate={{ y: [0, 12, 0], x: [0, -5, 0] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                  whileHover={{ scale: 1.1, rotateY: -10 }}
-                  className="bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/50"
-                  style={{ transformStyle: 'preserve-3d' }}
-                >
+              {/* Floating card 2 — hidden on mobile */}
+              <div className="hidden sm:block anim-fade-right anim-delay-12 absolute -bottom-8 -right-4 z-30">
+                <div className="loop-card-b bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/50">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-secondary to-secondary-dark flex items-center justify-center shadow-lg">
+                    <div className="w-12 h-12 rounded-xl bg-linear-to-br from-secondary to-secondary-dark flex items-center justify-center shadow-lg shrink-0">
                       <Smartphone className="w-6 h-6 text-white" />
                     </div>
                     <div>
@@ -439,169 +231,124 @@ export default function Hero({ data }) {
                       <div className="text-xs text-muted-foreground">{d.floatingCard2Subtitle || 'While you wait'}</div>
                     </div>
                   </div>
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
 
-              {/* Speed badge with pulse */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.4, duration: 0.6, type: 'spring', stiffness: 200 }}
-                className="absolute top-1/4 -right-12 z-30"
-              >
-                <motion.div
-                  animate={{
-                    scale: [1, 1.1, 1],
-                    rotate: [0, 360]
-                  }}
-                  transition={{
-                    scale: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
-                    rotate: { duration: 20, repeat: Infinity, ease: 'linear' }
-                  }}
-                  className="bg-gradient-to-br from-primary to-secondary rounded-full p-4 shadow-xl"
-                >
+              {/* Zap badge — hidden on mobile */}
+              <div className="hidden sm:block anim-scale-in anim-delay-14 absolute top-1/4 -right-12 z-30">
+                <div className="loop-zap bg-linear-to-br from-primary to-secondary rounded-full p-4 shadow-xl">
                   <Zap className="w-6 h-6 text-white" />
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
 
-              {/* Main visual with 3D devices */}
-              <motion.div
-                className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-white to-gray-50 border border-white/50"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="aspect-[4/3] p-8 flex items-center justify-center">
+              {/* Mobile service badges — shown only on mobile, inside the card area */}
+              <div className="sm:hidden absolute top-3 left-3 z-30">
+                <div className="bg-white/90 backdrop-blur-xl rounded-xl px-3 py-2 shadow-lg border border-white/50 flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-lg bg-linear-to-br from-primary to-primary-dark flex items-center justify-center shrink-0">
+                    <Monitor className="w-3.5 h-3.5 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold leading-tight">{d.floatingCard1Title || 'Computer Repair'}</div>
+                    <div className="text-[10px] text-muted-foreground">{d.floatingCard1Subtitle || 'Same-day'}</div>
+                  </div>
+                </div>
+              </div>
+              <div className="sm:hidden absolute bottom-3 right-3 z-30">
+                <div className="bg-white/90 backdrop-blur-xl rounded-xl px-3 py-2 shadow-lg border border-white/50 flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-lg bg-linear-to-br from-secondary to-secondary-dark flex items-center justify-center shrink-0">
+                    <Smartphone className="w-3.5 h-3.5 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold leading-tight">{d.floatingCard2Title || 'Phone Repair'}</div>
+                    <div className="text-[10px] text-muted-foreground">{d.floatingCard2Subtitle || 'While you wait'}</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Main device showcase */}
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-linear-to-br from-white to-gray-50 border border-white/50">
+                <div className="aspect-4/3 p-6 sm:p-8 flex items-center justify-center">
                   <div className="relative w-full max-w-md">
-                    {/* Desktop/Laptop */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 50, rotateX: 45 }}
-                      animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                      transition={{ delay: 0.8, duration: 0.8, type: 'spring' }}
-                      className="relative z-10"
-                      style={{ transformStyle: 'preserve-3d' }}
-                    >
+
+                    {/* Laptop */}
+                    <div className="anim-fade-up anim-delay-8 relative z-10">
                       <div className="bg-gray-900 rounded-t-2xl p-3">
                         <div className="flex gap-1.5 mb-2">
-                          <motion.div
-                            className="w-3 h-3 rounded-full bg-red-400"
-                            animate={{ opacity: [1, 0.5, 1] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                          />
-                          <motion.div
-                            className="w-3 h-3 rounded-full bg-yellow-400"
-                            animate={{ opacity: [1, 0.5, 1] }}
-                            transition={{ duration: 2, delay: 0.3, repeat: Infinity }}
-                          />
-                          <motion.div
-                            className="w-3 h-3 rounded-full bg-green-400"
-                            animate={{ opacity: [1, 0.5, 1] }}
-                            transition={{ duration: 2, delay: 0.6, repeat: Infinity }}
-                          />
+                          <div className="loop-blink   w-3 h-3 rounded-full bg-red-400" />
+                          <div className="loop-blink-2 w-3 h-3 rounded-full bg-yellow-400" />
+                          <div className="loop-blink-3 w-3 h-3 rounded-full bg-green-400" />
                         </div>
-                        <div className="aspect-[16/10] rounded-lg overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
-                          <img
-                            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
-                            alt="Web development"
+                        <div className="aspect-video rounded-lg overflow-hidden bg-linear-to-br from-primary/10 to-secondary/10">
+                          <Image
+                            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=75"
+                            alt="Web development dashboard"
+                            width={800}
+                            height={500}
+                            priority
                             className="w-full h-full object-cover"
                           />
                         </div>
                       </div>
-                      <div className="bg-gray-800 h-4 rounded-b-lg"></div>
-                      <div className="bg-gray-700 h-1 mx-12 rounded-b"></div>
-                    </motion.div>
+                      <div className="bg-gray-800 h-4 rounded-b-lg" />
+                      <div className="bg-gray-700 h-1 mx-12 rounded-b" />
+                    </div>
 
                     {/* Tablet */}
-                    <motion.div
-                      initial={{ opacity: 0, x: 50, rotateY: 45 }}
-                      animate={{ opacity: 1, x: 0, rotateY: 0 }}
-                      transition={{ delay: 1, duration: 0.8, type: 'spring' }}
-                      className="absolute -right-6 top-8 w-28 z-20"
-                      style={{ transformStyle: 'preserve-3d' }}
-                    >
-                      <motion.div
-                        animate={{ y: [0, -8, 0] }}
-                        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                      >
+                    <div className="anim-fade-right anim-delay-10 absolute -right-6 top-8 w-24 sm:w-28 z-20">
+                      <div className="loop-bob-up">
                         <div className="bg-gray-900 rounded-xl p-1.5 shadow-xl">
-                          <div className="aspect-[3/4] rounded-lg overflow-hidden bg-gradient-to-br from-secondary to-primary">
-                            <img
-                              src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&q=80"
-                              alt="Mobile app"
+                          <div className="aspect-3/4 rounded-lg overflow-hidden">
+                            <Image
+                              src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&q=75"
+                              alt="Mobile app interface"
+                              width={400}
+                              height={533}
+                              loading="lazy"
                               className="w-full h-full object-cover opacity-90"
                             />
                           </div>
                         </div>
-                      </motion.div>
-                    </motion.div>
+                      </div>
+                    </div>
 
                     {/* Phone */}
-                    <motion.div
-                      initial={{ opacity: 0, x: -50, rotateY: -45 }}
-                      animate={{ opacity: 1, x: 0, rotateY: 0 }}
-                      transition={{ delay: 1.2, duration: 0.8, type: 'spring' }}
-                      className="absolute -left-4 bottom-4 w-20 z-20"
-                      style={{ transformStyle: 'preserve-3d' }}
-                    >
-                      <motion.div
-                        animate={{ y: [0, 6, 0] }}
-                        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-                      >
+                    <div className="anim-fade-left anim-delay-12 absolute -left-4 bottom-4 w-16 sm:w-20 z-20">
+                      <div className="loop-bob-down">
                         <div className="bg-gray-900 rounded-2xl p-1 shadow-xl">
-                          <div className="aspect-[9/19] rounded-xl overflow-hidden bg-gradient-to-br from-primary to-secondary">
-                            <img
-                              src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&q=80"
-                              alt="Mobile device"
+                          <div className="aspect-9/19 rounded-xl overflow-hidden">
+                            <Image
+                              src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&q=75"
+                              alt="Mobile device repair"
+                              width={300}
+                              height={633}
+                              loading="lazy"
                               className="w-full h-full object-cover opacity-90"
                             />
                           </div>
                         </div>
-                      </motion.div>
-                    </motion.div>
+                      </div>
+                    </div>
                   </div>
                 </div>
+                <div className="absolute inset-0 bg-linear-to-t from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
+              </div>
 
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
-              </motion.div>
-
-              {/* Background glow */}
-              <motion.div
-                className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%]"
-                animate={{
-                  scale: [1, 1.1, 1],
-                  rotate: [0, 180, 360]
-                }}
-                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-              >
-                <div className="w-full h-full rounded-full bg-gradient-to-r from-primary/15 via-transparent to-secondary/15 blur-3xl" />
-              </motion.div>
+              {/* Glow ring — desktop only */}
+              <div className="hidden md:block loop-orb-spin absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] rounded-full bg-linear-to-r from-primary/15 via-transparent to-secondary/15 blur-3xl" />
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </Container>
 
       {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2, duration: 0.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-          className="flex flex-col items-center gap-2"
-        >
-          <span className="text-xs text-muted-foreground font-medium">Scroll to explore</span>
+      <div className="anim-scroll-reveal anim-delay-20 absolute bottom-8 left-1/2 -translate-x-1/2" aria-hidden="true">
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-xs text-muted-foreground font-medium tracking-wide">Scroll to explore</span>
           <div className="w-6 h-10 rounded-full border-2 border-primary/30 flex justify-center pt-2">
-            <motion.div
-              animate={{ opacity: [1, 0, 1], y: [0, 12, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="w-1.5 h-1.5 rounded-full bg-gradient-to-b from-primary to-secondary"
-            />
+            <div className="loop-scroll-dot w-1.5 h-1.5 rounded-full bg-linear-to-b from-primary to-secondary" />
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 }

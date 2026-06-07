@@ -1,5 +1,7 @@
 import { getGlobalContent, getPageContent } from '@/lib/content';
 import Header from '@/components/layout/Header';
+
+export const revalidate = 3600;
 import Footer from '@/components/layout/Footer';
 import ContactClient from '@/components/sections/ContactClient';
 
@@ -10,9 +12,11 @@ export async function generateMetadata() {
     title: d.title || 'Contact Us | Madeny Digital Services',
     description: d.description || 'Get in touch with Madeny Digital Services. We would love to hear about your project and how we can help bring your vision to life.',
     keywords: d.keywords || 'contact us, digital agency Calgary, web development inquiry',
+    alternates: { canonical: 'https://madenydigital.com/contact' },
     openGraph: {
       title: d.ogTitle || d.title || 'Contact Us | Madeny Digital Services',
       description: d.ogDescription || d.description || 'Get in touch with Madeny Digital Services. We would love to hear about your project and how we can help bring your vision to life.',
+      url: 'https://madenydigital.com/contact',
       images: [d.ogImage || '/og-contact.jpg'],
     },
     twitter: {

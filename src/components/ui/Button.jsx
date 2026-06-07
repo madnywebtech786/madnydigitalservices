@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 export default function Button({
@@ -12,7 +11,7 @@ export default function Button({
   iconPosition = 'right',
   ...props
 }) {
-  const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]';
 
   const variants = {
     primary: 'bg-gradient-to-r from-primary to-secondary text-white hover:shadow-[0_0_40px_rgba(159,35,33,0.4)] hover:-translate-y-1',
@@ -29,15 +28,13 @@ export default function Button({
   };
 
   return (
-    <motion.button
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+    <button
       className={cn(baseStyles, variants[variant], sizes[size], className)}
       {...props}
     >
-      {icon && iconPosition === 'left' && <span className="flex-shrink-0">{icon}</span>}
+      {icon && iconPosition === 'left' && <span className="shrink-0">{icon}</span>}
       {children}
-      {icon && iconPosition === 'right' && <span className="flex-shrink-0">{icon}</span>}
-    </motion.button>
+      {icon && iconPosition === 'right' && <span className="shrink-0">{icon}</span>}
+    </button>
   );
 }

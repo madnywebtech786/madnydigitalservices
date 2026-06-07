@@ -1,5 +1,7 @@
 import { getGlobalContent, getPageContent } from '@/lib/content';
 import Header from '@/components/layout/Header';
+
+export const revalidate = 3600;
 import Footer from '@/components/layout/Footer';
 import ProjectsClient from '@/components/sections/ProjectsClient';
 
@@ -10,9 +12,11 @@ export async function generateMetadata() {
     title: d.title || 'Our Projects | Madeny Digital Services',
     description: d.description || 'Discover cutting-edge digital solutions built by Madeny Digital Services. Browse our portfolio of web development, e-commerce, mobile app, and SaaS projects.',
     keywords: d.keywords || 'portfolio, web projects, digital projects, case studies, madeny digital portfolio',
+    alternates: { canonical: 'https://madenydigital.com/projects' },
     openGraph: {
       title: d.ogTitle || d.title || 'Our Projects | Madeny Digital Services',
       description: d.ogDescription || d.description || 'Discover cutting-edge digital solutions built by Madeny Digital Services. Browse our portfolio of web development, e-commerce, mobile app, and SaaS projects.',
+      url: 'https://madenydigital.com/projects',
       images: [d.ogImage || '/og-projects.jpg'],
     },
     twitter: {

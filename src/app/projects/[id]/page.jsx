@@ -1,55 +1,52 @@
-'use client';
-
-import { useRef, use } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import Image from 'next/image';
 import Link from 'next/link';
-import {
-  ArrowLeft,
-  ExternalLink,
-  Github,
-  Star,
-  Users,
-  Zap,
-  CheckCircle2,
-  ArrowRight,
-  TrendingUp,
-} from 'lucide-react';
+import { notFound } from 'next/navigation';
+import { ArrowLeft, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Container from '@/components/ui/Container';
-import Button from '@/components/ui/Button';
 import { projects, projectCategories } from '@/data/projects';
+import { ScrollPreview, RelatedCard } from './ProjectDetailClient';
 
-export default function ProjectDetailPage({ params }) {
-  const { id } = use(params);
+export async function generateStaticParams() {
+  return projects.map((p) => ({ id: String(p.id) }));
+}
+
+export async function generateMetadata({ params }) {
+  const { id } = await params;
   const project = projects.find((p) => p.id === parseInt(id));
-  const heroRef = useRef(null);
+  if (!project) return { title: 'Project Not Found' };
 
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
+  const category = projectCategories.find((c) => c.id === project.category);
+  const title = `${project.title} | Madeny Digital Services`;
+  const description = project.description;
+  const url = `https://madenydigital.com/projects/${project.id}`;
 
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
-  const imageOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.3]);
+  return {
+    title,
+    description,
+    keywords: `${project.tags?.join(', ')}, web development Calgary, ${category?.name ?? ''}`,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      images: [{ url: project.image, width: 900, height: 600, alt: project.title }],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [project.image],
+    },
+  };
+}
 
-  if (!project) {
-    return (
-      <>
-        <Header />
-        <Container className="py-24 text-center">
-          <h1 className="text-4xl font-bold mb-4">Project Not Found</h1>
-          <Link href="/projects">
-            <Button icon={<ArrowLeft className="w-4 h-4" />} iconPosition="left">
-              Back to Projects
-            </Button>
-          </Link>
-        </Container>
-        <Footer />
-      </>
-    );
-  }
+export default async function ProjectDetailPage({ params }) {
+  const { id } = await params;
+  const project = projects.find((p) => p.id === parseInt(id));
+
+  if (!project) notFound();
 
   const category = projectCategories.find((c) => c.id === project.category);
   const relatedProjects = projects
@@ -59,390 +56,221 @@ export default function ProjectDetailPage({ params }) {
   return (
     <>
       <Header />
+      <main className="page-flow pt-20">
 
-      {/* Hero Section with Parallax Image */}
-      <section ref={heroRef} className="relative h-[70vh] overflow-hidden">
-        {/* Background Image with Parallax */}
-        <motion.div
-          className="absolute inset-0"
-          style={{ scale: imageScale, opacity: imageOpacity }}
-        >
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            unoptimized
-            className="object-cover"
-            priority
+        {/* ══ HERO ══ */}
+        <section className="relative overflow-hidden pt-14 pb-0">
+          <div
+            className="absolute inset-0 opacity-[0.025] pointer-events-none"
+            style={{
+              backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")',
+            }}
+            aria-hidden="true"
           />
-          {/* Dark Overlay */}
-          <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/40 to-black/80" />
-        </motion.div>
 
-        {/* Content */}
-        <Container className="relative z-10 h-full flex flex-col justify-end pb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            {/* Back Button */}
-            <Link href="/projects">
-              <motion.button
-                whileHover={{ x: -5 }}
-                className="inline-flex items-center gap-2 text-white/80 hover:text-white mb-8 transition-colors"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span className="text-sm font-medium">Back to Projects</span>
-              </motion.button>
-            </Link>
-
-            {/* Category Badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4, type: 'spring' }}
-              className="inline-flex items-center gap-2 mb-6"
-            >
-              <div className={`px-4 py-2 rounded-xl bg-linear-to-r ${category.color} text-white text-sm font-bold backdrop-blur-xl shadow-lg`}>
-                <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                  {category.name}
-                </div>
-              </div>
-              {project.featured && (
-                <div className="px-4 py-2 rounded-xl bg-linear-to-r from-yellow-400 to-orange-500 text-white text-sm font-bold shadow-lg">
-                  <div className="flex items-center gap-1.5">
-                    <Star className="w-3.5 h-3.5 fill-white" />
-                    FEATURED
-                  </div>
-                </div>
-              )}
-            </motion.div>
-
-            {/* Title */}
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 leading-tight"
-            >
-              {project.title}
-            </motion.h1>
-
-            {/* Description */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="text-xl text-white/90 mb-8 max-w-3xl"
-            >
-              {project.description}
-            </motion.p>
-
-            {/* Action Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.8 }}
-              className="flex flex-wrap gap-4"
-            >
-              <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
-                <Button
-                  size="lg"
-                  icon={<ExternalLink className="w-5 h-5" />}
-                  className="shadow-2xl"
-                >
-                  View Live Demo
-                </Button>
-              </a>
-              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  icon={<Github className="w-5 h-5" />}
-                  iconPosition="left"
-                  className="bg-white/10 backdrop-blur-xl border-white/30 text-white hover:bg-white/20"
-                >
-                  View Source
-                </Button>
-              </a>
-            </motion.div>
-          </motion.div>
-        </Container>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-6 h-10 rounded-full border-2 border-white/30 flex justify-center pt-2"
-          >
-            <motion.div
-              animate={{ opacity: [1, 0, 1], y: [0, 12, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-1.5 h-1.5 rounded-full bg-white"
-            />
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-16 bg-white border-b border-gray-100">
-        <Container>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-center"
-            >
-              <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-blue-500 to-cyan-500 flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-white" />
-              </div>
-              <div className="text-4xl font-black text-gradient mb-2">{project.stats.users}</div>
-              <div className="text-sm text-muted-foreground font-medium">Active Users</div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="text-center"
-            >
-              <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-orange-500 to-yellow-500 flex items-center justify-center mx-auto mb-4">
-                <Star className="w-8 h-8 text-white fill-white" />
-              </div>
-              <div className="text-4xl font-black text-gradient mb-2">{project.stats.rating}</div>
-              <div className="text-sm text-muted-foreground font-medium">User Rating</div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="text-center"
-            >
-              <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-green-500 to-emerald-500 flex items-center justify-center mx-auto mb-4">
-                <Zap className="w-8 h-8 text-white" />
-              </div>
-              <div className="text-4xl font-black text-gradient mb-2">{project.stats.performance}</div>
-              <div className="text-sm text-muted-foreground font-medium">Performance Score</div>
-            </motion.div>
-          </div>
-        </Container>
-      </section>
-
-      {/* Project Details */}
-      <section className="py-24 bg-linear-to-b from-white via-gray-50 to-white">
-        <Container>
-          <div className="grid lg:grid-cols-2 gap-16">
-            {/* Left Column - Details */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-3xl md:text-4xl font-black mb-6">
-                Project <span className="text-gradient">Overview</span>
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                {project.longDescription}
-              </p>
-
-              {/* Technologies */}
-              <h3 className="text-xl font-bold mb-4">Technologies Used</h3>
-              <div className="flex flex-wrap gap-3 mb-8">
-                {project.tags.map((tag, index) => (
-                  <motion.div
-                    key={tag}
-                    initial={{ opacity: 0, scale: 0 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.05 }}
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    className="px-4 py-2 rounded-xl bg-white border-2 border-gray-200 hover:border-primary shadow-sm hover:shadow-md transition-all"
-                  >
-                    <span className="font-semibold text-sm text-foreground">{tag}</span>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Key Features */}
-              <h3 className="text-xl font-bold mb-4">Key Features</h3>
-              <div className="space-y-3">
-                {(project.features || []).map((feature, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-start gap-3"
-                  >
-                    <div className="w-6 h-6 rounded-full bg-linear-to-br from-primary to-secondary flex items-center justify-center shrink-0 mt-0.5">
-                      <CheckCircle2 className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="text-muted-foreground">{feature}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Right Column - Image Gallery */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="space-y-6"
-            >
-              {/* Main Image */}
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="relative h-96 rounded-2xl overflow-hidden shadow-2xl"
-              >
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  unoptimized
-                  className="object-cover"
-                />
-              </motion.div>
-
-              {/* Info Card */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-                className="p-6 rounded-2xl bg-white border-2 border-gray-200 shadow-lg"
-              >
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-linear-to-br from-primary to-secondary flex items-center justify-center shrink-0">
-                    <TrendingUp className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-lg mb-1">{project.projectImpact?.title || 'Project Impact'}</h4>
-                    <p className="text-sm text-muted-foreground">
-                      {project.projectImpact?.description || 'This project has helped transform the way users interact with digital platforms, providing seamless experiences and driving business growth.'}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </Container>
-      </section>
-
-      {/* Related Projects */}
-      {relatedProjects.length > 0 && (
-        <section className="py-24 bg-white">
           <Container>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl md:text-4xl font-black mb-4">
-                Related <span className="text-gradient">Projects</span>
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Explore more projects from the same category
-              </p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {relatedProjects.map((relatedProject, index) => (
-                <motion.div
-                  key={relatedProject.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Link href={`/projects/${relatedProject.id}`}>
-                    <motion.div
-                      whileHover={{ y: -8 }}
-                      className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all"
-                    >
-                      {/* Image */}
-                      <div className="relative h-64 overflow-hidden">
-                        <motion.div whileHover={{ scale: 1.1 }} transition={{ duration: 0.6 }}>
-                          <Image
-                            src={relatedProject.image}
-                            alt={relatedProject.title}
-                            fill
-                            unoptimized
-                            className="object-cover"
-                          />
-                        </motion.div>
-                        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
-
-                        {/* Category Badge */}
-                        <div className="absolute top-4 left-4">
-                          <div className={`px-3 py-1.5 rounded-lg bg-linear-to-r ${category.color} text-white text-xs font-bold`}>
-                            {category.name}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Content */}
-                      <div className="absolute bottom-0 left-0 right-0 p-6">
-                        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors">
-                          {relatedProject.title}
-                        </h3>
-                        <p className="text-sm text-white/80 line-clamp-2 mb-3">
-                          {relatedProject.description}
-                        </p>
-                        <div className="flex items-center gap-2 text-white text-sm font-medium">
-                          <span>View Project</span>
-                          <motion.div
-                            animate={{ x: [0, 4, 0] }}
-                            transition={{ duration: 1.5, repeat: Infinity }}
-                          >
-                            <ArrowRight className="w-4 h-4" />
-                          </motion.div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </Link>
-                </motion.div>
-              ))}
+            <div className="mb-10">
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-200 text-sm font-black uppercase tracking-[0.2em] group"
+              >
+                <ArrowLeft className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-1" />
+                All Projects
+              </Link>
             </div>
 
-            {/* View All Button */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mt-12"
-            >
-              <Link href="/projects">
-                <Button
-                  size="lg"
-                  icon={<ArrowRight className="w-5 h-5" />}
-                  className="shadow-xl"
-                >
-                  View All Projects
-                </Button>
-              </Link>
-            </motion.div>
+            <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-end pb-16">
+              {/* Left — meta + title */}
+              <div className="lg:col-span-7">
+                <div className="flex items-center gap-3 mb-7">
+                  <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/8 border border-primary/15 text-[10px] font-black uppercase tracking-[0.25em] text-primary">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary loop-blink inline-block" />
+                    {category?.name || project.category}
+                  </span>
+                  {project.featured && (
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-foreground/5 border border-foreground/10 text-[10px] font-black uppercase tracking-[0.25em] text-foreground/60">
+                      Featured
+                    </span>
+                  )}
+                  <span className="ml-auto text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground/40">
+                    {project.year || '2024'}
+                  </span>
+                </div>
+
+                <h1 className="text-5xl sm:text-6xl md:text-7xl font-black leading-[0.88] tracking-tighter mb-7">
+                  <span className="block text-foreground">{project.title}</span>
+                </h1>
+
+                <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl">
+                  {project.description}
+                </p>
+              </div>
+
+              {/* Right — stats + CTA */}
+              <div className="lg:col-span-5">
+                <div className="space-y-6">
+                  {project.stats && (
+                    <div className="grid grid-cols-3 gap-4">
+                      {[
+                        { label: 'Users',       value: project.stats.users },
+                        { label: 'Rating',      value: project.stats.rating },
+                        { label: 'Performance', value: project.stats.performance },
+                      ].map((s) => (
+                        <div key={s.label} className="p-4 rounded-2xl bg-foreground/4 border border-foreground/8">
+                          <div className="text-xl sm:text-2xl font-black text-gradient leading-none mb-1">{s.value}</div>
+                          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50">{s.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="flex flex-wrap gap-3">
+                    {project.demoUrl && project.demoUrl !== '#' && (
+                      <a
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-linear-to-r from-primary to-secondary text-white text-sm font-black uppercase tracking-[0.15em] shadow-lg shadow-primary/20"
+                      >
+                        Live Demo
+                      </a>
+                    )}
+                    <Link
+                      href="/contact"
+                      className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-foreground/15 text-sm font-black uppercase tracking-[0.15em] text-foreground hover:border-primary/30 hover:text-primary transition-colors duration-200"
+                    >
+                      Get a Quote
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+
+                  {project.tags?.length > 0 && (
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-3 py-1.5 rounded-full bg-foreground/5 border border-foreground/8 text-xs font-bold text-foreground/60"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </Container>
+
+          <div className="h-px bg-linear-to-r from-transparent via-foreground/10 to-transparent" />
+        </section>
+
+        {/* ══ BODY — preview + details ══ */}
+        <section className="py-20 lg:py-28">
+          <Container>
+            <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+              {/* Left — scrolling preview (client) */}
+              <div className="lg:col-span-6 lg:sticky lg:top-28">
+                <ScrollPreview src={project.image} alt={project.title} />
+
+                {project.projectImpact && (
+                  <div className="mt-6 p-5 rounded-2xl bg-primary/6 border border-primary/12">
+                    <div className="text-[10px] font-black uppercase tracking-[0.25em] text-primary mb-2">
+                      {project.projectImpact.title}
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {project.projectImpact.description}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Right — overview + features */}
+              <div className="lg:col-span-6">
+                <div className="mb-12">
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="h-px flex-1 bg-foreground/10" />
+                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/40">Overview</span>
+                  </div>
+                  <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+                    {project.longDescription || project.description}
+                  </p>
+                </div>
+
+                {project.features?.length > 0 && (
+                  <div className="mb-12">
+                    <div className="flex items-center gap-3 mb-7">
+                      <div className="h-px flex-1 bg-foreground/10" />
+                      <span className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/40">Key Features</span>
+                    </div>
+                    <ul className="space-y-4">
+                      {project.features.map((feature, i) => (
+                        <li key={i} className="flex items-start gap-4">
+                          <div className="w-6 h-6 rounded-full bg-linear-to-br from-primary to-secondary flex items-center justify-center shrink-0 mt-0.5 shadow-sm shadow-primary/20">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-white" />
+                          </div>
+                          <span className="text-sm sm:text-base text-foreground/80 leading-relaxed">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {project.tags?.length > 0 && (
+                  <div>
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="h-px flex-1 bg-foreground/10" />
+                      <span className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/40">Tech Stack</span>
+                    </div>
+                    <div className="flex flex-wrap gap-2.5">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-4 py-2 rounded-xl bg-white border border-foreground/10 text-xs font-black text-foreground shadow-sm"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           </Container>
         </section>
-      )}
 
+        {/* ══ RELATED PROJECTS ══ */}
+        {relatedProjects.length > 0 && (
+          <section className="pb-24">
+            <Container>
+              <div className="flex items-center gap-4 mb-12">
+                <div className="h-px flex-1 bg-foreground/10" />
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/40">More Projects</span>
+                <div className="h-px flex-1 bg-foreground/10" />
+              </div>
+
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {relatedProjects.map((rp) => (
+                  <RelatedCard
+                    key={rp.id}
+                    project={rp}
+                    category={projectCategories.find((c) => c.id === rp.category)}
+                  />
+                ))}
+              </div>
+
+              <div className="mt-10 flex justify-center">
+                <Link
+                  href="/projects"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-foreground/15 text-sm font-black uppercase tracking-[0.2em] text-muted-foreground hover:border-primary/30 hover:text-primary transition-colors duration-200"
+                >
+                  View All Projects
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </Container>
+          </section>
+        )}
+      </main>
       <Footer />
     </>
   );
