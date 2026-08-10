@@ -151,7 +151,7 @@ function CtaCard({ inView, delay }) {
       </p>
 
       <h3 className="text-3xl sm:text-4xl font-black leading-tight mb-6">
-        We tailor solutions beyond the list — tell us what you need.
+        We tailor solutions beyond the list . Tell us what you need.
       </h3>
 
       <Button href="/contact" variant="primary" className="group">
@@ -376,7 +376,7 @@ export default function ServicesCarousel({ services, inView }) {
                 className="
                 shrink-0
                 h-110
-                sm:h-115
+                md:h-130 lg:h-115
               "
                 style={{
                   width: slotWidth,
@@ -395,7 +395,8 @@ export default function ServicesCarousel({ services, inView }) {
               className="
               shrink-0
               h-110
-              sm:h-115
+              md:h-130 
+              lg:h-115
             "
               style={{
                 width: slotWidth,
