@@ -732,6 +732,10 @@ body {
   width: 100%;
   will-change: transform;
   transform: translateY(0);
+}
+
+/* Only the resting (non-scrolling) state transitions back smoothly on mouse-leave */
+.pdp-preview-inner:not(.pdp-preview-scrolling) {
   transition: transform 0.3s ease;
 }
 
@@ -741,8 +745,9 @@ body {
   85%  { transform: translateY(calc(-100% + 320px)); }
   100% { transform: translateY(calc(-100% + 320px)); }
 }
+
 .pdp-preview-inner.pdp-preview-scrolling {
-  animation: pdp-scroll-up 5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  animation: pdp-scroll-up 12s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
 
 /* Scan line that runs down during scroll */
@@ -751,7 +756,7 @@ body {
   to   { top: 100%; opacity: 0; }
 }
 .pdp-scan-line {
-  animation: pdp-scan 5s linear forwards;
+  animation: pdp-scan 12s linear forwards;
   position: absolute;
 }
 
@@ -825,12 +830,18 @@ body {
 
 /* ── Portfolio / ProjectsShowcase ───────────────────────────────── */
 
-/* Clip-path curtain reveal — image slides in from bottom */
+/* Clip-path curtain reveal — image slides in from bottom.
+   Self-contained: fully visible (no clip) by default, so the image is
+   never hidden if JS never marks it revealed. .is-revealed just plays
+   the curtain animation as a one-time enhancement on top. */
 @keyframes anim-clip-reveal {
   from { clip-path: inset(100% 0 0 0); }
   to   { clip-path: inset(0% 0 0 0); }
 }
-[data-inview="true"].reveal-clip {
+.portfolio-img-clip {
+  clip-path: inset(0% 0 0 0);
+}
+.portfolio-img-clip.is-revealed {
   animation: anim-clip-reveal 0.9s cubic-bezier(0.77,0,0.18,1) both;
 }
 
@@ -849,6 +860,7 @@ body {
   to   { transform: scaleX(1); }
 }
 [data-inview="true"].reveal-rule {
+  opacity: 1;
   animation: anim-rule-draw 1s cubic-bezier(0.22,1,0.36,1) both;
   transform-origin: left center;
 }
@@ -1366,15 +1378,23 @@ body {
   }
 }
 
-/* ── Services Section (Circuit Board) ──────────────────────────── */
+/* ── Services Section (Service Ticket) ────────────────────────────
+   Right side renders as a repair-shop service ticket / receipt. Every
+   ticket is always mounted, stacked in one CSS grid cell (grid-area:1/1
+   on each, display:grid on the shared parent) — the row's height is
+   therefore the tallest ticket, fixed once by the browser. Switching
+   the active service only toggles opacity/visibility per ticket, so
+   the grid track itself never resizes and nothing on the page jiggles.
+   The ticket content itself is also deliberately fixed-format (4 item
+   rows, clamped description) so every ticket is naturally the same
+   height regardless — the grid-stack is a safety net, not the only fix. */
 
-/* Service list item */
+/* Service list item (left column — unchanged design) */
 .srv-list-item {
   transition: color 200ms ease;
   cursor: pointer;
 }
 
-/* Active indicator bar */
 .srv-indicator {
   width: 3px;
   border-radius: 2px;
@@ -1389,55 +1409,104 @@ body {
   opacity: 1;
 }
 
-/* Panel slide-in */
-@keyframes srv-panel-in {
-  from { opacity: 0; transform: translateX(24px) scale(0.98); }
-  to   { opacity: 1; transform: translateX(0)    scale(1); }
-}
-.srv-panel {
-  animation: srv-panel-in 350ms cubic-bezier(0.22,1,0.36,1) both;
+/* Ticket stack — every ticket shares this one grid cell */
+.srv-ticket-stack {
+  display: grid;
 }
 
-/* Feature tag */
-.srv-tag {
-  transition: background 200ms ease, transform 200ms ease, color 200ms ease;
+/* Individual ticket — stacked via grid-area, crossfaded via opacity/visibility */
+.srv-ticket {
+  grid-area: 1 / 1;
+  transition: opacity 350ms ease, transform 350ms cubic-bezier(0.22,1,0.36,1);
 }
-.srv-tag:hover {
-  background: rgba(255,255,255,0.25);
-  transform: translateY(-2px);
+.srv-ticket[data-active="false"] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(6px);
+}
+.srv-ticket[data-active="true"] {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
-/* Number counter */
-.srv-num {
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: 'tnum';
+/* Torn/perforated top edge — zig-zag via repeating gradient mask */
+.srv-ticket-tear {
+  height: 14px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--color-background) 0,
+    var(--color-background) 7px,
+    transparent 7px,
+    transparent 14px
+  );
 }
 
-/* CTA arrow */
-.srv-cta-arrow {
+/* Punched holes running down the left edge of the ticket, like a stub */
+.srv-ticket-holes {
+  position: absolute;
+  left: 18px;
+  top: 34px;
+  bottom: 34px;
+  width: 6px;
+  background-image: radial-gradient(circle, var(--color-background) 2.5px, transparent 2.6px);
+  background-size: 6px 22px;
+  background-repeat: repeat-y;
+}
+
+/* Dashed item divider */
+.srv-ticket-dash {
+  border-top: 1.5px dashed rgba(10,10,10,0.15);
+}
+
+/* Line item row */
+.srv-ticket-item {
+  transition: background 180ms ease, padding-left 180ms ease;
+}
+.srv-ticket-item:hover {
+  background: rgba(159,35,33,0.04);
+  padding-left: 6px;
+}
+
+/* CTA stamp — rotated "APPROVED"-style badge */
+.srv-ticket-stamp {
+  transform: rotate(-8deg);
   transition: transform 250ms cubic-bezier(0.34,1.56,0.64,1);
 }
-.srv-cta:hover .srv-cta-arrow { transform: translate(3px,-3px); }
+.srv-ticket-cta:hover .srv-ticket-stamp {
+  transform: rotate(-4deg) scale(1.06);
+}
 
-/* Mobile accordion */
+/* Barcode footer */
+.srv-barcode {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 32px;
+}
+.srv-barcode span {
+  display: block;
+  width: 2px;
+  background: currentColor;
+}
+
+/* Live "printing" caret blink next to the ticket number */
+@keyframes srv-caret-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+.srv-caret {
+  animation: srv-caret-blink 1s step-end infinite;
+}
+
+/* Mobile accordion (unused now, kept only if referenced elsewhere) */
 .srv-mobile-card {
   transition: box-shadow 300ms ease, border-color 300ms ease;
 }
 .srv-mobile-card.is-open {
   border-color: rgba(159,35,33,0.25);
   box-shadow: 0 8px 32px rgba(159,35,33,0.1);
-}
-
-/* Orbiting dot on panel */
-@keyframes srv-orbit {
-  from { transform: rotate(0deg) translateX(80px) rotate(0deg); }
-  to   { transform: rotate(360deg) translateX(80px) rotate(-360deg); }
-}
-.srv-orbit-dot {
-  animation: srv-orbit 8s linear infinite;
-}
-.srv-orbit-dot-2 {
-  animation: srv-orbit 12s linear infinite reverse;
 }
 
 /* Auto-rotate progress bar — use scaleX instead of width to stay GPU-composited */

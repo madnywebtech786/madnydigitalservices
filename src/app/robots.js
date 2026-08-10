@@ -7,6 +7,6 @@ export default function robots() {
         disallow: ['/cms-admin/', '/api/'],
       },
     ],
-    sitemap: 'https://madenydigital.com/sitemap.xml',
+    sitemap: 'https://www.madnydigitalservices.com/sitemap.xml',
   };
 }

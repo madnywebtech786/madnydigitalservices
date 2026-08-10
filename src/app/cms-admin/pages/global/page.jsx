@@ -10,7 +10,7 @@ const TextareaAutosize = (props) => <textarea {...props} rows={props.rows || 3} 
 
 const defaultGlobal = {
   header: {
-    brandName: 'Madeny Digital',
+    brandName: 'Madny Digital',
     navLinks: [
       { name: 'Home', href: '/' },
       { name: 'About', href: '/about' },

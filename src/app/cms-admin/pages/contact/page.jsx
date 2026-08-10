@@ -29,7 +29,7 @@ export default function ContactEditor() {
             benefits: [{ title: 'Quick Response', description: 'Get a reply within 24 hours' }, { title: 'Your Data is Safe', description: 'We respect your privacy' }, { title: 'Global Support', description: 'Available worldwide' }],
           },
           contactInfo: [
-            { title: 'Email Us', value: 'hello@madenydigital.com', description: 'Drop us a line anytime', link: 'mailto:hello@madenydigital.com' },
+            { title: 'Email Us', value: 'madny786@hotmail.com', description: 'Drop us a line anytime', link: 'mailto:madny786@hotmail.com' },
             { title: 'Call Us', value: '+1 (403) 555-0123', description: 'Mon-Fri from 8am to 6pm', link: 'tel:+14035550123' },
             { title: 'Visit Us', value: 'Calgary, AB', description: '123 Innovation Drive, Suite 100', link: '#' },
           ],

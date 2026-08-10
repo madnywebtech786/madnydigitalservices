@@ -135,7 +135,7 @@ export default function SeoEditor() {
 
             <div>
               <label className="block text-sm font-bold mb-2">Browser Title Tag</label>
-              <Input placeholder="Madeny Digital Services | ..." value={currentMeta.title || ''} onChange={(e) => updateMeta('title', e.target.value)} />
+              <Input placeholder="Madny Digital Services | ..." value={currentMeta.title || ''} onChange={(e) => updateMeta('title', e.target.value)} />
               <p className="text-xs text-gray-500 mt-2">Recommended 50-60 characters. This appears in the browser tab and Google search results.</p>
             </div>
 

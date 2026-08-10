@@ -50,7 +50,7 @@ export default function HomeEditor() {
             subheading: 'Expert computer & cell phone repair, quality device sales, and professional web development services. All under one roof in Calgary, Alberta.',
             ctaPrimary: 'Get Free Quote', ctaSecondary: '(403) 555-0123',
             stats: [{ value: '500+', label: 'Devices Repaired' }, { value: '50+', label: 'Web Projects' }, { value: '1000+', label: 'Happy Customers' }, { value: '24/7', label: 'Support' }],
-            floatingCard1Title: 'Computer Repair', floatingCard1Subtitle: 'Same-day service',
+            floatingCard1Title: 'Website Development', floatingCard1Subtitle: 'Custom & responsive',
             floatingCard2Title: 'Phone Repair', floatingCard2Subtitle: 'While you wait',
           },
           services: {
@@ -64,7 +64,7 @@ export default function HomeEditor() {
             ],
           },
           about: {
-            badge: 'About Us', title: 'Madeny Digital Services', titlePrefix: 'We Are',
+            badge: 'About Us', title: 'Madny Digital Services', titlePrefix: 'We Are',
             paragraph1: "Based in Calgary, Canada, we are a full-service digital agency specializing in creating exceptional digital experiences.",
             paragraph2: 'Our team of designers, developers, and strategists work together to deliver solutions that drive real business results.',
             features: ['Custom solutions tailored to your business', 'Cutting-edge technologies and frameworks', 'Transparent communication throughout', 'On-time delivery guaranteed'],
@@ -98,8 +98,15 @@ export default function HomeEditor() {
             subtitle: "Ready to start your project? Contact us today.",
             contactInfo: [
               { title: 'Visit Us', details: ['123 Innovation Drive', 'Calgary, AB T2P 1J9', 'Canada'] },
-              { title: 'Email Us', details: ['hello@madenydigital.ca', 'support@madenydigital.ca'] },
+              { title: 'Email Us', details: ['madny786@hotmail.com'] },
               { title: 'Call Us', details: ['+1 (403) 555-0123', '+1 (403) 555-0124'] },
+            ],
+          },
+          faqs: {
+            badge: 'Frequently Asked Questions', title: 'Calgary Tech Questions, Answered',
+            subtitle: 'Straight answers about computer repair, phone unlocking, device sales, software development, and web development in Calgary.',
+            items: [
+              { question: 'How much does computer repair cost in Calgary?', answer: 'Computer repair in Calgary typically starts at $79 for diagnostics and virus removal, with hardware repairs from $99 plus parts.' },
             ],
           },
           testimonials: {
@@ -225,6 +232,7 @@ export default function HomeEditor() {
     { id: 'diagonalBanners', title: 'Diagonal Banners' },
     { id: 'gallery', title: 'Gallery Section' },
     { id: 'contact', title: 'Contact Section' },
+    { id: 'faqs', title: 'FAQ Section' },
     { id: 'testimonials', title: 'Testimonials' },
     { id: 'cta', title: 'Call to Action' },
   ];
@@ -544,6 +552,31 @@ export default function HomeEditor() {
                                 <button onClick={() => removeArrayItem('contact', 'contactInfo', i)} className="absolute top-3 right-3 p-2 text-red-500 hover:bg-red-50 rounded-lg"><Trash2 className="w-4 h-4"/></button>
                                 <div><label className="text-xs font-semibold text-gray-500 mb-1 block">Card Title</label><Input placeholder="Visit Us / Email Us / Call Us" value={info.title || ''} onChange={(e) => updateArrayItem('contact', 'contactInfo', i, 'title', e.target.value)} /></div>
                                 <div className="mt-2"><label className="text-xs font-semibold text-gray-500 mb-1 block">Details (one per line)</label><TextareaAutosize placeholder="123 Innovation Drive&#10;Calgary, AB T2P 1J9" value={(info.details || []).join('\n')} onChange={(e) => updateArrayItem('contact', 'contactInfo', i, 'details', e.target.value.split('\n').filter(Boolean))} rows={3} /></div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* FAQ Section Fields */}
+                    {section.id === 'faqs' && data.faqs && (
+                      <div className="grid gap-6">
+                        <div><label className="block text-sm font-bold mb-2">Badge Text</label><Input value={data.faqs.badge || ''} onChange={(e) => updateSection('faqs', 'badge', e.target.value)} /></div>
+                        <div><label className="block text-sm font-bold mb-2">Title</label><Input value={data.faqs.title || ''} onChange={(e) => updateSection('faqs', 'title', e.target.value)} /></div>
+                        <div><label className="block text-sm font-bold mb-2">Subtitle</label><TextareaAutosize value={data.faqs.subtitle || ''} onChange={(e) => updateSection('faqs', 'subtitle', e.target.value)} /></div>
+                        <p className="text-xs text-gray-500 bg-blue-50 border border-blue-100 p-3 rounded-xl">Phrase questions the way someone would ask a voice assistant (e.g. "How much does...", "Where can I..."). Keep answers direct and around 40-60 words so search and AI engines can quote them.</p>
+                        <div>
+                          <div className="flex items-center justify-between mb-2">
+                            <label className="block text-sm font-bold">Questions & Answers</label>
+                            <button onClick={() => addArrayItem('faqs', 'items', { question: '', answer: '' })} className="text-sm flex items-center gap-1 text-primary font-medium hover:underline"><Plus className="w-4 h-4"/> Add FAQ</button>
+                          </div>
+                          <div className="space-y-4">
+                            {(data.faqs.items || []).map((item, i) => (
+                              <div key={i} className="grid gap-3 bg-gray-50 p-4 rounded-xl border border-gray-100 relative pr-12">
+                                <button onClick={() => removeArrayItem('faqs', 'items', i)} className="absolute top-3 right-3 p-2 text-red-500 hover:bg-red-50 rounded-lg"><Trash2 className="w-4 h-4"/></button>
+                                <div><label className="text-xs font-semibold text-gray-500 mb-1 block">Question</label><Input placeholder="How much does computer repair cost in Calgary?" value={item.question || ''} onChange={(e) => updateArrayItem('faqs', 'items', i, 'question', e.target.value)} /></div>
+                                <div><label className="text-xs font-semibold text-gray-500 mb-1 block">Answer</label><TextareaAutosize placeholder="Direct, concise answer..." value={item.answer || ''} onChange={(e) => updateArrayItem('faqs', 'items', i, 'answer', e.target.value)} /></div>
                               </div>
                             ))}
                           </div>

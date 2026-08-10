@@ -1,6 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import SocialMediaWidget from "@/components/sections/SocialMediaWidget";
+import SocialMediaWidget from "@/components/sections/shared/SocialMediaWidget";
 import { getGlobalContent } from "@/lib/content";
 
 const geistSans = Geist({
@@ -16,23 +16,23 @@ const geistMono = Geist_Mono({
 export const revalidate = 3600;
 
 export const metadata = {
-  metadataBase: new URL('https://madenydigital.com'),
-  title: "Madeny Digital Services | Web Development & E-Commerce Solutions | Calgary",
+  metadataBase: new URL('https://www.madnydigitalservices.com'),
+  title: "Madny Digital Services | Web Development & E-Commerce Solutions | Calgary",
   description: "Calgary's premier digital agency specializing in website development, e-commerce solutions, mobile apps, and digital marketing for mobiles, laptops & accessories businesses.",
-  keywords: "web development, e-commerce, mobile app development, digital marketing, Calgary, Canada, Madeny Digital",
-  authors: [{ name: "Madeny Digital Services" }],
-  alternates: { canonical: 'https://madenydigital.com' },
+  keywords: "web development, e-commerce, mobile app development, digital marketing, Calgary, Canada, Madny Digital",
+  authors: [{ name: "Madny Digital Services" }],
+  alternates: { canonical: 'https://www.madnydigitalservices.com' },
   openGraph: {
-    title: "Madeny Digital Services | Calgary's Premier Digital Agency",
+    title: "Madny Digital Services | Calgary's Premier Digital Agency",
     description: "Transform your business with stunning websites, powerful e-commerce solutions, and cutting-edge digital experiences.",
-    url: 'https://madenydigital.com',
+    url: 'https://www.madnydigitalservices.com',
     type: "website",
     locale: "en_CA",
-    siteName: "Madeny Digital Services",
+    siteName: "Madny Digital Services",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Madeny Digital Services | Calgary's Premier Digital Agency",
+    title: "Madny Digital Services | Calgary's Premier Digital Agency",
     description: "Transform your business with stunning websites, powerful e-commerce solutions, and cutting-edge digital experiences.",
   },
 };
@@ -40,15 +40,30 @@ export const metadata = {
 const localBusinessJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
-  name: 'Madeny Digital Services',
+  name: 'Madny Digital Services',
+  legalName: 'Madny Digital Services Group Ltd.',
   description: "Calgary's premier digital agency specializing in website development, e-commerce solutions, mobile apps, and tech repair services.",
-  url: 'https://madenydigital.com',
-  telephone: '+1-587-XXX-XXXX',
-  email: 'info@madenydigital.com',
+  url: 'https://www.madnydigitalservices.com',
+  telephone: '+1-403-708-8214',
+  email: 'madny786@hotmail.com',
+  contactPoint: [
+    {
+      '@type': 'ContactPoint',
+      telephone: '+1-403-708-8214',
+      contactType: 'customer service',
+    },
+    {
+      '@type': 'ContactPoint',
+      telephone: '+1-403-493-7500',
+      contactType: 'customer service',
+    },
+  ],
   address: {
     '@type': 'PostalAddress',
+    streetAddress: '#216, 55 Westwinds Cres NE',
     addressLocality: 'Calgary',
     addressRegion: 'AB',
+    postalCode: 'T3J 5H2',
     addressCountry: 'CA',
   },
   geo: {
@@ -61,20 +76,20 @@ const localBusinessJsonLd = {
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '09:00',
-      closes: '18:00',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      opens: '11:00',
+      closes: '19:00',
     },
     {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: 'Saturday',
-      opens: '10:00',
-      closes: '16:00',
+      dayOfWeek: 'Sunday',
+      opens: '12:00',
+      closes: '17:00',
     },
   ],
   sameAs: [
-    'https://facebook.com/madenydigital',
-    'https://instagram.com/madenydigital',
+    'https://www.facebook.com/share/17UsEhwnzo/?mibextid=wwXIfr',
+    'https://www.instagram.com/madnydigitalservices',
   ],
 };
 

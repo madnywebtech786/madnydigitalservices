@@ -8,7 +8,7 @@ const GlobalContentSchema = new mongoose.Schema({
     default: 'global',
   },
   header: {
-    brandName: { type: String, default: 'Madeny Digital' },
+    brandName: { type: String, default: 'Madny Digital' },
     navLinks: [{
       name: { type: String },
       href: { type: String },

@@ -4,22 +4,36 @@ import { ArrowLeft, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Container from '@/components/ui/Container';
-import { projects, projectCategories } from '@/data/projects';
+import { getPageContent } from '@/lib/content';
+import { projectCategories as fallbackCategories } from '@/data/projects';
 import { ScrollPreview, RelatedCard } from './ProjectDetailClient';
 
+export const revalidate = 3600;
+
+async function getProjectsData() {
+  const content = await getPageContent('projects');
+  const sections = content?.sections || {};
+  return {
+    projects: sections.items || [],
+    categories: sections.categories?.length ? sections.categories : fallbackCategories,
+  };
+}
+
 export async function generateStaticParams() {
+  const { projects } = await getProjectsData();
   return projects.map((p) => ({ id: String(p.id) }));
 }
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const project = projects.find((p) => p.id === parseInt(id));
+  const { projects, categories } = await getProjectsData();
+  const project = projects.find((p) => String(p.id) === id);
   if (!project) return { title: 'Project Not Found' };
 
-  const category = projectCategories.find((c) => c.id === project.category);
-  const title = `${project.title} | Madeny Digital Services`;
+  const category = categories.find((c) => c.id === project.category);
+  const title = `${project.title} | Madny Digital Services`;
   const description = project.description;
-  const url = `https://madenydigital.com/projects/${project.id}`;
+  const url = `https://www.madnydigitalservices.com/projects/${project.id}`;
 
   return {
     title,
@@ -44,17 +58,35 @@ export async function generateMetadata({ params }) {
 
 export default async function ProjectDetailPage({ params }) {
   const { id } = await params;
-  const project = projects.find((p) => p.id === parseInt(id));
+  const { projects, categories } = await getProjectsData();
+  const project = projects.find((p) => String(p.id) === id);
 
   if (!project) notFound();
 
-  const category = projectCategories.find((c) => c.id === project.category);
+  const category = categories.find((c) => c.id === project.category);
   const relatedProjects = projects
     .filter((p) => p.category === project.category && p.id !== project.id)
     .slice(0, 3);
 
+  // BreadcrumbList structured data for AEO/GEO: explicit page hierarchy
+  // for search engines and AI answer engines.
+  const BASE_URL = 'https://www.madnydigitalservices.com';
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Projects', item: `${BASE_URL}/projects` },
+      { '@type': 'ListItem', position: 3, name: project.title, item: `${BASE_URL}/projects/${project.id}` },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <Header />
       <main className="page-flow pt-20">
 
@@ -98,7 +130,7 @@ export default async function ProjectDetailPage({ params }) {
                 </div>
 
                 <h1 className="text-5xl sm:text-6xl md:text-7xl font-black leading-[0.88] tracking-tighter mb-7">
-                  <span className="block text-foreground">{project.title}</span>
+                  <span className="block text-foreground">{project.shortTitle || project.title}</span>
                 </h1>
 
                 <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl">
@@ -106,24 +138,9 @@ export default async function ProjectDetailPage({ params }) {
                 </p>
               </div>
 
-              {/* Right — stats + CTA */}
+              {/* Right — CTA */}
               <div className="lg:col-span-5">
                 <div className="space-y-6">
-                  {project.stats && (
-                    <div className="grid grid-cols-3 gap-4">
-                      {[
-                        { label: 'Users',       value: project.stats.users },
-                        { label: 'Rating',      value: project.stats.rating },
-                        { label: 'Performance', value: project.stats.performance },
-                      ].map((s) => (
-                        <div key={s.label} className="p-4 rounded-2xl bg-foreground/4 border border-foreground/8">
-                          <div className="text-xl sm:text-2xl font-black text-gradient leading-none mb-1">{s.value}</div>
-                          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50">{s.label}</div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
                   <div className="flex flex-wrap gap-3">
                     {project.demoUrl && project.demoUrl !== '#' && (
                       <a
@@ -170,7 +187,12 @@ export default async function ProjectDetailPage({ params }) {
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
               {/* Left — scrolling preview (client) */}
               <div className="lg:col-span-6 lg:sticky lg:top-28">
-                <ScrollPreview src={project.image} alt={project.title} />
+                <ScrollPreview
+                  src={project.previewImg || project.image}
+                  alt={project.title}
+                  width={project.previewImgWidth}
+                  height={project.previewImgHeight}
+                />
 
                 {project.projectImpact && (
                   <div className="mt-6 p-5 rounded-2xl bg-primary/6 border border-primary/12">
@@ -191,9 +213,16 @@ export default async function ProjectDetailPage({ params }) {
                     <div className="h-px flex-1 bg-foreground/10" />
                     <span className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/40">Overview</span>
                   </div>
-                  <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                    {project.longDescription || project.description}
-                  </p>
+                  <div className="space-y-4">
+                    {(project.longDescription || project.description)
+                      .split('\n\n')
+                      .filter(Boolean)
+                      .map((paragraph, i) => (
+                        <p key={i} className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+                          {paragraph}
+                        </p>
+                      ))}
+                  </div>
                 </div>
 
                 {project.features?.length > 0 && (
@@ -253,7 +282,7 @@ export default async function ProjectDetailPage({ params }) {
                   <RelatedCard
                     key={rp.id}
                     project={rp}
-                    category={projectCategories.find((c) => c.id === rp.category)}
+                    category={categories.find((c) => c.id === rp.category)}
                   />
                 ))}
               </div>

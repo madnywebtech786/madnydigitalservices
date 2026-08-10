@@ -30,10 +30,10 @@ export default function AboutEditor() {
       if (res.ok) {
         const json = await res.json();
         const defaultSections = {
-          hero: { badge: 'About Madeny Digital', headingPart1: 'Crafting Digital', headingPart2: 'Excellence', description: "We're a team of passionate innovators transforming ideas into powerful digital experiences that drive real business growth", ctaPrimary: 'Our Projects', ctaSecondary: 'Contact Us' },
+          hero: { badge: 'About Madny Digital', headingPart1: 'Crafting Digital', headingPart2: 'Excellence', description: "We're a team of passionate innovators transforming ideas into powerful digital experiences that drive real business growth", ctaPrimary: 'Our Projects', ctaSecondary: 'Contact Us' },
           stats: [{ value: '500+', label: 'Happy Clients' }, { value: '50+', label: 'Awards Won' }, { value: '1000+', label: 'Projects Completed' }, { value: '99%', label: 'Success Rate' }],
           whyChooseUs: {
-            badge: 'The Madeny Edge', title: 'Engineered for Digital Dominance',
+            badge: 'The Madny Edge', title: 'Engineered for Digital Dominance',
             description: "We don't just build websites; we architect digital powerhouses.",
             features: [
               { title: 'Technical Excellence', description: 'Zero-compromise code quality using the latest Next.js architectures.', metric: '99.9%', benefit: 'System Uptime' },
@@ -59,6 +59,13 @@ export default function AboutEditor() {
               { step: '02', title: 'Design & Prototype', description: 'Our designers create stunning, user-centric interfaces.', duration: '2-3 weeks', deliverables: ['Interactive prototypes & mockups', 'Design system & style guide', 'User feedback integration'] },
               { step: '03', title: 'Development & Testing', description: 'Expert developers build your solution with rigorous testing.', duration: '4-6 weeks', deliverables: ['Fully tested codebase', 'Performance optimization', 'Security & code reviews'] },
               { step: '04', title: 'Launch & Support', description: 'Seamless deployment with ongoing support and monitoring.', duration: 'Ongoing', deliverables: ['Live deployment & documentation', 'Training & knowledge transfer', '24/7 monitoring & support'] },
+            ],
+          },
+          faq: {
+            badge: 'Frequently Asked Questions', title: 'Getting to Know Madny Digital',
+            subtitle: 'Common questions about who we are and how we work, before you book a repair or start a project.',
+            items: [
+              { question: 'Is Madny Digital Services a real Calgary company?', answer: 'Yes. Madny Digital Services is based in Calgary, Alberta, with a physical shop serving local residents and businesses.' },
             ],
           },
           cta: { badge: 'Ready to Build Something Amazing?', heading: 'Ready to Build Something Amazing?', description: "Let's collaborate and turn your vision into reality.", ctaPrimary: 'Start Your Project', ctaSecondary: 'Schedule a Call' }
@@ -384,6 +391,41 @@ export default function AboutEditor() {
                                }} />
                              </div>
                            </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* FAQ SECTION */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          <button onClick={() => setOpenSection(openSection === 'faq' ? null : 'faq')} className="w-full px-6 py-4 flex items-center justify-between bg-gray-50/50 hover:bg-gray-50 transition-colors">
+            <h2 className="text-lg font-bold">FAQ Section</h2>
+            <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform ${openSection === 'faq' ? 'rotate-180' : ''}`} />
+          </button>
+          <AnimatePresence>
+            {openSection === 'faq' && data.faq && (
+              <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+                <div className="p-6 border-t border-gray-100 space-y-6">
+                  <div><label className="block text-sm font-bold mb-2">Badge Text</label><Input value={data.faq.badge || ''} onChange={(e) => updateSection('faq', 'badge', e.target.value)} /></div>
+                  <div><label className="block text-sm font-bold mb-2">Title</label><Input value={data.faq.title || ''} onChange={(e) => updateSection('faq', 'title', e.target.value)} /></div>
+                  <div><label className="block text-sm font-bold mb-2">Subtitle</label><TextareaAutosize value={data.faq.subtitle || ''} onChange={(e) => updateSection('faq', 'subtitle', e.target.value)} /></div>
+                  <p className="text-xs text-gray-500 bg-blue-50 border border-blue-100 p-3 rounded-xl">Keep these company-level questions (certifications, service area) rather than repeating service-specific FAQs already on the homepage.</p>
+                  <div className="pt-4 border-t border-gray-100">
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-sm font-bold">Questions & Answers</label>
+                      <button onClick={() => addArrayItem('faq', 'items', { question: '', answer: '' })} className="text-sm flex items-center gap-1 text-primary font-medium hover:underline"><Plus className="w-4 h-4"/> Add FAQ</button>
+                    </div>
+                    <div className="grid gap-4">
+                      {(data.faq.items || []).map((item, i) => (
+                        <div key={i} className="bg-gray-50 p-4 rounded-xl border border-gray-100 relative pr-12">
+                          <button onClick={() => removeArrayItem('faq', 'items', i)} className="absolute top-4 right-4 p-2 text-red-500 hover:bg-red-50 rounded-lg"><Trash2 className="w-4 h-4"/></button>
+                          <div className="mb-3"><label className="text-xs font-semibold text-gray-500 mb-1 block">Question</label><Input placeholder="Is Madny Digital Services a real Calgary company?" value={item.question || ''} onChange={(e) => updateArrayItem('faq', 'items', i, 'question', e.target.value)} /></div>
+                          <div><label className="text-xs font-semibold text-gray-500 mb-1 block">Answer</label><TextareaAutosize placeholder="Direct, concise answer..." value={item.answer || ''} onChange={(e) => updateArrayItem('faq', 'items', i, 'answer', e.target.value)} /></div>
                         </div>
                       ))}
                     </div>

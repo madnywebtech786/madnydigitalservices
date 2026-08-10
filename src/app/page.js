@@ -1,14 +1,16 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import Hero from '@/components/sections/Hero';
-import Services from '@/components/sections/Services';
-import About from '@/components/sections/About';
-import ProjectsShowcase from '@/components/sections/ProjectsShowcase';
-import Gallery from '@/components/sections/Gallery';
-import Testimonials from '@/components/sections/Testimonials';
-import Contact from '@/components/sections/Contact';
-import CTA from '@/components/sections/CTA';
-import DiagonalBanners from '@/components/sections/DiagonalBanners';
+import Hero from '@/components/sections/home/Hero';
+import Services from '@/components/sections/home/Services';
+import About from '@/components/sections/home/About';
+import AboutProcess from '@/components/sections/shared/AboutProcess';
+import ProjectsShowcase from '@/components/sections/home/ProjectsShowcase';
+import Gallery from '@/components/sections/home/Gallery';
+import Testimonials from '@/components/sections/home/Testimonials';
+import FAQ from '@/components/sections/home/FAQ';
+import Contact from '@/components/sections/home/Contact';
+import CTA from '@/components/sections/shared/CTA';
+import DiagonalBanners from '@/components/sections/home/DiagonalBanners';
 import { getPageContent, getGlobalContent } from '@/lib/content';
 
 export const revalidate = 3600;
@@ -20,14 +22,14 @@ export async function generateMetadata() {
     title: page.meta.title,
     description: page.meta.description,
     keywords: page.meta.keywords,
-    alternates: { canonical: 'https://madenydigital.com' },
+    alternates: { canonical: 'https://www.madnydigitalservices.com' },
     openGraph: {
       title: page.meta.ogTitle || page.meta.title,
       description: page.meta.ogDescription || page.meta.description,
-      url: 'https://madenydigital.com',
+      url: 'https://www.madnydigitalservices.com',
       type: 'website',
       locale: 'en_CA',
-      siteName: 'Madeny Digital Services',
+      siteName: 'Madny Digital Services',
     },
     twitter: {
       card: 'summary_large_image',
@@ -54,17 +56,42 @@ export default async function Home() {
     items: allProjectItems,
   };
 
+  // FAQPage structured data for AEO/GEO: lets voice assistants and AI
+  // search engines (Google, ChatGPT, Gemini) surface these Q&As directly
+  // as featured snippets / direct answers instead of only crawling prose.
+  const faqItems = sections.faqs?.items || [];
+  const faqJsonLd = faqItems.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  } : null;
+
   return (
     <>
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
       <Header data={globalContent?.header} />
       <main className="page-flow">
         <Hero data={sections.hero} />
         <Services data={sections.services} />
         <About data={sections.about} />
+        <AboutProcess data={sections.process} />
         <ProjectsShowcase data={projectsShowcaseData} />
         <DiagonalBanners data={sections.diagonalBanners} />
         <Gallery data={sections.gallery} />
         <Testimonials data={sections.testimonials} />
+        <FAQ data={sections.faqs} />
         <Contact data={sections.contact} />
         <CTA data={sections.cta} />
       </main>

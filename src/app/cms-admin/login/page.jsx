@@ -60,7 +60,7 @@ export default function LoginPage() {
           >
             <ShieldCheck className="w-10 h-10 text-white" />
           </motion.div>
-          <h1 className="text-3xl font-bold mb-2">Madeny Digital <span className="text-gradient">CMS</span></h1>
+          <h1 className="text-3xl font-bold mb-2">Madny Digital <span className="text-gradient">CMS</span></h1>
           <p className="text-muted-foreground">Sign in to manage your website content</p>
         </div>
 

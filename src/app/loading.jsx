@@ -82,7 +82,7 @@ export default function Loading() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/mds-logo.png"
-              alt="Madeny Digital Services"
+              alt="Madny Digital Services"
               className="loader-logo-img"
             />
             {/* Subtle inner glow plate */}

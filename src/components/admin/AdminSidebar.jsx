@@ -83,7 +83,7 @@ export default function AdminSidebar({ children }) {
         <div className="flex items-center justify-between h-20 px-6 border-b border-gray-800 shrink-0">
           {(isOpen || isMobile) && (
             <span className="text-xl font-bold text-black whitespace-nowrap overflow-hidden">
-              <span className="text-primary">Madeny</span> CMS
+              <span className="text-primary">Madny</span> CMS
             </span>
           )}
           {!isOpen && !isMobile && (
@@ -161,7 +161,7 @@ export default function AdminSidebar({ children }) {
             </div>
             <div className="hidden sm:block">
               <div className="font-semibold text-sm">Admin User</div>
-              <div className="text-xs text-muted-foreground">admin@madenydigital.com</div>
+              <div className="text-xs text-muted-foreground">admin@madnydigitalservices.com</div>
             </div>
           </div>
         </header>

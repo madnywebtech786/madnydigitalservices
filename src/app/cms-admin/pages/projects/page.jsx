@@ -133,7 +133,6 @@ export default function ProjectsEditor() {
           demoUrl: '',
           githubUrl: '',
           featured: false,
-          stats: { users: '', rating: '', performance: '' },
           features: [],
           projectImpact: { title: 'Project Impact', description: '' },
         },
@@ -320,12 +319,6 @@ export default function ProjectsEditor() {
                           <div><label className="block text-sm font-bold mb-2">Client Name</label><Input value={proj.client || ''} onChange={(e) => updateProjectItem(i, 'client', e.target.value)} /></div>
                           <div><label className="block text-sm font-bold mb-2">Demo URL</label><Input value={proj.demoUrl || ''} onChange={(e) => updateProjectItem(i, 'demoUrl', e.target.value)} /></div>
                           <div><label className="block text-sm font-bold mb-2">GitHub URL</label><Input value={proj.githubUrl || ''} onChange={(e) => updateProjectItem(i, 'githubUrl', e.target.value)} /></div>
-                        </div>
-
-                        <div className="grid md:grid-cols-3 gap-4 p-4 border rounded-xl bg-blue-50/30">
-                          <div><label className="block text-sm font-bold mb-2">Stats: Users</label><Input value={proj.stats?.users || ''} onChange={(e) => updateProjectItem(i, 'stats', { ...proj.stats, users: e.target.value })} /></div>
-                          <div><label className="block text-sm font-bold mb-2">Stats: Rating</label><Input value={proj.stats?.rating || ''} onChange={(e) => updateProjectItem(i, 'stats', { ...proj.stats, rating: e.target.value })} /></div>
-                          <div><label className="block text-sm font-bold mb-2">Stats: Performance</label><Input value={proj.stats?.performance || ''} onChange={(e) => updateProjectItem(i, 'stats', { ...proj.stats, performance: e.target.value })} /></div>
                         </div>
 
                         <div><label className="block text-sm font-bold mb-2">Short Description (Cards)</label><TextareaAutosize value={proj.description || ''} onChange={(e) => updateProjectItem(i, 'description', e.target.value)} /></div>

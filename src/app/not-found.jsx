@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ArrowLeft, Home } from 'lucide-react';
 
 export const metadata = {
-  title: '404 — Page Not Found | Madeny Digital Services',
+  title: '404 — Page Not Found | Madny Digital Services',
 };
 
 export default function NotFound() {

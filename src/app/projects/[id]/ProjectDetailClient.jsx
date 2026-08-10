@@ -7,7 +7,7 @@ import { ArrowUpRight, ExternalLink, Monitor, Smartphone } from 'lucide-react';
 import { useInView } from '@/hooks/useInView';
 
 /* ── Scrolling preview image component ── */
-export function ScrollPreview({ src, alt }) {
+export function ScrollPreview({ src, alt, width = 1920, height = 12000 }) {
   const [active, setActive] = useState(false);
   const timerRef = useRef(null);
 
@@ -48,13 +48,13 @@ export function ScrollPreview({ src, alt }) {
         </div>
 
         <div className="pdp-preview-scroll-area relative overflow-hidden" style={{ height: '320px' }}>
-          <div className={`pdp-preview-inner w-full ${active ? 'pdp-preview-scrolling' : ''}`}>
+          <div key={active ? 'scrolling' : 'idle'} className={`pdp-preview-inner w-full ${active ? 'pdp-preview-scrolling' : ''}`}>
             <Image
               src={src}
               alt={alt}
-              width={1200}
-              height={2400}
-              className="w-full object-cover object-top"
+              width={width}
+              height={height}
+              className="w-full h-auto object-cover object-top"
               sizes="(max-width: 768px) 100vw, 50vw"
               loading="lazy"
             />
@@ -97,7 +97,7 @@ export function RelatedCard({ project, category }) {
               </div>
             )}
             <div className="absolute bottom-0 left-0 right-0 p-5">
-              <h4 className="text-white font-black text-base leading-tight mb-2">{project.title}</h4>
+              <h4 className="text-white font-black text-base leading-tight mb-2">{project.shortTitle || project.title}</h4>
               <div className="flex items-center gap-1.5 text-white/70 text-xs font-bold">
                 <span>View Project</span>
                 <ArrowUpRight className="w-3 h-3" />
