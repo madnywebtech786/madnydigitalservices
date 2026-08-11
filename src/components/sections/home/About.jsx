@@ -91,7 +91,7 @@ export default function About({ data }) {
               {/* Main image */}
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                 <Image
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=75"
+                  src="/images/about.webp"
                   alt="Madny Digital Services Team"
                   width={800}
                   height={600}

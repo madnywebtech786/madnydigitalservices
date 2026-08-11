@@ -5,8 +5,6 @@ import {
   Mail,
   Phone,
   MapPin,
-  Linkedin,
-  Twitter,
   Instagram,
   Facebook,
   Send,
@@ -36,11 +34,12 @@ const defaultContactInfo = [
 ];
 
 const socialLinks = [
-  { icon: Linkedin,  href: '#', label: 'LinkedIn' },
-  { icon: Twitter,   href: '#', label: 'Twitter' },
-  { icon: Instagram, href: '#', label: 'Instagram' },
-  { icon: Facebook,  href: '#', label: 'Facebook' },
+  { icon: Instagram, href: 'https://www.instagram.com/madnydigitalservices', label: 'Instagram' },
+  { icon: Facebook,  href: 'https://www.facebook.com/share/17UsEhwnzo/?mibextid=wwXIfr', label: 'Facebook' },
 ];
+
+// Google Maps embed for the business location (Madny Digital Services Group Ltd).
+const MAP_EMBED_SRC = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2505.0496015523217!2d-113.9696833!3d51.107544999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5371648042664955%3A0x2d801ecf3f343165!2sMadny%20Digital%20Services%20Group%20Ltd!5e0!3m2!1sen!2s!4v1786450296654!5m2!1sen!2s';
 
 const iconMap = { 'Visit Us': MapPin, 'Email Us': Mail, 'Call Us': Phone };
 
@@ -131,6 +130,8 @@ export default function Contact({ data }) {
                   <a
                     key={social.label}
                     href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="contact-social w-11 h-11 rounded-xl bg-muted flex items-center justify-center"
                     aria-label={social.label}
                   >
@@ -221,6 +222,23 @@ export default function Contact({ data }) {
               )}
             </div>
           </div>
+        </div>
+
+        {/* Map — full width */}
+        <div
+          data-inview={inView ? 'true' : ''}
+          className="reveal-up anim-delay-10 mt-12 rounded-2xl overflow-hidden border border-border"
+        >
+          <iframe
+            src={MAP_EMBED_SRC}
+            width="100%"
+            height="320"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
+            title="Madny Digital Services location on Google Maps"
+          />
         </div>
       </Container>
     </section>

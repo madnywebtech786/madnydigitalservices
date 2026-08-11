@@ -35,7 +35,7 @@ export const services = [
     icon: Monitor,
     secondaryIcon: Wrench,
     color: 'from-primary to-primary-dark',
-    image: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=1200&q=80',
+    image: '/images/services/computer-repair.webp',
     features: [
       {
         icon: Monitor,
@@ -125,7 +125,7 @@ export const services = [
     icon: Smartphone,
     secondaryIcon: Unlock,
     color: 'from-secondary to-secondary-dark',
-    image: 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=1200&q=80',
+    image: '/images/services/cell-phone-repair.webp',
     features: [
       {
         icon: Unlock,
@@ -215,7 +215,7 @@ export const services = [
     icon: ShoppingBag,
     secondaryIcon: Cpu,
     color: 'from-primary to-secondary',
-    image: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=1200&q=80',
+    image: '/images/services/mobile-computer-sale.webp',
     features: [
       {
         icon: Smartphone,
@@ -291,7 +291,7 @@ export const services = [
     icon: Terminal,
     secondaryIcon: FileCode,
     color: 'from-primary to-secondary-dark',
-    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&q=80',
+    image: '/images/services/software-development.webp',
     features: [
       {
         icon: Terminal,
@@ -359,7 +359,7 @@ export const services = [
     icon: Code2,
     secondaryIcon: Globe,
     color: 'from-secondary to-primary',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80',
+    image: '/images/hero.webp',
     features: [
       {
         icon: Globe,

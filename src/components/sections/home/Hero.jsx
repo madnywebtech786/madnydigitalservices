@@ -281,7 +281,7 @@ export default function Hero({ data }) {
                         </div>
                         <div className="aspect-video rounded-lg overflow-hidden bg-linear-to-br from-primary/10 to-secondary/10">
                           <Image
-                            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=75"
+                            src="/images/hero.webp"
                             alt="Web development dashboard"
                             width={800}
                             height={500}
@@ -300,7 +300,7 @@ export default function Hero({ data }) {
                         <div className="bg-gray-900 rounded-xl p-1.5 shadow-xl">
                           <div className="aspect-3/4 rounded-lg overflow-hidden">
                             <Image
-                              src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&q=75"
+                              src="/images/hero-small-tab.webp"
                               alt="Mobile app interface"
                               width={400}
                               height={533}
@@ -318,7 +318,7 @@ export default function Hero({ data }) {
                         <div className="bg-gray-900 rounded-2xl p-1 shadow-xl">
                           <div className="aspect-9/19 rounded-xl overflow-hidden">
                             <Image
-                              src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&q=75"
+                              src="/images/hero-small-mobile.webp"
                               alt="Mobile device repair"
                               width={300}
                               height={633}

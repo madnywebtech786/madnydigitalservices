@@ -29,7 +29,7 @@ export default function AboutMission({ mission, vision }) {
               className="reveal-left relative rounded-[40px] overflow-hidden shadow-2xl"
             >
               <Image
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=75"
+                src="/images/mission.webp"
                 alt="Our Mission"
                 width={800}
                 height={800}
@@ -135,7 +135,7 @@ export default function AboutMission({ mission, vision }) {
             >
               <div className="relative rounded-[40px] overflow-hidden shadow-2xl">
                 <Image
-                  src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=75"
+                  src="/images/vission.webp"
                   alt="Our Vision"
                   width={800}
                   height={1000}
