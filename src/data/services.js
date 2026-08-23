@@ -31,7 +31,7 @@ export const services = [
     id: 'computer-repair',
     title: 'Computer Repair',
     shortDesc: 'Computer repair Calgary: PC and Mac diagnostics, upgrades & virus removal',
-    heroDescription: 'Madny Digital Services provides computer repair in Calgary for residents, remote workers, and businesses across the NE, NW, SE, SW, and nearby Airdrie and Cochrane. Our CompTIA A+ certified technicians repair and upgrade PCs and Macs of every brand, remove viruses, recover lost data, and run full diagnostics so your system runs reliably again.',
+    heroDescription: 'Madny Digital Services provides computer repair in Calgary for residents, remote workers, and businesses across the NE, NW, SE, SW, and nearby Airdrie and Cochrane. Our expert technicians repair and upgrade PCs and Macs of every brand, remove viruses, recover lost data, and run full diagnostics so your system runs reliably again.',
     icon: Monitor,
     secondaryIcon: Wrench,
     color: 'from-primary to-primary-dark',
@@ -87,7 +87,7 @@ export const services = [
       { service: 'OS Installation', price: '$69', note: 'Windows/Linux' },
     ],
     benefits: [
-      'CompTIA A+ certified technicians',
+      'Expert, highly skilled technicians',
       'Free diagnostics with repair',
       '90 day warranty on repairs',
       'Same day service available',

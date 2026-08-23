@@ -13,8 +13,8 @@ const defaultFaqs = [
     answer: 'Yes. Madny Digital Services is based in Calgary, Alberta, with a physical shop serving local residents and businesses. We offer computer repair, phone repair, device sales, software development, and web development under one roof.',
   },
   {
-    question: 'Are your technicians certified?',
-    answer: 'Yes. Our repair technicians hold CompTIA A+ and Apple certifications, and our developers follow modern software and web development standards. Every repair and project is backed by testing and a clear warranty.',
+    question: 'Are your technicians experienced?',
+    answer: 'Yes. Our repair technicians are among the most skilled in Calgary, and our developers follow modern software and web development standards. Every repair and project is backed by testing and a clear warranty.',
   },
   {
     question: 'Do you serve areas outside Calgary, like Airdrie or Cochrane?',

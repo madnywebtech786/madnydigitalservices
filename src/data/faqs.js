@@ -28,7 +28,7 @@ export const faqGroups = [
       },
       {
         question: 'How do I know if a repair shop is trustworthy?',
-        answer: 'Look for certified technicians, a clear warranty on the work, transparent pricing before repairs start, and a physical location you can visit. Our technicians hold CompTIA A+ and Apple certifications, every repair includes a 90 day warranty on parts and labor, and diagnostics are free so you get a real quote before agreeing to anything.',
+        answer: 'Look for experienced technicians, a clear warranty on the work, transparent pricing before repairs start, and a physical location you can visit. Our technicians are among the most skilled in Calgary, every repair includes a 90 day warranty on parts and labor, and diagnostics are free so you get a real quote before agreeing to anything.',
       },
       {
         question: 'Is Madny Digital Services good for both personal and business needs?',
@@ -46,7 +46,7 @@ export const faqGroups = [
       },
       {
         question: 'Do you repair gaming PCs and custom-built desktops?',
-        answer: 'Yes. Our CompTIA A+ certified technicians work on all PC and Mac brands, including custom-built and gaming desktops, for hardware repair, RAM and SSD upgrades, and full diagnostics.',
+        answer: 'Yes. Our expert technicians work on all PC and Mac brands, including custom-built and gaming desktops, for hardware repair, RAM and SSD upgrades, and full diagnostics.',
       },
       {
         question: 'What is the difference between a diagnostic and a repair?',
@@ -176,7 +176,7 @@ export const faqGroups = [
     questions: [
       {
         question: 'Is it better to use a local Calgary repair shop or a manufacturer repair service?',
-        answer: 'Manufacturer repair often means mailing your device away and waiting longer, sometimes at a higher cost. A local certified shop lets you get a free diagnostic in person, ask questions directly, and in many cases get same day service, while still using CompTIA A+ and Apple certified technicians and backing repairs with a warranty.',
+        answer: 'Manufacturer repair often means mailing your device away and waiting longer, sometimes at a higher cost. A local shop lets you get a free diagnostic in person, ask questions directly, and in many cases get same day service, while still using some of the most skilled technicians in Calgary and backing repairs with a warranty.',
       },
       {
         question: 'Should I hire a freelancer, a large agency, or a local Calgary company for my website?',
