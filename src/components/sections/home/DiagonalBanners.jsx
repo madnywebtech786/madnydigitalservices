@@ -2,8 +2,8 @@
 
 export default function DiagonalBanners({ data }) {
   const d = data || {};
-  const bannerText1 = d.text1 || 'Best in Canada • Website Development • Cell Phone Repair •  ';
-  const bannerText2 = d.text2 || 'Premium Products • Premium Services • Best Prices •';
+  const bannerText1 = d.text1 || 'Computer Systems Design ✦ Software and Hardware ✦ Data Recovery ✦ Web Development ✦ ECommerce Solutions ✦ Database Development ✦ SEO & Digital Marketing ✦ Computer Sales & Service ✦ Device Repair & Support ✦ Sales and Service ✦ ';
+  const bannerText2 = d.text2 || 'Computer Systems Design ✦ Software and Hardware ✦ Data Recovery ✦ Web Development ✦ ECommerce Solutions ✦ Database Development ✦ SEO & Digital Marketing ✦ Computer Sales & Service ✦ Device Repair & Support ✦ Sales and Service ✦ ';
 
   const repeatedText1 = bannerText1.repeat(10);
   const repeatedText2 = bannerText2.repeat(10);

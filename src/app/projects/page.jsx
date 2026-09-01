@@ -17,7 +17,7 @@ export async function generateMetadata() {
       title: d.ogTitle || d.title || 'Our Projects | Madny Digital Services',
       description: d.ogDescription || d.description || 'Discover cutting-edge digital solutions built by Madny Digital Services. Browse our portfolio of web development, e-commerce, mobile app, and SaaS projects.',
       url: 'https://www.madnydigitalservices.com/projects',
-      images: [d.ogImage || '/og-projects.jpg'],
+      images: [d.ogImage || '/mds-logo.png'],
     },
     twitter: {
       card: 'summary_large_image',
@@ -27,13 +27,28 @@ export async function generateMetadata() {
   };
 }
 
+const BASE_URL = 'https://www.madnydigitalservices.com';
+
 export default async function ProjectsPage() {
   const content = await getPageContent('projects');
   const global = await getGlobalContent();
   const sections = content?.sections || {};
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Projects', item: `${BASE_URL}/projects` },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <Header data={global?.header} />
       <ProjectsClient data={sections} />
       <Footer data={global?.footer} />

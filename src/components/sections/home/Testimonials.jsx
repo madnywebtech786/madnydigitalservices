@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { Star } from 'lucide-react';
 import Container from '@/components/ui/Container';
 import { useInView } from '@/hooks/useInView';
@@ -8,54 +7,36 @@ import { useInView } from '@/hooks/useInView';
 const defaultTestimonials = [
   {
     id: 1,
-    name: 'Sarah Mitchell',
-    role: 'Small Business Owner',
-    image: '/images/client-female-1.webp',
     content: 'Madny Digital fixed my laptop in just a few hours when another shop said it would take a week. Their expertise and speed saved my business.',
     rating: 5,
     tag: 'Computer Repair',
   },
   {
     id: 2,
-    name: 'Michael Chen',
-    role: 'Real Estate Agent',
-    image: '/images/client-male-1.webp',
     content: 'Got my iPhone screen replaced while I waited. The quality is amazing and the price was very fair. The team is professional and friendly.',
     rating: 5,
     tag: 'Phone Repair',
   },
   {
     id: 3,
-    name: 'Emily Rodriguez',
-    role: 'Restaurant Owner',
-    image: '/images/client-female-2.webp',
     content: 'They built an amazing website for my restaurant and helped me set up online ordering. Beautiful and has brought in so many new customers.',
     rating: 5,
     tag: 'Web Development',
   },
   {
     id: 4,
-    name: 'David Thompson',
-    role: 'IT Professional',
-    image: '/images/client-male-2.webp',
     content: "I bought a refurbished MacBook from Madny and it's been running perfectly for over a year. Great prices on quality devices.",
     rating: 5,
     tag: 'Device Sales',
   },
   {
     id: 5,
-    name: 'Jessica Parker',
-    role: 'Graphic Designer',
-    image: '/images/client-female-2.webp',
     content: 'The web development team understood my vision perfectly. My portfolio site is stunning and loads incredibly fast. Exceptional work!',
     rating: 5,
     tag: 'Web Development',
   },
   {
     id: 6,
-    name: 'Robert Kim',
-    role: 'Startup Founder',
-    image: '/images/client-male-3.webp',
     content: 'Unlocked my phone quickly and professionally. Also got great advice on the best accessories for my business needs. Highly recommend!',
     rating: 5,
     tag: 'Device Services',
@@ -101,6 +82,14 @@ function TestimonialCard({ testimonial }) {
         {/* Scan line */}
         <div className="testi-scan absolute inset-x-0 top-0" style={{ height: '1px' }} />
 
+        {/* Oversized quote mark accent */}
+        <span
+          className="absolute -top-3 right-4 text-7xl font-black text-primary/6 leading-none select-none pointer-events-none"
+          aria-hidden="true"
+        >
+          &rdquo;
+        </span>
+
         {/* Top row — tag + signal */}
         <div className="flex items-center justify-between mb-5">
           <span className="text-[9px] font-black uppercase tracking-[0.25em] text-primary/80 px-2 py-1 rounded border border-primary/20 bg-primary/8">
@@ -110,35 +99,21 @@ function TestimonialCard({ testimonial }) {
         </div>
 
         {/* Quote text */}
-        <p className="flex-1 text-foreground/70 text-sm leading-relaxed mb-6 font-light">
+        <p className="relative flex-1 text-foreground/70 text-sm leading-relaxed mb-6 font-light">
           &ldquo;{testimonial.content}&rdquo;
         </p>
 
         {/* Divider */}
-        <div className="h-px bg-foreground/8 mb-5" />
+        <div className="h-px bg-foreground/8 mb-4" />
 
-        {/* Author row */}
-        <div className="flex items-center gap-3">
-          <div className="relative shrink-0">
-            <Image
-              src={testimonial.image}
-              alt={testimonial.name}
-              width={40}
-              height={40}
-              loading="lazy"
-              className="testi-avatar w-10 h-10 rounded-full object-cover"
-            />
-            {/* Live dot */}
-            <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-primary border-2 border-white testi-live-dot" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="text-foreground text-sm font-bold leading-tight truncate">{testimonial.name}</div>
-            <div className="text-muted-foreground text-[11px] truncate">{testimonial.role}</div>
-          </div>
-          {/* Stars */}
+        {/* Rating row */}
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
+            Happy Client
+          </span>
           <div className="flex gap-0.5 shrink-0">
             {Array.from({ length: testimonial.rating || 5 }).map((_, i) => (
-              <Star key={i} className="w-3 h-3 text-primary fill-primary" />
+              <Star key={i} className="w-3.5 h-3.5 text-primary fill-primary" />
             ))}
           </div>
         </div>
@@ -225,9 +200,9 @@ export default function Testimonials({ data }) {
           {/* Right — stats */}
           <div className="lg:col-span-5">
             <div className="grid grid-cols-3 gap-6">
-              <StatChip value={d.stat1Value || '500+'} label={d.stat1Label || 'Clients'} delay="anim-delay-3" inView={inView} />
+              <StatChip value={d.stat1Value || '1.5k+'} label={d.stat1Label || 'Clients'} delay="anim-delay-3" inView={inView} />
               <StatChip value={d.stat2Value || '4.9'} label={d.stat2Label || 'Avg Rating'} delay="anim-delay-4" inView={inView} />
-              <StatChip value={d.stat3Value || '98%'} label={d.stat3Label || 'Satisfaction'} delay="anim-delay-5" inView={inView} />
+              <StatChip value={d.stat3Value || '99%'} label={d.stat3Label || 'Satisfaction'} delay="anim-delay-5" inView={inView} />
             </div>
           </div>
         </div>
@@ -247,7 +222,7 @@ export default function Testimonials({ data }) {
         >
           <div className="h-px flex-1 bg-foreground/10 max-w-24" />
           <p className="text-muted-foreground text-xs font-black uppercase tracking-[0.3em]">
-            Trusted by {d.bottomCount || '500+'} {d.bottomText || 'customers in Calgary'}
+            Trusted by {d.bottomCount || '1.5k+'} {d.bottomText || 'customers in Calgary and surrounding areas'}
           </p>
           <div className="h-px flex-1 bg-foreground/10 max-w-24" />
         </div>

@@ -10,6 +10,14 @@
   --color-secondary-light: #1a6ba8;
   --color-secondary-dark: #0e3d5f;
 
+  /* Tertiary Color — forest green, woven into the brand gradient itself
+     (see --gradient-primary below) as a subtle midpoint tint between red
+     and blue, plus used standalone for category wayfinding (Web
+     Development in the services mega menu). */
+  --color-tertiary: #355d2e;
+  --color-tertiary-light: #4a7a40;
+  --color-tertiary-dark: #24421f;
+
   /* Neutral Colors */
   --color-background: #ffffff;
   --color-foreground: #0a0a0a;
@@ -20,10 +28,22 @@
   --color-card-foreground: #0a0a0a;
 
   /* Gradients as CSS Variables */
-  --gradient-primary: linear-gradient(135deg, #9f2321 0%, #135180 100%);
-  --gradient-primary-reverse: linear-gradient(135deg, #135180 0%, #9f2321 100%);
-  --gradient-radial: radial-gradient(ellipse at center, #9f2321 0%, #135180 100%);
-  --gradient-subtle: linear-gradient(135deg, rgba(159, 35, 33, 0.05) 0%, rgba(19, 81, 128, 0.05) 100%);
+  /* Gradient stops use a brighter, more saturated green (#4a8f3c) than the
+     flat --color-tertiary (#355d2e) — a dark/muted green sitting between
+     vivid red and blue interpolates through a muddy plum/gray in sRGB and
+     never reads as "green" to the eye. The brighter green matches the
+     red/blue's lightness so it blends cleanly and stays visibly green. */
+  /* The two green stops use slightly different hex values (#4a8f3c /
+     #4b903d — visually identical, 1 unit apart) rather than an exact
+     duplicate. Lightning CSS's minifier collapses two IDENTICAL adjacent
+     color-stops into the two-position "color pos1 pos2" shorthand, which
+     has inconsistent real-world rendering support — this was silently
+     breaking the "green band" effect. Non-identical values prevent that
+     merge and keep the standard, universally-supported comma syntax. */
+  --gradient-primary: linear-gradient(135deg, #9f2321 0%, #4a8f3c 36%, #4b903d 48%, #135180 100%);
+  --gradient-primary-reverse: linear-gradient(135deg, #135180 0%, #4a8f3c 52%, #4b903d 64%, #9f2321 100%);
+  --gradient-radial: radial-gradient(ellipse at center, #9f2321 0%, #4a8f3c 36%, #4b903d 48%, #135180 100%);
+  --gradient-subtle: linear-gradient(135deg, rgba(159, 35, 33, 0.05) 0%, rgba(74, 143, 60, 0.05) 36%, rgba(75, 144, 61, 0.05) 48%, rgba(19, 81, 128, 0.05) 100%);
   --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
 
   /* Typography */
@@ -463,8 +483,8 @@ body {
   from { transform: translateX(-50%); }
   to   { transform: translateX(0); }
 }
-.loop-marquee-fwd { animation: loop-marquee-fwd 30s linear infinite; will-change: transform; }
-.loop-marquee-rev { animation: loop-marquee-rev 30s linear infinite; will-change: transform; }
+.loop-marquee-fwd { animation: loop-marquee-fwd 180s linear infinite; will-change: transform; }
+.loop-marquee-rev { animation: loop-marquee-rev 180s linear infinite; will-change: transform; }
 
 /* Testimonials marquee rows */
 .testimonial-marquee-track {
@@ -776,7 +796,7 @@ body {
   100% { background-position: 0%   50%; }
 }
 .loop-gradient-text {
-  background: linear-gradient(135deg, #9f2321, #135180, #9f2321);
+  background: linear-gradient(135deg, #9f2321, #4a8f3c, #135180, #4a8f3c, #9f2321);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -990,6 +1010,7 @@ body {
 }
 .bento-card:hover .bento-cta { opacity: 1; transform: translateY(0); }
 
+
 /* Process step hover */
 .process-step {
   transition: transform 250ms cubic-bezier(0.34,1.56,0.64,1);
@@ -1027,7 +1048,7 @@ body {
   inset: 0;
   border-radius: inherit;
   padding: 2px;
-  background: linear-gradient(135deg, #9f2321, #135180, #9f2321);
+  background: linear-gradient(135deg, #9f2321, #4a8f3c, #135180, #4a8f3c, #9f2321);
   background-size: 200% 200%;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: destination-out;
@@ -1104,13 +1125,6 @@ body {
   93%, 97%       { opacity: 0.2; }
 }
 .testi-corner { animation: loop-corner-flicker 6s ease-in-out infinite; }
-
-/* Avatar ring pulse */
-@keyframes loop-avatar-ring {
-  0%, 100% { box-shadow: 0 0 0 2px rgba(159,35,33,0.4); }
-  50%       { box-shadow: 0 0 0 4px rgba(159,35,33,0.15), 0 0 12px rgba(159,35,33,0.3); }
-}
-.testi-avatar { animation: loop-avatar-ring 3s ease-in-out infinite; }
 
 /* Dot blink for "live" indicator */
 @keyframes loop-live-dot {
@@ -1287,80 +1301,6 @@ body {
 }
 .svc-back-link:hover .svc-back-arrow { transform: translateX(-4px); }
 
-/* ── Contact Page ───────────────────────────────────────────────── */
-
-/* Input underline focus */
-.ct-input {
-  background: transparent;
-  border: none;
-  border-bottom: 1.5px solid rgba(0,0,0,0.15);
-  border-radius: 0;
-  padding: 10px 0;
-  width: 100%;
-  font-size: 0.95rem;
-  color: var(--color-foreground);
-  outline: none;
-  transition: border-color 200ms ease;
-}
-.ct-input::placeholder { color: rgba(0,0,0,0.3); }
-.ct-input:focus { border-color: var(--color-primary); }
-
-/* Submit button sweep */
-@keyframes ct-sweep {
-  from { transform: translateX(-100%) skewX(-12deg); }
-  to   { transform: translateX(200%)  skewX(-12deg); }
-}
-.ct-btn {
-  position: relative;
-  overflow: hidden;
-}
-.ct-btn::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  width: 50%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
-  transform: translateX(-200%) skewX(-12deg);
-  transition: none;
-}
-.ct-btn:hover::after {
-  animation: ct-sweep 0.6s ease forwards;
-}
-
-/* Info card hover */
-.ct-info-row {
-  transition: transform 250ms cubic-bezier(0.34,1.56,0.64,1), background 250ms ease;
-}
-.ct-info-row:hover { transform: translateX(6px); background: rgba(255,255,255,0.06); }
-
-/* Social link */
-.ct-social {
-  transition: background 250ms ease, transform 250ms cubic-bezier(0.34,1.56,0.64,1);
-}
-.ct-social:hover { background: rgba(255,255,255,0.15); transform: translateY(-3px); }
-
-/* Diagonal divider clip on the dark panel */
-.ct-dark-panel {
-  clip-path: polygon(0 0, 92% 0, 100% 100%, 0 100%);
-}
-
-/* Success state */
-@keyframes ct-success {
-  0%   { transform: scale(0.5) rotate(-20deg); opacity: 0; }
-  60%  { transform: scale(1.1) rotate(5deg); }
-  100% { transform: scale(1) rotate(0deg); opacity: 1; }
-}
-.ct-success-icon { animation: ct-success 0.5s cubic-bezier(0.34,1.56,0.64,1) both; }
-
-/* Pulse ring on dark panel */
-@keyframes ct-ring-pulse {
-  0%        { transform: scale(1);   opacity: 0.15; }
-  70%, 100% { transform: scale(2.5); opacity: 0; }
-}
-.ct-ring-pulse {
-  animation: ct-ring-pulse 2.5s ease-out infinite;
-}
-
 /* ── Header entrance ───────────────────────────────────────────── */
 @keyframes header-slide-down {
   from { opacity: 0; transform: translateY(-100%); }
@@ -1533,6 +1473,86 @@ body {
   background: var(--gradient-primary);
   border-radius: inherit;
   z-index: -1;
+}
+
+/* ── Terms & Conditions page ────────────────────────────────────── */
+
+/* Topic-group accent map — reuses the site's existing brand tokens
+   (primary/secondary/tertiary) plus foreground-as-neutral for the 4th
+   group, so clause cards visually sort into "which kind of term is this"
+   without introducing new colors. */
+.terms-group-label--primary   { color: var(--color-primary); }
+.terms-group-label--secondary { color: var(--color-secondary); }
+.terms-group-label--tertiary  { color: var(--color-tertiary); }
+.terms-group-label--ink       { color: var(--color-foreground); }
+
+.terms-point-dot--primary   { background: var(--color-primary); }
+.terms-point-dot--secondary { background: var(--color-secondary); }
+.terms-point-dot--tertiary  { background: var(--color-tertiary); }
+.terms-point-dot--ink       { background: var(--color-foreground); opacity: 0.4; }
+
+.terms-card {
+  border-left-width: 3px;
+  transition: border-color 250ms ease, box-shadow 250ms ease;
+}
+.terms-card--primary   { border-left-color: rgba(159,35,33,0.35); }
+.terms-card--secondary { border-left-color: rgba(19,81,128,0.35); }
+.terms-card--tertiary  { border-left-color: rgba(53,93,46,0.35); }
+.terms-card--ink       { border-left-color: rgba(10,10,10,0.2); }
+.terms-card:hover {
+  box-shadow: 0 8px 28px rgba(0,0,0,0.06);
+}
+
+/* Quick-answer strip — the page's signature element */
+.terms-quick-card {
+  transition: transform 240ms cubic-bezier(0.34,1.56,0.64,1),
+              border-color 240ms ease,
+              box-shadow 240ms ease;
+}
+.terms-quick-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(159,35,33,0.3);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+}
+.terms-quick-arrow svg {
+  transition: transform 240ms cubic-bezier(0.34,1.56,0.64,1);
+}
+.terms-quick-card:hover .terms-quick-arrow svg {
+  transform: translate(2px, -2px);
+}
+
+/* ── About "What We Do" — bento pillar cards ────────────────────── */
+.wwd-card {
+  transition: transform 340ms cubic-bezier(0.34,1.56,0.64,1),
+              border-color 340ms ease,
+              box-shadow 340ms ease;
+}
+.wwd-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(159,35,33,0.2);
+  box-shadow: 0 28px 64px -16px rgba(159,35,33,0.16);
+}
+
+.wwd-icon {
+  transition: transform 340ms cubic-bezier(0.34,1.56,0.64,1);
+}
+.wwd-card:hover .wwd-icon {
+  transform: scale(1.08) rotate(-4deg);
+}
+
+.wwd-panel {
+  transition: transform 340ms cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow 340ms ease;
+}
+.wwd-panel:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 64px -16px rgba(159,35,33,0.28);
+}
+.wwd-panel-blob {
+  transition: transform 500ms cubic-bezier(0.22,1,0.36,1);
+}
+.wwd-panel:hover .wwd-panel-blob {
+  transform: scale(1.15);
 }
 
 /* ===== Noise Texture Overlay ===== */

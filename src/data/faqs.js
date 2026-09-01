@@ -1,116 +1,33 @@
-// Dedicated /faqs page content. Written as real visitor search queries and
-// voice/AI-assistant phrasings (AEO/GEO), grouped by topic for scannability.
-// Every factual claim here (price, warranty, hours, certification, service
-// area) traces back to src/data/services.js or src/scripts/seed.js — no
-// invented numbers. New question angles not already covered elsewhere on
-// the site — see docs/superpowers/specs/2026-08-10-faqs-page-design.md.
+// Dedicated /faqs page content. Sourced verbatim from FAQs.txt (client-
+// provided), grouped by topic for scannability. Replaces the earlier
+// pricing/AEO-focused question set — see docs/superpowers/specs/2026-08-10-faqs-page-design.md
+// for the original design rationale, still followed structurally (grouping,
+// search, accordion), just with new content.
 
 export const faqGroups = [
   {
-    id: 'general',
-    name: 'General & Getting Started',
+    id: 'computer-systems-it',
+    name: 'Computer Systems & IT Services',
     questions: [
       {
-        question: 'How do I get a quote from Madny Digital Services?',
-        answer: 'Contact us through the website contact form, by phone, or by visiting our Calgary location. Computer and phone repairs start with a free diagnostic assessment, and software or web development projects start with a free consultation, so you always know the cost before any work begins.',
+        question: 'What computer and IT services does Madny Digital Services provide?',
+        answer: 'Madny Digital Services provides computer systems design, hardware and software solutions, system configuration, upgrades, optimization, technical support, data backup and recovery, and related computer services for businesses and individuals.',
       },
       {
-        question: 'What areas does Madny Digital Services serve?',
-        answer: 'Our shop is based in Calgary, and we regularly serve customers and businesses across the NE, NW, SE, and SW quadrants, as well as nearby Airdrie and Cochrane, for repairs, device sales, and web or software development projects.',
+        question: 'Can you help businesses with computer systems and IT solutions?',
+        answer: 'Yes. We work with businesses to understand their technology requirements and provide practical computer systems, hardware, software, database, and technical solutions.',
       },
       {
-        question: 'What are your hours?',
-        answer: 'We are open Monday to Saturday from 11am to 7pm, and Sunday from 12pm to 5pm.',
+        question: 'Do you install and upgrade computer hardware?',
+        answer: 'Yes. We provide computer hardware installation and upgrades, including RAM, HDDs, SSDs, batteries, and other compatible components.',
       },
       {
-        question: 'Do I need an appointment for a repair?',
-        answer: 'Walk-ins are welcome for most computer and phone repairs. If you want to guarantee a specific time or you have a larger job, contacting us ahead lets us prepare for your device and give you a more accurate timeline.',
+        question: 'Do you provide software installation and troubleshooting?',
+        answer: 'Yes. Madny Digital Services provides software installation, configuration, troubleshooting, operating system support, updates, and other technical assistance.',
       },
       {
-        question: 'How do I know if a repair shop is trustworthy?',
-        answer: 'Look for experienced technicians, a clear warranty on the work, transparent pricing before repairs start, and a physical location you can visit. Our technicians are among the most skilled in Calgary, every repair includes a 90 day warranty on parts and labor, and diagnostics are free so you get a real quote before agreeing to anything.',
-      },
-      {
-        question: 'Is Madny Digital Services good for both personal and business needs?',
-        answer: 'Yes. We work with individual residents, remote workers, and small to medium Calgary businesses, covering everything from a single cracked phone screen to a full company website or custom business software.',
-      },
-    ],
-  },
-  {
-    id: 'computer-repair',
-    name: 'Computer Repair',
-    questions: [
-      {
-        question: 'Can you fix a laptop that will not turn on?',
-        answer: 'In most cases, yes. A laptop that will not power on can be caused by a failed battery, charging port, motherboard issue, or RAM problem. Our free diagnostic assessment identifies the actual cause before we quote a hardware repair, so you know exactly what is wrong and what it costs to fix.',
-      },
-      {
-        question: 'Do you repair gaming PCs and custom-built desktops?',
-        answer: 'Yes. Our expert technicians work on all PC and Mac brands, including custom-built and gaming desktops, for hardware repair, RAM and SSD upgrades, and full diagnostics.',
-      },
-      {
-        question: 'What is the difference between a diagnostic and a repair?',
-        answer: 'A diagnostic is the free assessment where we identify what is actually wrong with your device. A repair is the fix itself, quoted separately after the diagnostic, such as virus removal starting at $79 or hardware repair starting at $99, so you approve the cost before any work is done.',
-      },
-      {
-        question: 'Can you recover files from a laptop that will not boot?',
-        answer: 'Often, yes. Our technicians use specialized data recovery tools for drives that will not boot or have failed. Data recovery starts at $149 depending on complexity, and we offer a free assessment before quoting any recovery work.',
-      },
-      {
-        question: 'Is it worth repairing an old computer instead of buying a new one?',
-        answer: 'It depends on the issue and the computer\'s age. A screen, battery, or storage upgrade is usually far cheaper than a new computer and can add years of useful life. During your free diagnostic, we give you an honest recommendation on whether repair or replacement makes more sense for your specific device.',
-      },
-    ],
-  },
-  {
-    id: 'cell-phone-repair',
-    name: 'Cell Phone Repair & Unlocking',
-    questions: [
-      {
-        question: 'Can any phone be unlocked?',
-        answer: 'We unlock phones from any Canadian or international carrier at our Calgary location. Unlocking starts at $29, is legal, and does not void your manufacturer warranty, so your phone can be used with any compatible carrier, including while travelling.',
-      },
-      {
-        question: 'Do you fix cracked back glass, not just the front screen?',
-        answer: 'Yes. In addition to broken front screen repairs starting at $89 for iPhone and $99 for Samsung, our technicians handle other physical damage including camera, charging port, and speaker repairs, all cleaned and tested before pickup.',
-      },
-      {
-        question: 'Is it worth repairing an old phone instead of buying a new one?',
-        answer: 'For most common issues like a cracked screen or worn battery, repair is significantly cheaper than replacing the phone and can restore it to full working condition. Battery replacement starts at $49 and screen repair starts at $89, both a fraction of the cost of a new device.',
-      },
-      {
-        question: 'How can I tell if my phone has water damage that can still be fixed?',
-        answer: 'Signs include a phone that will not turn on, a distorted speaker, or a fogged camera lens after contact with liquid. We offer diagnostic cleaning and component-level repair for water damaged devices with a no fix, no fee policy, so you only pay if we can restore it, and success is much more likely the sooner the device is brought in.',
-      },
-      {
-        question: 'Do you sell screen protectors and cases as well as repair phones?',
-        answer: 'Yes. Alongside repairs, we sell phone cases, chargers, cables, and screen protectors, with free screen protector installation available at our Calgary location.',
-      },
-    ],
-  },
-  {
-    id: 'device-sales',
-    name: 'Device Sales & Trade-Ins',
-    questions: [
-      {
-        question: 'How long do refurbished devices last compared to new ones?',
-        answer: 'Our certified refurbished devices are professionally inspected, repaired where needed, and functionally tested before sale, and each one is backed by a warranty. With normal use, a certified refurbished laptop or phone offers comparable performance and lifespan to new, at a lower price.',
-      },
-      {
-        question: 'Can I sell my old device without buying a new one?',
-        answer: 'Bring your old phone, laptop, or computer to our Calgary location and we will assess its condition and offer trade-in credit, which you can put toward a new or refurbished device or use as store credit, depending on the item.',
-      },
-      {
-        question: 'What is your return policy on devices?',
-        answer: 'We offer a 30 day return policy on devices purchased from us, plus a price match guarantee and a warranty on all devices sold, whether new or certified refurbished.',
-      },
-      {
-        question: 'Do you offer financing on phones or laptops?',
-        answer: 'Yes. We offer flexible financing options for approved customers, letting you spread the cost of a new or refurbished device over time. Ask our staff in store or online for current financing terms and eligibility.',
-      },
-      {
-        question: 'How much cheaper is a refurbished device than buying new?',
-        answer: 'Certified refurbished smartphones and laptops typically cost significantly less than new equivalents while offering comparable tested performance. Refurbished iPhones start at $299 and refurbished laptops start at $399, both backed by a warranty.',
+        question: 'Do you provide data backup and recovery?',
+        answer: 'Yes. We provide data backup and recovery services for supported computers and storage devices. Recovery depends on the condition of the device or storage media, so successful recovery cannot be guaranteed.',
       },
     ],
   },
@@ -119,80 +36,164 @@ export const faqGroups = [
     name: 'Software Development',
     questions: [
       {
-        question: 'Do you sign an NDA before discussing my business idea or project?',
-        answer: 'We are happy to discuss confidentiality requirements, including an NDA, during your free consultation before any detailed scoping begins, so you can share what you need to without concern.',
+        question: 'Does Madny Digital Services develop custom software?',
+        answer: 'Yes. We develop custom software solutions tailored to specific business requirements, workflows, processes, and operational needs.',
       },
       {
-        question: 'Can you work with our existing codebase instead of starting from scratch?',
-        answer: 'Yes. Our requirements-first approach means we assess your existing systems and codebase during the free consultation and scope the project around what already exists, rather than assuming a full rebuild is always necessary.',
+        question: 'Do you develop custom web applications?',
+        answer: 'Yes. Madny Digital Services designs and develops custom web applications with a focus on functionality, usability, performance, and scalability.',
       },
       {
-        question: 'Do I own the code after the software project is finished?',
-        answer: 'Ownership terms are confirmed as part of your project agreement before work begins. Every project also includes post-launch support, and we offer ongoing maintenance plans for updates and bug fixes after your application goes live.',
+        question: 'Can you develop database solutions for businesses?',
+        answer: 'Yes. We provide database development and integration solutions designed to help businesses organize, manage, and access information efficiently.',
       },
       {
-        question: 'What happens if I need changes after the software is delivered?',
-        answer: 'Every custom software project includes post-launch support, and we offer ongoing maintenance plans for updates, bug fixes, and improvements after your application goes live, so your system keeps running reliably as your business changes.',
+        question: 'Can you improve or maintain existing software?',
+        answer: 'Yes. Depending on the technology and existing system, we can provide software testing, troubleshooting, maintenance, modifications, enhancements, and ongoing technical support.',
       },
       {
-        question: 'Can a small business afford custom software, or is it only for large companies?',
-        answer: 'We work with Calgary small and medium businesses building automation tools, internal apps, and database systems tailored to their exact workflow. Pricing is project-based on complexity and features rather than a fixed enterprise rate, and a free consultation gives you a real quote scoped to your actual needs.',
+        question: 'How much does custom software development cost?',
+        answer: "The cost depends on the project's features, complexity, integrations, development requirements, and timeline. Contact Madny Digital Services for a consultation and customized quotation.",
+      },
+      {
+        question: 'Do you provide ongoing software maintenance?',
+        answer: 'Yes. We can provide ongoing software maintenance, updates, troubleshooting, enhancements, and technical support based on your project requirements.',
       },
     ],
   },
   {
     id: 'web-development',
-    name: 'Web Development',
+    name: 'Web Development & Digital Solutions',
     questions: [
       {
-        question: 'Do you build websites on WordPress or a custom platform?',
-        answer: 'We build custom websites using modern frameworks rather than generic page builders or template-based platforms, which means faster load times, stronger SEO performance, and more flexibility to add features as your business grows.',
+        question: 'Does Madny Digital Services build professional websites?',
+        answer: 'Yes. We design and develop professional business websites, e-commerce stores, custom web portals, web applications, and other digital solutions.',
       },
       {
-        question: 'Can you redesign my existing website without losing my current SEO rankings?',
-        answer: 'Yes, this is a normal part of a website redesign or platform migration. Redesigns start at $999, and every project includes on-page SEO fundamentals like fast load times, mobile responsiveness, and structured metadata from day one.',
+        question: 'Do you build e-commerce websites?',
+        answer: 'Yes. We develop e-commerce solutions with features such as product management, online ordering, payment integrations, customer functionality, and other features based on your business requirements.',
       },
       {
-        question: 'Can I update my website content myself after it launches?',
-        answer: 'Yes. Every site we build includes a custom content management dashboard, so you can edit text, images, and pages in real time without touching code or calling a developer. We walk you through it at launch so your team can manage updates independently from day one.',
+        question: 'Can you redesign my existing website?',
+        answer: 'Yes. We can modernize existing websites, improve design and structure, enhance mobile responsiveness, improve user experience, and add new functionality.',
       },
       {
-        question: 'Do you build e-commerce stores with payment processing?',
-        answer: 'Yes. Our e-commerce store development, starting at $2,999, includes secure checkout, inventory management, and payment processing built in.',
+        question: 'Will my website be mobile-friendly?',
+        answer: 'Yes. Our modern websites are developed using responsive design principles to provide a professional user experience across supported desktops, tablets, and mobile devices.',
       },
       {
-        question: 'Will my new website actually show up on Google?',
-        answer: 'Every website we build includes on-page SEO fundamentals: fast load times, mobile responsiveness, structured headings, and metadata. For competitive Calgary keywords, we also offer ongoing local SEO and Google Ads packages to accelerate rankings further.',
+        question: 'Do you provide website maintenance?',
+        answer: 'Yes. Madny Digital Services provides website maintenance, content updates, troubleshooting, enhancements, security-related updates, and ongoing technical support.',
       },
       {
-        question: 'How much does website maintenance cost after launch?',
-        answer: 'Monthly maintenance, including updates and support, starts at $99 per month. Alternatively, we can deploy your site to a hosting provider of your choice if you prefer to manage it independently.',
+        question: 'Do you provide SEO services?',
+        answer: 'Yes. We provide SEO services designed to improve website structure, content, technical performance, and search visibility. Search-engine rankings depend on many external factors, so specific positions cannot be guaranteed.',
+      },
+      {
+        question: 'Do you provide Google Ads and digital marketing?',
+        answer: 'Yes. Our digital services include Google Ads/PPC and digital marketing solutions designed to strengthen your online presence, reach potential customers, and support business growth.',
       },
     ],
   },
   {
-    id: 'trust-comparisons-local',
-    name: 'Trust, Comparisons & Local',
+    id: 'computer-repair',
+    name: 'Computer Sales, Service & Repair',
     questions: [
       {
-        question: 'Is it better to use a local Calgary repair shop or a manufacturer repair service?',
-        answer: 'Manufacturer repair often means mailing your device away and waiting longer, sometimes at a higher cost. A local shop lets you get a free diagnostic in person, ask questions directly, and in many cases get same day service, while still using some of the most skilled technicians in Calgary and backing repairs with a warranty.',
+        question: 'Do you sell computers and laptops?',
+        answer: 'Yes. Madny Digital Services offers new and refurbished computers and laptops, subject to current inventory and availability.',
       },
       {
-        question: 'Should I hire a freelancer, a large agency, or a local Calgary company for my website?',
-        answer: 'A freelancer can be lower cost but often has limited availability and no team to fall back on. A large agency may have overhead that drives up pricing. A local company like ours gives you direct access to the people building your project, in-person consultation, and ongoing local support, at pricing that starts at $499 for a landing page rather than enterprise agency rates.',
+        question: 'What computer repair services do you provide?',
+        answer: 'We provide laptop and desktop diagnostics and repairs, including screen, keyboard, battery, charging port, RAM, HDD, SSD, motherboard-related issues, liquid damage assessment, software troubleshooting, and system upgrades.',
       },
       {
-        question: 'Why choose Madny Digital Services over a national repair or electronics chain?',
-        answer: 'We offer certified technicians, free diagnostics, a 90 day repair warranty, and direct in-person service at our Calgary location, without the wait times or scripted service often associated with larger chains. We also cover a broader range under one roof, including computer repair, phone repair, device sales, software development, and web development.',
+        question: 'Can you upgrade my existing computer?',
+        answer: "Yes. Depending on your computer's compatibility, we can upgrade components such as RAM and storage and recommend other improvements to enhance system performance.",
       },
       {
-        question: 'Can one company really handle both my computer repairs and my business website?',
-        answer: 'Yes. Madny Digital Services offers computer repair, cell phone repair and unlocking, device sales, custom software development, and web development all under one roof, so both your hardware needs and your business\'s digital presence can be handled by a team that already knows you.',
+        question: "Can you repair a computer that won't turn on?",
+        answer: 'Yes. Our technicians can diagnose supported computers to determine whether the issue is related to the power system, battery, charging port, RAM, storage, motherboard, software, or another component.',
       },
       {
-        question: 'Do you offer any guarantees on your work?',
-        answer: 'Yes. Repairs include a 90 day warranty on parts and labor, phone screen repairs include a lifetime warranty, device purchases include a price match guarantee and 30 day return policy, and water damage treatment is no fix, no fee.',
+        question: 'Do you repair laptop screens and keyboards?',
+        answer: 'Yes. Madny Digital Services provides laptop screen and keyboard replacement services for supported makes and models.',
+      },
+      {
+        question: 'Can you replace an HDD with an SSD?',
+        answer: 'Yes. We can upgrade compatible computers from traditional HDD storage to SSD storage, which can significantly improve startup times and overall system responsiveness.',
+      },
+      {
+        question: 'Is my data guaranteed to remain safe during repair?',
+        answer: 'Customers should back up important information before submitting a device for service. Although reasonable care is taken when handling equipment and data, diagnostic and repair procedures can involve data-loss risks, especially when hardware or storage devices are already damaged.',
+      },
+    ],
+  },
+  {
+    id: 'cell-phone-repair',
+    name: 'Cellphone Sales & Repair',
+    questions: [
+      {
+        question: 'What cellphone repair services do you provide?',
+        answer: 'Madny Digital Services provides screen replacement, battery replacement, charging port repair, camera repair, microphone and speaker services, back-glass replacement, liquid-damage assessment, cleaning, testing, and other repairs for supported devices.',
+      },
+      {
+        question: 'Do you provide cellphone unlocking?',
+        answer: 'Yes. Cellphone unlocking is available for supported devices and networks. Contact us with your device information to confirm availability.',
+      },
+      {
+        question: 'Do you sell new and refurbished cellphones?',
+        answer: 'Yes. We offer new and refurbished mobile devices depending on current inventory and availability.',
+      },
+      {
+        question: 'Can you replace a broken cellphone screen?',
+        answer: 'Yes. We provide screen replacement for many supported cellphone makes and models. Contact us with your phone model for availability and pricing.',
+      },
+      {
+        question: 'Can you repair a liquid-damaged cellphone?',
+        answer: 'We can inspect and assess liquid-damaged devices to determine whether repair is possible. Because liquid damage can affect multiple internal components and may cause future problems, successful or permanent repair cannot be guaranteed.',
+      },
+      {
+        question: 'Do your cellphone repairs come with a warranty?',
+        answer: 'Warranty coverage depends on the repair, replacement part, and type of damage. Any applicable warranty information will be provided with the service. Certain repairs, including liquid-damaged or severely damaged devices, may have limited or no warranty.',
+      },
+    ],
+  },
+  {
+    id: 'pricing-projects-support',
+    name: 'Pricing, Projects & Support',
+    questions: [
+      {
+        question: 'How much do your services cost?',
+        answer: 'Pricing depends on the type of service, project requirements, parts, complexity, and work involved. Contact Madny Digital Services with your requirements for a customized quotation.',
+      },
+      {
+        question: 'How long does a software or website project take?',
+        answer: 'Project timelines depend on the scope, features, integrations, content requirements, approvals, and overall complexity. We provide an estimated timeline after reviewing your project requirements.',
+      },
+      {
+        question: 'Can I request changes during a software or website project?',
+        answer: 'Yes. Changes can be discussed throughout the project. Requests outside the originally agreed scope may require additional development time and charges.',
+      },
+      {
+        question: 'Do you provide ongoing technical support?',
+        answer: 'Yes. Madny Digital Services provides technical support, troubleshooting, maintenance, and ongoing technology services depending on your requirements and service agreement.',
+      },
+      {
+        question: 'Do you work with both individuals and businesses?',
+        answer: 'Yes. We provide technology solutions for individuals, small businesses, organizations, and other clients based on their specific requirements.',
+      },
+      {
+        question: 'What areas does Madny Digital Services serve?',
+        answer: 'We are based in Calgary and serve customers and businesses throughout Calgary and nearby areas.',
+      },
+      {
+        question: 'Why choose Madny Digital Services?',
+        answer: 'Madny Digital Services brings computer systems, software development, web development, digital solutions, hardware and software services, device sales, technical support, and professional repair services together under one roof.',
+      },
+      {
+        question: 'How can I get started?',
+        answer: 'Contact our team to discuss your technology needs, request a quotation, arrange a repair or technical service, or schedule a consultation.',
       },
     ],
   },

@@ -13,6 +13,8 @@ import {
 import Container from '@/components/ui/Container';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Button from '@/components/ui/Button';
+import Select from '@/components/ui/Select';
+import { serviceSelectOptions } from '@/data/servicesNav';
 import { useInView } from '@/hooks/useInView';
 
 const defaultContactInfo = [
@@ -45,7 +47,7 @@ const iconMap = { 'Visit Us': MapPin, 'Email Us': Mail, 'Call Us': Phone };
 
 const infoDelays = ['anim-delay-3', 'anim-delay-5', 'anim-delay-7'];
 
-export default function Contact({ data }) {
+export default function Contact({ data, showHeader = true }) {
   const d = data || {};
   const rawContactInfo = d.contactInfo || defaultContactInfo;
   const contactInfo = rawContactInfo.map(info => ({
@@ -53,7 +55,7 @@ export default function Contact({ data }) {
     icon: info.icon || iconMap[info.title] || MapPin,
   }));
 
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', service: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -65,7 +67,7 @@ export default function Contact({ data }) {
     await new Promise((resolve) => setTimeout(resolve, 1500));
     setIsSubmitting(false);
     setIsSubmitted(true);
-    setFormData({ name: '', email: '', message: '' });
+    setFormData({ name: '', email: '', service: '', message: '' });
     setTimeout(() => setIsSubmitted(false), 4000);
   };
 
@@ -85,12 +87,14 @@ export default function Contact({ data }) {
       </div>
 
       <Container className="relative z-10">
-        <SectionHeader
-          inView={inView}
-          badge={d.badge || 'Get In Touch'}
-          title={d.title || "Let's Build Something Amazing"}
-          subtitle={d.subtitle || "Ready to start your project? Contact us today and let's discuss how we can help transform your digital presence."}
-        />
+        {showHeader && (
+          <SectionHeader
+            inView={inView}
+            badge={d.badge || 'Get In Touch'}
+            title={d.title || "Let's Build Something Amazing"}
+            subtitle={d.subtitle || "Ready to start your project? Contact us today and let's discuss how we can help transform your digital presence."}
+          />
+        )}
 
         <div className="grid lg:grid-cols-5 gap-12">
 
@@ -187,6 +191,17 @@ export default function Contact({ data }) {
                         className="contact-input w-full px-4 py-3 rounded-xl border border-border bg-white"
                       />
                     </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Service You're Interested In</label>
+                    <Select
+                      name="service"
+                      value={formData.service}
+                      onChange={handleChange}
+                      options={serviceSelectOptions}
+                      placeholder="Select a service"
+                    />
                   </div>
 
                   <div>

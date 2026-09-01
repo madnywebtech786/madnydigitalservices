@@ -7,26 +7,23 @@ import {
   X,
   Monitor,
   Smartphone,
-  ShoppingBag,
   Terminal,
   Code,
-  ShieldCheck,
+  Wallet,
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import FaqAccordion from "@/components/ui/FaqAccordion";
 import { useInView } from "@/hooks/useInView";
 import { faqGroups, allFaqs } from "@/data/faqs";
 
-// Same per-service icon mapping as ServiceClient.jsx's getIconForService,
-// extended with the two topic groups that have no service equivalent.
+// Same per-service icon mapping as ServiceClient.jsx's getIconForService.
 const groupIcons = {
-  general: HelpCircle,
-  "computer-repair": Monitor,
-  "cell-phone-repair": Smartphone,
-  "device-sales": ShoppingBag,
+  "computer-systems-it": HelpCircle,
   "software-development": Terminal,
   "web-development": Code,
-  "trust-comparisons-local": ShieldCheck,
+  "computer-repair": Monitor,
+  "cell-phone-repair": Smartphone,
+  "pricing-projects-support": Wallet,
 };
 
 export default function FaqPageClient() {
@@ -104,7 +101,7 @@ export default function FaqPageClient() {
               data-inview={heroInView ? "true" : ""}
               className="reveal-blur anim-delay-4 mt-6 text-lg text-muted-foreground max-w-2xl leading-relaxed"
             >
-              Before you book a repair, buy a device, or start a software or web project, find out what it costs, how long it takes, and what&rsquo;s covered , no call needed.
+              Answers about our computer, software, and web services, plus device repairs and sales, before you book a repair, buy a device, or start a project.
             </p>
 
             <div
@@ -145,8 +142,8 @@ export default function FaqPageClient() {
         </Container>
       </section>
 
-      {/* ══ CATEGORY PILLS (sticky) ══ */}
-      <div className="sticky top-16 z-30 py-4 bg-background/85 backdrop-blur-xl border-y border-foreground/8">
+      {/* ══ CATEGORY PILLS ══ */}
+      <div className="py-4 bg-background/85 backdrop-blur-xl border-y border-foreground/8">
         <Container size="sm">
           <div className="flex flex-wrap gap-2 items-center justify-center">
             <button

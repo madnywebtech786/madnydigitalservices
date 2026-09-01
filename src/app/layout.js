@@ -29,11 +29,13 @@ export const metadata = {
     type: "website",
     locale: "en_CA",
     siteName: "Madny Digital Services",
+    images: ['/mds-logo.png'],
   },
   twitter: {
     card: "summary_large_image",
     title: "Madny Digital Services | Calgary's Premier Digital Agency",
     description: "Transform your business with stunning websites, powerful e-commerce solutions, and cutting-edge digital experiences.",
+    images: ['/mds-logo.png'],
   },
 };
 
@@ -93,6 +95,35 @@ const localBusinessJsonLd = {
   ],
 };
 
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Madny Digital Services',
+  legalName: 'Madny Digital Services Group Ltd.',
+  url: 'https://www.madnydigitalservices.com',
+  logo: 'https://www.madnydigitalservices.com/mds-logo.png',
+  contactPoint: [
+    {
+      '@type': 'ContactPoint',
+      telephone: '+1-403-708-8214',
+      contactType: 'customer service',
+      areaServed: 'CA',
+      availableLanguage: 'English',
+    },
+  ],
+  sameAs: [
+    'https://www.facebook.com/share/17UsEhwnzo/?mibextid=wwXIfr',
+    'https://www.instagram.com/madnydigitalservices',
+  ],
+};
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Madny Digital Services',
+  url: 'https://www.madnydigitalservices.com',
+};
+
 export default async function RootLayout({ children }) {
   const globalContent = await getGlobalContent();
 
@@ -102,6 +133,14 @@ export default async function RootLayout({ children }) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
       <body

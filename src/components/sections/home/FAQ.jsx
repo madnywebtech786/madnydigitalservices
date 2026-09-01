@@ -20,31 +20,54 @@ const staggerDelays = [
 
 const defaultFaqs = [
   {
-    question: 'How much does computer repair cost in Calgary?',
+    question: 'What computer and technology services do you provide in Calgary?',
     answer:
-      'Computer repair in Calgary typically starts at $79 for diagnostics and virus removal, with hardware repairs from $99 plus parts. We provide a free diagnostic assessment with every repair, so you always know the exact cost before we begin.',
+      'We provide computer systems design, hardware and software solutions, system upgrades, data backup and recovery, technical support, software development, web development, and other digital solutions for businesses and individuals.',
   },
   {
-    question: 'Where can I get my phone unlocked in Calgary?',
+    question: 'Do you develop custom software for businesses?',
     answer:
-      'Madny Digital Services unlocks phones from any carrier at our Calgary shop, starting at $29. Carrier unlocking is legal, does not void your manufacturer warranty, and most unlocks are completed the same day, often within the hour.',
+      'Yes. We develop custom software solutions based on specific business requirements, including web applications, database solutions, business systems, and other tailored digital tools.',
   },
   {
-    question: 'Do you sell refurbished laptops and phones in Calgary?',
+    question: 'Do you provide web application development in Calgary?',
     answer:
-      'Yes. We stock certified refurbished laptops, desktops, and smartphones from trusted brands, each tested and backed by a warranty. New devices, accessories, and a trade-in program are also available at our Calgary location.',
+      'Yes. We design and develop custom web applications with a focus on functionality, performance, usability, and scalability to support different business requirements.',
   },
   {
-    question:
-      'Can I hire a software development company in Calgary for a custom business app?',
+    question: 'Do you design and develop business websites?',
     answer:
-      'Yes. Our Calgary-based software development team builds custom business applications, automation tools, and databases designed around your exact workflow, with a requirements-first approach and testing before every launch.',
+      'Yes. We develop professional business websites, e-commerce stores, custom web portals, and other web solutions. Our websites are designed to be responsive, user friendly, and aligned with your business goals.',
   },
   {
-    question:
-      'How much does a website cost from a Calgary web development company?',
+    question: 'Do you provide SEO and digital marketing services?',
     answer:
-      'Business websites start at $1,499, e-commerce stores from $2,999, and landing pages from $499. Every project includes mobile-responsive design, SEO best practices, and a free consultation to scope your exact needs first.',
+      'Yes. Our digital services include search engine optimization (SEO), digital marketing, Google Ads/PPC, website optimization, and ongoing website support to help businesses strengthen their online presence.',
+  },
+  {
+    question: 'Do you provide computer upgrades and data recovery?',
+    answer:
+      'Yes. We provide computer hardware and software support, RAM and storage upgrades, HDD and SSD solutions, data backup and recovery, and system performance improvements.',
+  },
+  {
+    question: 'Do you sell computers, laptops, and mobile devices?',
+    answer:
+      'Yes. We offer a selection of new and refurbished computers, laptops, and mobile devices, along with setup and technical support services.',
+  },
+  {
+    question: 'Do you repair computers, laptops, and cellphones?',
+    answer:
+      'Yes. We provide professional computer, laptop, and cellphone repair services, including screen, battery, charging port, keyboard, back glass, and other hardware-related repairs.',
+  },
+  {
+    question: 'Do you provide cellphone unlocking services?',
+    answer:
+      'Yes. Cellphone unlocking services are available for supported devices and networks. Contact our team with your device details to confirm availability.',
+  },
+  {
+    question: 'What areas do you serve?',
+    answer:
+      'We are based in Calgary and provide technology, digital, computer, and device services to customers and businesses in Calgary and nearby areas.',
   },
 ];
 
@@ -96,7 +119,7 @@ export default function FAQ({ data }) {
             data-inview={inView ? 'true' : ''}
             className="reveal-up anim-delay-2 text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight"
           >
-            {d.title || 'Calgary Tech Questions, Answered'}
+            {d.title || 'FAQs'}
           </h2>
 
           <p
@@ -104,7 +127,7 @@ export default function FAQ({ data }) {
             className="reveal-blur anim-delay-4 mt-6 text-lg text-muted-foreground max-w-2xl leading-relaxed"
           >
             {d.subtitle ||
-              'Straight answers about computer repair, phone unlocking, device sales, software development, and web development in Calgary.'}
+              'Straightforward answers about computer systems, software development, web development, digital solutions, and technical services in Calgary.'}
           </p>
         </div>
 

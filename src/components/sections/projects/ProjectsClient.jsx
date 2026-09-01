@@ -237,7 +237,7 @@ export default function ProjectsClient({ data }) {
               data-inview={heroInView ? 'true' : ''}
               className="reveal-right anim-delay-3 text-lg sm:text-xl text-muted-foreground max-w-2xl leading-relaxed"
             >
-              {hero.description || 'Cutting-edge digital solutions that transform businesses and delight users — from startups to enterprise.'}
+              {hero.description || 'Cutting-edge digital solutions that transform businesses and delight users, from startups to enterprise.'}
             </p>
           </div>
         </Container>

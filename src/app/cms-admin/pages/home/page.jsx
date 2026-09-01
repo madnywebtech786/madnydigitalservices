@@ -49,9 +49,9 @@ export default function HomeEditor() {
             headingLine1: 'Your One-Stop', headingLine2: 'Tech Solution', headingLine3: 'Center',
             subheading: 'Expert computer & cell phone repair, quality device sales, and professional web development services. All under one roof in Calgary, Alberta.',
             ctaPrimary: 'Get Free Quote', ctaSecondary: '(403) 555-0123',
-            stats: [{ value: '500+', label: 'Devices Repaired' }, { value: '50+', label: 'Web Projects' }, { value: '1000+', label: 'Happy Customers' }, { value: '24/7', label: 'Support' }],
+            stats: [{ value: '5k+', label: 'Devices Repaired' }, { value: '1k+', label: 'Web Projects' }, { value: '1.5k+', label: 'Happy Customers' }, { value: '20+', label: 'Years of Experience' }],
             floatingCard1Title: 'Website Development', floatingCard1Subtitle: 'Custom & responsive',
-            floatingCard2Title: 'Phone Repair', floatingCard2Subtitle: 'While you wait',
+            floatingCard2Title: 'Computer System Design', floatingCard2Subtitle: 'Hardware and Software',
           },
           services: {
             badge: 'Our Services', title: 'What We Offer',
@@ -65,13 +65,13 @@ export default function HomeEditor() {
           },
           about: {
             badge: 'About Us', title: 'Madny Digital Services', titlePrefix: 'We Are',
-            paragraph1: "Based in Calgary, Canada, we are a full-service digital agency specializing in creating exceptional digital experiences.",
-            paragraph2: 'Our team of designers, developers, and strategists work together to deliver solutions that drive real business results.',
-            features: ['Custom solutions tailored to your business', 'Cutting-edge technologies and frameworks', 'Transparent communication throughout', 'On-time delivery guaranteed'],
-            values: [{ title: 'Mission', description: 'To empower businesses in Calgary with innovative digital solutions.' }, { title: 'Vision', description: 'To be the leading digital agency in Canada, known for exceptional creativity.' }],
-            achievements: [{ number: '150+', label: 'Projects Completed' }, { number: '50+', label: 'Happy Clients' }, { number: '10+', label: 'Years Experience' }, { number: '25+', label: 'Team Members' }],
-            floatingCard1Value: '10+', floatingCard1Label: 'Years of Excellence',
-            floatingCard2Value: '50+', floatingCard2Label: 'Happy Clients',
+            paragraph1: "Madny Digital Services is a Calgary-based technology company providing professional computer systems and digital solutions to businesses and individuals. We specialize in computer systems design, custom software development, web application development, website development, database solutions, and ongoing technical support.",
+            paragraph2: 'Our digital services include e-commerce development, custom web portals, website maintenance, SEO, digital marketing, and Google Ads. We focus on developing reliable, practical, and scalable technology solutions tailored to the needs of each client. In addition to our core technology and digital services, we provide computer and cellphone sales, hardware and software support, system upgrades, data backup and recovery, and professional device repair services.',
+            features: ['Free Diagnose', 'Warranty on all repairs and devices sold', 'Transparent, upfront pricing', 'Same-day service available', 'Onsite service option available', 'Quality replacement parts'],
+            values: [{ title: 'Mission', description: 'To deliver reliable and innovative computer systems, software, web, and digital solutions that help businesses and individuals use technology more effectively. We are committed to quality service, practical solutions, and long-term client relationships, supported by professional technical and device repair services.' }, { title: 'Vision', description: 'To become a trusted technology and digital solutions provider recognized for delivering modern, reliable, and scalable solutions that help businesses grow, adapt, and succeed in an evolving digital world.' }],
+            achievements: [{ number: '150+', label: 'Projects Completed' }, { number: '1.5k+', label: 'Happy Clients' }, { number: '20+', label: 'Years Experience' }],
+            floatingCard1Value: '20+', floatingCard1Label: 'Years of Excellence',
+            floatingCard2Value: '1.5k+', floatingCard2Label: 'Happy Clients',
           },
           projects: {
             badge: 'Portfolio', title: 'Featured Projects',
@@ -103,16 +103,25 @@ export default function HomeEditor() {
             ],
           },
           faqs: {
-            badge: 'Frequently Asked Questions', title: 'Calgary Tech Questions, Answered',
-            subtitle: 'Straight answers about computer repair, phone unlocking, device sales, software development, and web development in Calgary.',
+            badge: 'Frequently Asked Questions', title: 'FAQs',
+            subtitle: 'Straightforward answers about computer systems, software development, web development, digital solutions, and technical services in Calgary.',
             items: [
-              { question: 'How much does computer repair cost in Calgary?', answer: 'Computer repair in Calgary typically starts at $79 for diagnostics and virus removal, with hardware repairs from $99 plus parts.' },
+              { question: 'What computer and technology services do you provide in Calgary?', answer: 'We provide computer systems design, hardware and software solutions, system upgrades, data backup and recovery, technical support, software development, web development, and other digital solutions for businesses and individuals.' },
+              { question: 'Do you develop custom software for businesses?', answer: 'Yes. We develop custom software solutions based on specific business requirements, including web applications, database solutions, business systems, and other tailored digital tools.' },
+              { question: 'Do you provide web application development in Calgary?', answer: 'Yes. We design and develop custom web applications with a focus on functionality, performance, usability, and scalability to support different business requirements.' },
+              { question: 'Do you design and develop business websites?', answer: 'Yes. We develop professional business websites, e-commerce stores, custom web portals, and other web solutions. Our websites are designed to be responsive, user friendly, and aligned with your business goals.' },
+              { question: 'Do you provide SEO and digital marketing services?', answer: 'Yes. Our digital services include search engine optimization (SEO), digital marketing, Google Ads/PPC, website optimization, and ongoing website support to help businesses strengthen their online presence.' },
+              { question: 'Do you provide computer upgrades and data recovery?', answer: 'Yes. We provide computer hardware and software support, RAM and storage upgrades, HDD and SSD solutions, data backup and recovery, and system performance improvements.' },
+              { question: 'Do you sell computers, laptops, and mobile devices?', answer: 'Yes. We offer a selection of new and refurbished computers, laptops, and mobile devices, along with setup and technical support services.' },
+              { question: 'Do you repair computers, laptops, and cellphones?', answer: 'Yes. We provide professional computer, laptop, and cellphone repair services, including screen, battery, charging port, keyboard, back glass, and other hardware-related repairs.' },
+              { question: 'Do you provide cellphone unlocking services?', answer: 'Yes. Cellphone unlocking services are available for supported devices and networks. Contact our team with your device details to confirm availability.' },
+              { question: 'What areas do you serve?', answer: 'We are based in Calgary and provide technology, digital, computer, and device services to customers and businesses in Calgary and nearby areas.' },
             ],
           },
           testimonials: {
             badge: 'Testimonials', title: 'What Our Clients Say',
             description: "Don't just take our word for it. Here's what Calgary businesses and individuals have to say.",
-            bottomText: 'satisfied customers in Calgary', bottomCount: '500+',
+            bottomText: 'satisfied customers in Calgary', bottomCount: '1.5k+',
             items: [],
           },
           cta: {
@@ -120,7 +129,7 @@ export default function HomeEditor() {
             description: "Whether you need a stunning website, a powerful e-commerce platform, or a complete digital transformation, we're here to make it happen.",
             ctaPrimary: 'Start Your Project', ctaSecondary: 'Schedule a Call',
           },
-          diagonalBanners: { text1: 'Best in Canada • Website Development • Cell Phone Repair •  ', text2: 'Premium Products • Premium Services • Best Prices •' }
+          diagonalBanners: { text1: 'Computer Systems Design ✦ Software and Hardware ✦ Data Recovery ✦ Web Development ✦ ECommerce Solutions ✦ Database Development ✦ SEO & Digital Marketing ✦ Computer Sales & Service ✦ Device Repair & Support ✦ Sales and Service ✦ ', text2: 'Computer Systems Design ✦ Software and Hardware ✦ Data Recovery ✦ Web Development ✦ ECommerce Solutions ✦ Database Development ✦ SEO & Digital Marketing ✦ Computer Sales & Service ✦ Device Repair & Support ✦ Sales and Service ✦ ' }
         };
         setData({ ...defaultSections, ...json.sections });
       }

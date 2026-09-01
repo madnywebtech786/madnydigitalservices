@@ -35,42 +35,42 @@ export default function AboutHero({ data }) {
           <div className="anim-scale-in anim-delay-1 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/80 backdrop-blur-xl border border-primary/20 shadow-lg shadow-primary/5 mb-8">
             <Sparkles className="w-4 h-4 text-primary loop-spin" />
             <span className="text-sm font-black text-gradient uppercase tracking-widest">
-              {d.badge || 'About Madny Digital'}
+              {d.badge || 'About Madny Digital Services'}
             </span>
           </div>
 
           {/* Headline */}
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-[0.9] tracking-tighter">
+          <h1 className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.05] tracking-tighter">
             <span className="anim-fade-up anim-delay-2 block text-foreground">
               {d.headingPart1 || 'Crafting Digital'}
             </span>
-            <span className="anim-fade-up anim-delay-4 block loop-gradient-text">
+            <span className="anim-fade-up anim-delay-4 block loop-gradient-text pb-2">
               {d.headingPart2 || 'Masterpieces'}
             </span>
           </h1>
 
           {/* Description */}
-          <p className="anim-blur-up anim-delay-5 text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
+          <p className="anim-blur-up anim-delay-5 text-base md:text-lg text-muted-foreground mb-12 max-w-4xl mx-auto leading-relaxed">
             {d.description || 'We are a team of visionary designers, technical experts, and strategic thinkers dedicated to transforming businesses through exceptional digital experiences.'}
           </p>
 
           {/* CTAs */}
-          <div className="anim-fade-up anim-delay-7 flex flex-wrap justify-center gap-6">
+          <div className="anim-fade-up anim-delay-7 flex flex-wrap justify-center gap-3 sm:gap-6">
             <div className="hover-lift">
               <Link href="/projects">
-                <Button size="lg" className="h-16 px-10 rounded-2xl text-lg font-black group">
+                <Button size="lg" className="h-11 px-6 text-sm rounded-xl sm:h-16 sm:px-10 sm:text-lg sm:rounded-2xl font-black group">
                   <span className="flex items-center gap-2">
                     {d.ctaPrimary || 'Our Portfolio'}
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </Button>
               </Link>
             </div>
             <div className="hover-lift">
               <Link href="/contact">
-                <Button variant="secondary" size="lg" className="h-16 px-10 rounded-2xl text-lg font-black group bg-white/50 backdrop-blur-xl border-gray-200">
+                <Button variant="secondary" size="lg" className="h-11 px-6 text-sm rounded-xl sm:h-16 sm:px-10 sm:text-lg sm:rounded-2xl font-black group bg-white/50 backdrop-blur-xl border-gray-200">
                   <span className="flex items-center gap-2">
-                    <Play className="w-5 h-5 fill-current" />
+                    <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
                     {d.ctaSecondary || 'Contact Us'}
                   </span>
                 </Button>

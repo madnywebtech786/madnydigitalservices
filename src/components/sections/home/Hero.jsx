@@ -4,17 +4,14 @@ import {
   ArrowRight,
   Phone,
   Sparkles,
-  Zap,
-  Shield,
-  Monitor,
-  Smartphone,
   Wrench,
+  Monitor,
   Star,
-  CloudCog,
-  Code2,
+  Shield,
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import Button from '@/components/ui/Button';
 import Container from '@/components/ui/Container';
 
@@ -24,23 +21,94 @@ const DOT_POSITIONS = [
   { left: '82%', top: '38%', dur: 4.8, delay: 0.4 },
 ];
 
-export default function Hero({ data }) {
-  const d = data || {};
-  const defaultIcons = [Wrench, Monitor, Star, Shield, Zap, Sparkles, CloudCog];
-  const stats = d.stats && Array.isArray(d.stats)
-    ? d.stats.map((stat, i) => ({
-        value: stat.value,
-        label: stat.label,
-        icon: defaultIcons[i % defaultIcons.length],
-      }))
-    : [
-        { value: '500+',  label: 'Devices Repaired', icon: Wrench },
-        { value: '50+',   label: 'Web Projects',      icon: Monitor },
-        { value: '1000+', label: 'Happy Customers',   icon: Star },
-        { value: '24/7',  label: 'Support',           icon: Shield },
-      ];
+const SLIDE_INTERVAL_MS = 4000;
 
-  const statDelays = ['anim-delay-14', 'anim-delay-15', 'anim-delay-16', 'anim-delay-17'];
+// Rotating slide content — text, the two floating stat cards, and the main
+// hero image all change together every 4s.
+const heroSlides = [
+  {
+    badge: "Calgary's Trusted Computer and Digital Services",
+    heading: 'Complete Digital & IT Solutions',
+    subheading:
+      'From computer systems to software and web development, we provide reliable technology solutions for individuals and businesses , all delivered by one trusted technology team. We are serving Calgary and nearby areas.',
+    ctaPrimary: 'Explore Our Services',
+    ctaPrimaryHref: '/#services',
+    ctaSecondaryLabel: '(403) 708-8214',
+    ctaSecondaryHref: 'tel:+14037088214',
+    stat1: { icon: Shield, value: '20+', label: 'Years of Experience', color: 'primary' },
+    stat2: { icon: Star, value: '1.5k+', label: 'Happy Customers', color: 'secondary' },
+    image: '/images/hero.webp',
+    imageAlt: 'Complete digital and IT solutions',
+  },
+  {
+    badge: 'Professional Computer Solutions',
+    heading: 'Computer Sales & Repair',
+    subheading:
+      'Expert laptop and desktop repairs, hardware and software support, upgrades, data backup and recovery, and complete desktop sets for sale at competitive prices.',
+    ctaPrimary: 'Computer Services',
+    ctaPrimaryHref: '/services/computer',
+    ctaSecondaryLabel: '(403) 493-7500',
+    ctaSecondaryHref: 'tel:+14034937500',
+    stat1: { icon: Wrench, value: '5k+', label: 'Devices Repaired', color: 'primary' },
+    stat2: { icon: Star, value: '1.5k+', label: 'Happy Customers', color: 'secondary' },
+    image: '/images/hero.webp',
+    imageAlt: 'Computer sales, repair and upgrades',
+  },
+  {
+    badge: 'Technology Built for Your Business',
+    heading: 'Software & Web Development',
+    subheading:
+      'Custom software, web applications, professional websites, e-commerce solutions, SEO, digital marketing, and Google Ads to help your business grow.',
+    ctaPrimary: 'Our Projects',
+    ctaPrimaryHref: '/projects',
+    ctaSecondaryLabel: 'Get a Free Quote',
+    ctaSecondaryHref: '/contact',
+    stat1: { icon: Monitor, value: '1k+', label: 'Web Projects', color: 'primary' },
+    stat2: { icon: Shield, value: '20+', label: 'Years of Experience', color: 'secondary' },
+    image: '/images/hero.webp',
+    imageAlt: 'Software and web development',
+  },
+  {
+    badge: 'Reliable Mobile Device Solutions',
+    heading: 'Cellphone Sales and Repair',
+    subheading:
+      'Professional cellphone repairs including screens, batteries, charging ports, cameras, back glass and liquid damage, plus unlocking and cellphones for sale.',
+    ctaPrimary: 'Cellphone Services',
+    ctaPrimaryHref: '/services/cellphone',
+    ctaSecondaryLabel: 'Get a Free Diagnose',
+    ctaSecondaryHref: '/contact',
+    stat1: { icon: Wrench, value: '5k+', label: 'Devices Repaired', color: 'primary' },
+    stat2: { icon: Star, value: '1.5k+', label: 'Happy Customers', color: 'secondary' },
+    image: '/images/hero.webp',
+    imageAlt: 'Cellphone sales and repair',
+  },
+];
+
+const statColorClasses = {
+  primary: 'from-primary to-primary-dark',
+  secondary: 'from-secondary to-secondary-dark',
+};
+
+export default function Hero() {
+  // Only ONE slide is ever mounted at a time — no stacked/overlapping DOM.
+  // A fresh `key` on the text block forces React to remount it on every
+  // change, replaying its CSS entrance animations (fade/blur-in) each time,
+  // which doubles as the "slide changed" motion cue. The stats grid that
+  // used to sit below the CTAs was removed — its varying height (driven by
+  // subheading length differences between slides) left a visible empty gap
+  // once the tallest slide's height was reserved. Two relevant stats now
+  // rotate into the floating cards on the right instead, tied to the
+  // slide's own topic, so nothing on the left column depends on content
+  // height beyond its own natural size.
+  const [activeSlide, setActiveSlide] = useState(0);
+  const slide = heroSlides[activeSlide];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % heroSlides.length);
+    }, SLIDE_INTERVAL_MS);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-transparent pt-28 pb-12">
@@ -113,90 +181,56 @@ export default function Hero({ data }) {
           {/* ── Left / text column ── */}
           <div className="text-left lg:text-left">
 
-            {/* Badge */}
-            <div className="anim-fade-down anim-delay-2 inline-flex items-center gap-2 px-3.5 py-1.5 mb-5 sm:mb-7 rounded-full bg-white/80 backdrop-blur-sm border border-primary/20 shadow-md shadow-primary/5">
-              <span className="loop-spin inline-flex">
-                <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-primary" />
-              </span>
-              <span className="text-[11px] sm:text-sm font-semibold text-gradient">
-                {d.badge || "Calgary's Trusted Tech Partner"}
-              </span>
-            </div>
+            {/* Rotating text block. Only the active slide is ever mounted —
+                key={activeSlide} forces a full remount on change so the
+                fade/blur entrance animations replay each time. */}
+            <div key={activeSlide}>
 
-            {/* Headline */}
-            <h1 className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-4 sm:mb-6">
-              <span className="anim-fade-left anim-delay-3 block text-foreground">
-                {d.headingLine1 || 'Your One-Stop'}
-              </span>
-              <span className="anim-fade-left anim-delay-5 block text-gradient">
-                {d.headingLine2 || 'Tech Solution'}
-              </span>
-              <span className="anim-fade-left anim-delay-7 block text-foreground">
-                {d.headingLine3 || 'Center'}
-              </span>
-            </h1>
-
-            {/* Subheading */}
-            <p className="anim-blur-up anim-delay-9 text-sm sm:text-base md:text-lg text-muted-foreground max-w-lg lg:mx-0 mb-6 sm:mb-8 leading-relaxed">
-              {d.subheading || 'Expert computer & cell phone repair, quality device sales, and professional web development services. All under one roof in Calgary, Alberta.'}
-            </p>
-
-            {/* CTAs — stacked on mobile, side by side on sm+ */}
-            <div className="anim-fade-up anim-delay-11 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center lg:justify-start mb-8 sm:mb-10 lg:mb-0">
-              <Link href="/contact">
-                <Button
-                  size="default"
-                  icon={<ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />}
-                  className="w-full sm:w-auto text-sm sm:text-base shadow-lg shadow-primary/20"
-                >
-                  {d.ctaPrimary || 'Get Free Quote'}
-                </Button>
-              </Link>
-              <a href={`tel:${d.phone || '+14035550123'}`}>
-                <Button
-                  variant="secondary"
-                  size="default"
-                  icon={<Phone className="w-4 h-4 sm:w-5 sm:h-5" />}
-                  iconPosition="left"
-                  className="w-full sm:w-auto text-sm sm:text-base"
-                >
-                  {d.ctaSecondary || '(403) 555-0123'}
-                </Button>
-              </a>
-            </div>
-
-            {/* Stats — horizontal scrolling row on mobile, grid on sm+ */}
-            <div className="anim-fade-up anim-delay-13 mt-8 sm:mt-10 pt-6 sm:pt-10 lg:py-6 border-t border-primary/10">
-              {/* Mobile: 4-col inline row, no card box */}
-              <div className="grid grid-cols-4 gap-2 sm:hidden">
-                {stats.map((stat, index) => {
-                  const StatIcon = stat.icon;
-                  return (
-                    <div key={stat.label} className={`anim-fade-up ${statDelays[index]} text-center`}>
-                      <StatIcon className="w-4 h-4 text-primary mx-auto mb-1" />
-                      <div className="text-lg font-bold text-gradient leading-none mb-1">{stat.value}</div>
-                      <div className="text-[9px] text-muted-foreground leading-tight">{stat.label}</div>
-                    </div>
-                  );
-                })}
+              {/* Badge — single line, truncated so a long badge never wraps
+                  a rounded-full pill to 2 lines. */}
+              <div className="anim-fade-down anim-delay-2 inline-flex items-center gap-2 max-w-full px-3.5 py-1.5 mb-5 sm:mb-7 rounded-full bg-white/80 backdrop-blur-sm border border-primary/20 shadow-md shadow-primary/5">
+                <span className="loop-spin inline-flex shrink-0">
+                  <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-primary" />
+                </span>
+                <span className="text-[11px] sm:text-sm font-semibold text-gradient truncate">
+                  {slide.badge}
+                </span>
               </div>
-              {/* sm+: card grid */}
-              <div className="hidden sm:grid sm:grid-cols-4 gap-3 py-2 lg:max-w-full overflow-hidden">
-                {stats.map((stat, index) => {
-                  const StatIcon = stat.icon;
-                  return (
-                    <div
-                      key={stat.label}
-                      className={`anim-fade-up ${statDelays[index]} p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-white/50 shadow-md`}
-                    >
-                      <div className="flex items-center gap-1.5 mb-1">
-                        <StatIcon className="w-3.5 h-3.5 text-primary shrink-0" />
-                        <span className="text-2xl md:text-3xl font-bold text-gradient">{stat.value}</span>
-                      </div>
-                      <div className="text-xs text-muted-foreground leading-tight">{stat.label}</div>
-                    </div>
-                  );
-                })}
+
+              {/* Headline */}
+              <h1 className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-4 sm:mb-6">
+                <span className="anim-fade-left anim-delay-3 block text-gradient">
+                  {slide.heading}
+                </span>
+              </h1>
+
+              {/* Subheading */}
+              <p className="anim-blur-up anim-delay-9 text-sm sm:text-base md:text-lg text-muted-foreground max-w-lg lg:mx-0 mb-6 sm:mb-8 leading-relaxed">
+                {slide.subheading}
+              </p>
+
+              {/* CTAs — stacked on mobile, side by side on sm+ */}
+              <div className="anim-fade-up anim-delay-11 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center lg:justify-start mb-8 sm:mb-10 lg:mb-0">
+                <Link href={slide.ctaPrimaryHref}>
+                  <Button
+                    size="default"
+                    icon={<ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />}
+                    className="w-full sm:w-auto text-sm sm:text-base shadow-lg shadow-primary/20"
+                  >
+                    {slide.ctaPrimary}
+                  </Button>
+                </Link>
+                <Link href={slide.ctaSecondaryHref}>
+                  <Button
+                    variant="secondary"
+                    size="default"
+                    icon={<Phone className="w-4 h-4 sm:w-5 sm:h-5" />}
+                    iconPosition="left"
+                    className="w-full sm:w-auto text-sm sm:text-base"
+                  >
+                    {slide.ctaSecondaryLabel}
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -205,63 +239,66 @@ export default function Hero({ data }) {
           <div className="anim-fade-right anim-delay-5 relative">
             <div className="relative">
 
-              {/* Floating card 1 — hidden on mobile to avoid overlap */}
-              <div className="hidden sm:block anim-fade-left anim-delay-10 absolute -top-4 -left-8 z-30">
-                <div className="loop-card-a bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/50">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-linear-to-br from-primary to-primary-dark flex items-center justify-center shadow-lg shrink-0">
-                      <Code2 className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <div className="text-sm font-bold">{d.floatingCard1Title || 'Website Development'}</div>
-                      <div className="text-xs text-muted-foreground">{d.floatingCard1Subtitle || 'Custom & responsive'}</div>
+              {/* Floating stat card 1 — hidden on mobile to avoid overlap.
+                  Only the active slide's stat1 is ever mounted;
+                  key={activeSlide} forces a remount so it fades/scales in
+                  fresh each rotation. loop-card-a's float animation stays
+                  on the outer wrapper, never mixed with the remount-driven
+                  entrance, per the entrance/loop separation rule used
+                  across this site. */}
+              <div className="hidden sm:block absolute -top-4 -left-8 z-30">
+                <div className="loop-card-a">
+                  <div key={`stat1-${activeSlide}`} className="anim-scale-in bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/50">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-12 h-12 rounded-xl bg-linear-to-br ${statColorClasses[slide.stat1.color]} flex items-center justify-center shadow-lg shrink-0`}>
+                        <slide.stat1.icon className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-lg font-black text-gradient leading-none">{slide.stat1.value}</div>
+                        <div className="text-xs text-muted-foreground">{slide.stat1.label}</div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Floating card 2 — hidden on mobile */}
-              <div className="hidden sm:block anim-fade-right anim-delay-12 absolute -bottom-8 -right-4 z-30">
-                <div className="loop-card-b bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/50">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-linear-to-br from-secondary to-secondary-dark flex items-center justify-center shadow-lg shrink-0">
-                      <Smartphone className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <div className="text-sm font-bold">{d.floatingCard2Title || 'Phone Repair'}</div>
-                      <div className="text-xs text-muted-foreground">{d.floatingCard2Subtitle || 'While you wait'}</div>
+              <div className="hidden sm:block absolute -bottom-8 -right-4 z-30">
+                <div className="loop-card-b">
+                  <div key={`stat2-${activeSlide}`} className="anim-scale-in bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/50">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-12 h-12 rounded-xl bg-linear-to-br ${statColorClasses[slide.stat2.color]} flex items-center justify-center shadow-lg shrink-0`}>
+                        <slide.stat2.icon className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-lg font-black text-gradient leading-none">{slide.stat2.value}</div>
+                        <div className="text-xs text-muted-foreground">{slide.stat2.label}</div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Zap badge — hidden on mobile */}
-              <div className="hidden sm:block anim-scale-in anim-delay-14 absolute top-1/4 -right-12 z-30">
-                <div className="loop-zap bg-linear-to-br from-primary to-secondary rounded-full p-4 shadow-xl">
-                  <Zap className="w-6 h-6 text-white" />
-                </div>
-              </div>
-
-              {/* Mobile service badges — shown only on mobile, inside the card area */}
+              {/* Mobile stat badges — shown only on mobile, inside the card area */}
               <div className="sm:hidden absolute top-3 left-3 z-30">
-                <div className="bg-white/90 backdrop-blur-xl rounded-xl px-3 py-2 shadow-lg border border-white/50 flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-linear-to-br from-primary to-primary-dark flex items-center justify-center shrink-0">
-                    <Code2 className="w-3.5 h-3.5 text-white" />
+                <div key={`m-stat1-${activeSlide}`} className="anim-scale-in bg-white/90 backdrop-blur-xl rounded-xl px-3 py-2 shadow-lg border border-white/50 flex items-center gap-2">
+                  <div className={`w-7 h-7 rounded-lg bg-linear-to-br ${statColorClasses[slide.stat1.color]} flex items-center justify-center shrink-0`}>
+                    <slide.stat1.icon className="w-3.5 h-3.5 text-white" />
                   </div>
                   <div>
-                    <div className="text-xs font-bold leading-tight">{d.floatingCard1Title || 'Website Development'}</div>
-                    <div className="text-[10px] text-muted-foreground">{d.floatingCard1Subtitle || 'Custom & responsive'}</div>
+                    <div className="text-sm font-black text-gradient leading-tight">{slide.stat1.value}</div>
+                    <div className="text-[10px] text-muted-foreground">{slide.stat1.label}</div>
                   </div>
                 </div>
               </div>
               <div className="sm:hidden absolute bottom-3 right-3 z-30">
-                <div className="bg-white/90 backdrop-blur-xl rounded-xl px-3 py-2 shadow-lg border border-white/50 flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-linear-to-br from-secondary to-secondary-dark flex items-center justify-center shrink-0">
-                    <Smartphone className="w-3.5 h-3.5 text-white" />
+                <div key={`m-stat2-${activeSlide}`} className="anim-scale-in bg-white/90 backdrop-blur-xl rounded-xl px-3 py-2 shadow-lg border border-white/50 flex items-center gap-2">
+                  <div className={`w-7 h-7 rounded-lg bg-linear-to-br ${statColorClasses[slide.stat2.color]} flex items-center justify-center shrink-0`}>
+                    <slide.stat2.icon className="w-3.5 h-3.5 text-white" />
                   </div>
                   <div>
-                    <div className="text-xs font-bold leading-tight">{d.floatingCard2Title || 'Phone Repair'}</div>
-                    <div className="text-[10px] text-muted-foreground">{d.floatingCard2Subtitle || 'While you wait'}</div>
+                    <div className="text-sm font-black text-gradient leading-tight">{slide.stat2.value}</div>
+                    <div className="text-[10px] text-muted-foreground">{slide.stat2.label}</div>
                   </div>
                 </div>
               </div>
@@ -271,7 +308,9 @@ export default function Hero({ data }) {
                 <div className="aspect-4/3 p-6 sm:p-8 flex items-center justify-center">
                   <div className="relative w-full max-w-md">
 
-                    {/* Laptop */}
+                    {/* Laptop — only the active slide's image is mounted;
+                        key={activeSlide} forces a remount so it fades in
+                        fresh each rotation via the anim-blur-up class. */}
                     <div className="anim-fade-up anim-delay-8 relative z-10">
                       <div className="bg-gray-900 rounded-t-2xl p-3">
                         <div className="flex gap-1.5 mb-2">
@@ -281,12 +320,13 @@ export default function Hero({ data }) {
                         </div>
                         <div className="aspect-video rounded-lg overflow-hidden bg-linear-to-br from-primary/10 to-secondary/10">
                           <Image
-                            src="/images/hero.webp"
-                            alt="Web development dashboard"
+                            key={activeSlide}
+                            src={slide.image}
+                            alt={slide.imageAlt}
                             width={800}
                             height={500}
-                            priority
-                            className="w-full h-full object-cover"
+                            priority={activeSlide === 0}
+                            className="anim-blur-up w-full h-full object-cover"
                           />
                         </div>
                       </div>
@@ -294,14 +334,14 @@ export default function Hero({ data }) {
                       <div className="bg-gray-700 h-1 mx-12 rounded-b" />
                     </div>
 
-                    {/* Tablet */}
+                    {/* Computer */}
                     <div className="anim-fade-right anim-delay-10 absolute -right-6 top-8 w-24 sm:w-28 z-20">
                       <div className="loop-bob-up">
                         <div className="bg-gray-900 rounded-xl p-1.5 shadow-xl">
                           <div className="aspect-3/4 rounded-lg overflow-hidden">
                             <Image
-                              src="/images/hero-small-tab.webp"
-                              alt="Mobile app interface"
+                              src="/images/hero.webp"
+                              alt="Computer systems design"
                               width={400}
                               height={533}
                               loading="lazy"

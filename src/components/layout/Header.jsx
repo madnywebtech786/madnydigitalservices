@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X, ArrowRight, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
-import { services } from '@/data/services';
+import { servicesNav } from '@/data/servicesNav';
+import ServicesMegaMenu from './ServicesMegaMenu';
 
 const defaultNavLinks = [
   { name: 'Home', href: '/' },
@@ -17,39 +18,101 @@ const defaultNavLinks = [
   { name: 'Contact', href: '/contact' },
 ];
 
-function MobileServicesAccordion({ linkName, services, isOpen, onToggle, onSelect }) {
-  const panelRef = useRef(null);
+const accentDotClasses = {
+  primary: 'bg-primary',
+  secondary: 'bg-secondary',
+  tertiary: 'bg-tertiary',
+  ink: 'bg-foreground',
+};
+
+/**
+ * Smooth expand/collapse without a JS-measured height. `grid-template-rows`
+ * animates between 0fr and 1fr, and the browser's own layout engine sizes
+ * the 1fr row to the content's real (possibly-changing) height every frame
+ * — unlike a `max-height` snapshot, this stays correct when a nested panel
+ * inside it changes size after the outer panel already opened.
+ */
+function CollapsePanel({ isOpen, children, className = '' }) {
+  return (
+    <div
+      className={`grid transition-[grid-template-rows] duration-300 ease-out ${className}`}
+      style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
+    >
+      <div className="overflow-hidden min-h-0">{children}</div>
+    </div>
+  );
+}
+
+function MobileSubAccordion({ subcategory, categoryHref, isOpen, onToggle, onSelect }) {
+  return (
+    <div>
+      <button
+        onClick={onToggle}
+        className="flex items-center justify-between w-full px-4 py-2 rounded-lg text-sm font-semibold text-foreground hover:bg-muted transition-colors duration-200"
+      >
+        <span>{subcategory.name}</span>
+        <ChevronDown className={`w-3.5 h-3.5 opacity-30 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+      <CollapsePanel isOpen={isOpen}>
+        <div className="pb-1 pl-3 space-y-0.5">
+          {subcategory.children.map((item) => (
+            <Link
+              key={item.id}
+              href={`${categoryHref}/${subcategory.id}/${item.id}`}
+              onClick={onSelect}
+              className="flex items-center justify-between px-4 py-2 rounded-lg text-sm text-muted-foreground hover:text-primary hover:bg-muted transition-colors duration-150 group"
+            >
+              <span>{item.name}</span>
+              <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity duration-150 shrink-0" />
+            </Link>
+          ))}
+        </div>
+      </CollapsePanel>
+    </div>
+  );
+}
+
+function MobileCategoryAccordion({ category, isOpen, onToggle, openSubId, onToggleSub, onSelect }) {
+  const categoryHref = `/services/${category.id}`;
+
   return (
     <div>
       <button
         onClick={onToggle}
         className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-foreground hover:bg-muted hover:text-primary transition-colors duration-200"
       >
-        <span className="font-medium">{linkName}</span>
+        <span className="flex items-center gap-2 font-medium">
+          <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${accentDotClasses[category.accent] || accentDotClasses.primary}`} />
+          {category.name}
+        </span>
         <ChevronDown className={`w-4 h-4 opacity-30 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
-      <div
-        ref={panelRef}
-        style={{
-          maxHeight: isOpen ? `${panelRef.current?.scrollHeight ?? 400}px` : '0px',
-          overflow: 'hidden',
-          transition: 'max-height 300ms cubic-bezier(0.4, 0, 0.2, 1)',
-        }}
-      >
+      <CollapsePanel isOpen={isOpen}>
         <div className="pb-2 pl-3 pt-0.5 space-y-0.5">
-          {services.map((service) => (
-            <Link
-              key={service.id}
-              href={`/services/${service.id}`}
-              onClick={onSelect}
-              className="flex items-center justify-between px-4 py-2.5 rounded-xl text-muted-foreground hover:text-primary hover:bg-muted transition-colors duration-150 group"
-            >
-              <span className="text-sm font-medium">{service.title}</span>
-              <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity duration-150 shrink-0" />
-            </Link>
-          ))}
+          {category.children.map((child) =>
+            child.children ? (
+              <MobileSubAccordion
+                key={child.id}
+                subcategory={child}
+                categoryHref={categoryHref}
+                isOpen={openSubId === child.id}
+                onToggle={() => onToggleSub(child.id)}
+                onSelect={onSelect}
+              />
+            ) : (
+              <Link
+                key={child.id}
+                href={`${categoryHref}/${child.id}`}
+                onClick={onSelect}
+                className="flex items-center justify-between px-4 py-2.5 rounded-xl text-muted-foreground hover:text-primary hover:bg-muted transition-colors duration-150 group"
+              >
+                <span className="text-sm font-medium">{child.name}</span>
+                <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity duration-150 shrink-0" />
+              </Link>
+            )
+          )}
         </div>
-      </div>
+      </CollapsePanel>
     </div>
   );
 }
@@ -66,6 +129,8 @@ export default function Header({ data }) {
   const [menuVisible, setMenuVisible] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [openMobileCategoryId, setOpenMobileCategoryId] = useState(null);
+  const [openMobileSubId, setOpenMobileSubId] = useState(null);
 
   const closeMenu = () => {
     setMenuVisible(false);
@@ -125,45 +190,9 @@ export default function Header({ data }) {
                         <div className="absolute top-full left-0 w-full h-3" />
                       )}
 
-                      {/* Dropdown */}
+                      {/* Mega menu */}
                       {servicesDropdownOpen && (
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-72 bg-white rounded-2xl shadow-2xl border border-border/60 overflow-hidden animate-[anim-fade-down_0.15s_ease-out_both]">
-                          {/* Header strip */}
-                          <div className="px-4 py-3 bg-linear-to-r from-primary/8 to-secondary/8 border-b border-border/50">
-                            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Our Services</p>
-                          </div>
-                          <div className="p-2">
-                            {services.map((service, i) => {
-                              const Icon = service.icon;
-                              return (
-                                <Link
-                                  key={service.id}
-                                  href={`/services/${service.id}`}
-                                  onClick={() => setServicesDropdownOpen(false)}
-                                  className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-linear-to-r hover:from-primary/6 hover:to-secondary/6 transition-all duration-150 group"
-                                >
-                                  <div className="w-8 h-8 rounded-lg bg-linear-to-br from-primary/10 to-secondary/10 flex items-center justify-center shrink-0 group-hover:from-primary/20 group-hover:to-secondary/20 transition-all duration-150">
-                                    <Icon className="w-4 h-4 text-primary" />
-                                  </div>
-                                  <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
-                                    {service.title}
-                                  </span>
-                                  <ArrowRight className="w-3.5 h-3.5 text-primary opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-150 shrink-0 ml-auto" />
-                                </Link>
-                              );
-                            })}
-                          </div>
-                          {/* Footer strip */}
-                          <div className="px-4 py-2.5 border-t border-border/50 bg-muted/40">
-                            <a
-                              href="/#services"
-                              onClick={() => setServicesDropdownOpen(false)}
-                              className="text-[11px] font-black uppercase tracking-[0.15em] text-primary hover:text-primary-dark transition-colors flex items-center gap-1"
-                            >
-                              View all services <ArrowRight className="w-3 h-3" />
-                            </a>
-                          </div>
-                        </div>
+                        <ServicesMegaMenu onNavigate={() => setServicesDropdownOpen(false)} />
                       )}
                     </div>
                   ) : (
@@ -238,13 +267,37 @@ export default function Header({ data }) {
                 {navLinks.map((link) => (
                   <div key={link.name}>
                     {link.hasDropdown ? (
-                      <MobileServicesAccordion
-                        linkName={link.name}
-                        services={services}
-                        isOpen={mobileServicesOpen}
-                        onToggle={() => setMobileServicesOpen(!mobileServicesOpen)}
-                        onSelect={() => { setMobileServicesOpen(false); closeMenu(); }}
-                      />
+                      <div>
+                        <button
+                          onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                          className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-foreground hover:bg-muted hover:text-primary transition-colors duration-200"
+                        >
+                          <span className="font-medium">{link.name}</span>
+                          <ChevronDown className={`w-4 h-4 opacity-30 transition-transform duration-300 ${mobileServicesOpen ? 'rotate-180' : ''}`} />
+                        </button>
+                        {mobileServicesOpen && (
+                          <div className="pb-2 pl-1 pt-1 space-y-0.5">
+                            {servicesNav.map((category) => (
+                              <MobileCategoryAccordion
+                                key={category.id}
+                                category={category}
+                                isOpen={openMobileCategoryId === category.id}
+                                onToggle={() =>
+                                  setOpenMobileCategoryId(openMobileCategoryId === category.id ? null : category.id)
+                                }
+                                openSubId={openMobileSubId}
+                                onToggleSub={(subId) => setOpenMobileSubId(openMobileSubId === subId ? null : subId)}
+                                onSelect={() => {
+                                  setMobileServicesOpen(false);
+                                  setOpenMobileCategoryId(null);
+                                  setOpenMobileSubId(null);
+                                  closeMenu();
+                                }}
+                              />
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     ) : (
                       <a
                         href={link.href}

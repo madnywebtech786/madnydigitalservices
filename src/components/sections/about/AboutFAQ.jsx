@@ -9,16 +9,28 @@ const staggerDelays = ['anim-delay-1', 'anim-delay-2', 'anim-delay-3', 'anim-del
 
 const defaultFaqs = [
   {
-    question: 'Is Madny Digital Services a real Calgary company?',
-    answer: 'Yes. Madny Digital Services is based in Calgary, Alberta, with a physical shop serving local residents and businesses. We offer computer repair, phone repair, device sales, software development, and web development under one roof.',
+    question: 'Who is Madny Digital Services?',
+    answer: 'Madny Digital Services is a Calgary-based technology company providing professional computer systems and digital solutions to businesses and individuals, including software development, web development, digital marketing, and device sales and repair, all under one roof.',
   },
   {
-    question: 'Are your technicians experienced?',
-    answer: 'Yes. Our repair technicians are among the most skilled in Calgary, and our developers follow modern software and web development standards. Every repair and project is backed by testing and a clear warranty.',
+    question: 'What makes Madny Digital Services different from other agencies or repair shops?',
+    answer: 'We combine technology and digital services with computer and device sales and repair in one company. Instead of coordinating between separate vendors, businesses and individuals can rely on the same trusted team for their systems, software, websites, and devices.',
   },
   {
-    question: 'Do you serve areas outside Calgary, like Airdrie or Cochrane?',
-    answer: 'Yes. While our shop is based in Calgary, we regularly serve customers and businesses in Airdrie, Cochrane, and surrounding areas for repairs, device sales, and web or software development projects.',
+    question: 'Is your team experienced and qualified?',
+    answer: 'Yes. Our developers and technicians follow modern industry standards across software development, web development, and device repair, and every project or service is carried out with a focus on quality, reliability, and long-term client relationships.',
+  },
+  {
+    question: 'Do you work with both businesses and individuals?',
+    answer: 'Yes. We provide computer systems, software, and web solutions for businesses of all sizes, as well as device sales, repairs, and technical support for individuals.',
+  },
+  {
+    question: 'What areas do you serve?',
+    answer: 'We are based in Calgary and provide technology, digital, computer, and device services to customers and businesses in Calgary and nearby areas.',
+  },
+  {
+    question: 'How do I get started with Madny Digital Services?',
+    answer: 'Contact our team with your project or service details, whether it is a computer or device repair, a software or web development project, or an ongoing digital service, and we will guide you through the next steps.',
   },
 ];
 
@@ -56,7 +68,7 @@ export default function AboutFAQ({ data }) {
             data-inview={inView ? 'true' : ''}
             className="reveal-blur anim-delay-3 text-lg text-muted-foreground max-w-2xl leading-relaxed"
           >
-            {d.subtitle || 'Common questions about who we are and how we work, before you book a repair or start a project.'}
+            {d.subtitle || 'Straightforward answers about who we are, what we do, and how we work with businesses and individuals in Calgary.'}
           </p>
         </div>
 

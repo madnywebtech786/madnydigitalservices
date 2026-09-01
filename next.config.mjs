@@ -12,10 +12,18 @@ const nextConfig = {
       { source: '/index.php',             destination: '/',                              permanent: true },
       { source: '/about.php',             destination: '/about',                         permanent: true },
       { source: '/contact.php',           destination: '/contact',                       permanent: true },
-      { source: '/computer-repair.php',   destination: '/services/computer-repair',      permanent: true },
-      { source: '/cellphone-unlock.php',  destination: '/services/cell-phone-repair',    permanent: true },
+      { source: '/computer-repair.php',   destination: '/services/computer',             permanent: true },
+      { source: '/cellphone-unlock.php',  destination: '/services/cellphone',            permanent: true },
       { source: '/webdesign.php',         destination: '/services/web-development',      permanent: true },
       { source: '/webhosting.php',        destination: '/services/web-development',      permanent: true },
+
+      // Services hierarchy restructure (2026-08-27): the 5 flat service pages
+      // became 4 category pages with a 3-level tree underneath. web-development
+      // and software-development keep their exact URLs (now category pages,
+      // same content model migration path) — no redirect needed for those two.
+      { source: '/services/computer-repair',   destination: '/services/computer',  permanent: true },
+      { source: '/services/device-sales',      destination: '/services/computer',  permanent: true },
+      { source: '/services/cell-phone-repair', destination: '/services/cellphone', permanent: true },
     ];
   },
 

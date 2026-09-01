@@ -9,10 +9,10 @@ const stepIcons = [Search, PenTool, Code, Rocket, ShieldCheck];
 export default function AboutProcess({ data }) {
   const d = data || {};
   const steps = d.steps || [
-    { title: 'Discovery',    description: 'Understanding your goals and mapping the path forward.' },
-    { title: 'Design',       description: 'Creating the visual concept and user experience.' },
-    { title: 'Development',  description: 'Building the solution with clean, performant code.' },
-    { title: 'Launch',       description: 'Going live and delivering to the world.' },
+    { title: 'Understand Your Needs', description: 'We discuss your requirements, goals, or technical issue to understand exactly what solution you need.' },
+    { title: 'Assess & Plan',         description: 'Our team evaluates the requirements and recommends the right technology, service, repair, or development approach.' },
+    { title: 'Develop & Deliver',     description: 'We design, develop, configure, upgrade, or repair your solution with a focus on quality, performance, and reliability.' },
+    { title: 'Test & Support',        description: 'We test the completed work, ensure everything functions as expected, and provide ongoing support when required.' },
   ];
 
   const [sectionRef, inView] = useInView('-60px');
@@ -32,19 +32,19 @@ export default function AboutProcess({ data }) {
             data-inview={inView ? 'true' : ''}
             className="reveal-scale anim-delay-1 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6 font-bold text-primary uppercase tracking-wider text-xs"
           >
-            {d.badge || 'Our Working Process'}
+            {d.badge || 'Our Process'}
           </span>
           <h2
             data-inview={inView ? 'true' : ''}
             className="reveal-blur anim-delay-2 text-4xl md:text-5xl font-black mb-6"
           >
-            {d.title || 'How We Bring Your Ideas to Life'}
+            {d.title || 'Simple Process. Reliable Solutions.'}
           </h2>
           <p
             data-inview={inView ? 'true' : ''}
             className="reveal-blur anim-delay-3 text-lg text-muted-foreground max-w-2xl mx-auto"
           >
-            {d.description || 'Our proven methodology ensures that every project is delivered on time, within budget, and to the highest standards of quality.'}
+            {d.description || 'From digital projects to technical services, we follow a clear and professional process focused on understanding your needs and delivering the right solution.'}
           </p>
         </div>
 

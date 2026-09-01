@@ -3,7 +3,6 @@
 import {
   Monitor,
   Smartphone,
-  ShoppingBag,
   Code2,
   Terminal,
   Star,
@@ -13,20 +12,15 @@ import { useInView } from "@/hooks/useInView";
 import ServicesCarousel from "@/components/sections/home/ServicesCarousel";
 
 const servicesMeta = {
-  "computer-repair": {
+  "computer": {
     icon: Monitor,
     gradient: "from-primary to-primary-dark",
     tint: "bg-primary/6",
   },
-  "cell-phone-repair": {
+  "cellphone": {
     icon: Smartphone,
     gradient: "from-secondary to-secondary-dark",
     tint: "bg-secondary/6",
-  },
-  "device-sales": {
-    icon: ShoppingBag,
-    gradient: "from-primary to-secondary",
-    tint: "bg-primary/6",
   },
   "software-development": {
     icon: Terminal,
@@ -42,41 +36,41 @@ const servicesMeta = {
 
 const defaultServices = [
   {
-    id: "computer-repair",
+    id: "computer",
     title: "Computer Repair",
-    shortDesc: "Expert diagnostics & repair",
+    shortDesc: "Diagnostics, upgrades & data backup",
     description:
-      "Professional computer repair for all brands — hardware, software, virus removal, data recovery.",
-    features: ["Hardware Repair", "Virus Removal", "Data Recovery", "Upgrades"],
+      "Professional computer repair and systems design: hardware, software, RAM/SSD upgrades, data recovery.",
+    features: ["Hardware Repair", "System Design", "Data Recovery", "Upgrades"],
   },
   {
-    id: "cell-phone-repair",
+    id: "cellphone",
     title: "Cell Phone Repair",
-    shortDesc: "Screen repair & carrier unlock",
+    shortDesc: "Screen repair & carrier unlocking",
     description:
-      "Fast, reliable phone repair — screens, batteries, water damage, and carrier unlocking.",
+      "Fast, reliable phone repair: screens, batteries, charging ports, cameras, and carrier unlocking.",
     features: [
       "Screen Repair",
       "Battery Replacement",
       "Unlocking",
-      "Water Damage",
+      "Liquid Damage",
     ],
   },
   {
-    id: "device-sales",
-    title: "Device Sales",
-    shortDesc: "Quality devices & accessories",
+    id: "software-development",
+    title: "Software Development",
+    shortDesc: "Custom business software & apps",
     description:
-      "New and refurbished mobiles, laptops, and computers, plus quality accessories.",
-    features: ["New Devices", "Refurbished", "Accessories", "Best Prices"],
+      "Custom software built around your business: management systems, web apps, portals, and databases.",
+    features: ["Custom Software", "Web Apps", "Databases", "Automation"],
   },
   {
     id: "web-development",
     title: "Web Development",
-    shortDesc: "Custom websites & apps",
+    shortDesc: "Custom websites & online stores",
     description:
-      "Business websites and e-commerce platforms — modern, responsive, built to perform.",
-    features: ["Custom Websites", "E-Commerce", "SEO Optimized", "Responsive"],
+      "Business websites and e-commerce platforms: modern, responsive, built with SEO in mind.",
+    features: ["Custom Websites", "E-Commerce", "SEO Ready", "Responsive"],
   },
 ];
 
@@ -128,7 +122,7 @@ export default function Services({ data }) {
               className="reveal-up anim-delay-2 text-muted-foreground leading-relaxed"
             >
               {d.subtitle ||
-                "From device repairs to web solutions — comprehensive tech services to keep you connected and your business growing."}
+                "From device repairs to web solutions, comprehensive tech services to keep you connected and your business growing."}
             </p>
             <p className="text-xs text-muted-foreground/50 mt-4 hidden lg:block">
               Scroll to explore →

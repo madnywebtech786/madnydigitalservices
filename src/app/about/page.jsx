@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 export const revalidate = 3600;
 import Footer from '@/components/layout/Footer';
 import AboutHero from '@/components/sections/about/AboutHero';
+import AboutWhatWeDo from '@/components/sections/about/AboutWhatWeDo';
 import AboutWhy from '@/components/sections/about/AboutWhy';
 import AboutMission from '@/components/sections/about/AboutMission';
 import AboutFAQ from '@/components/sections/about/AboutFAQ';
@@ -22,7 +23,7 @@ export async function generateMetadata() {
       title: d.ogTitle || d.title || 'About Us | Madny Digital Services',
       description: d.ogDescription || d.description || 'Learn about Madny Digital Services, our mission, vision, and the team driving digital excellence in Calgary.',
       url: 'https://www.madnydigitalservices.com/about',
-      images: [d.ogImage || '/og-about.jpg'],
+      images: [d.ogImage || '/mds-logo.png'],
     },
     twitter: {
       card: 'summary_large_image',
@@ -64,6 +65,7 @@ export default async function AboutPage() {
       <Header data={global?.header} />
       <main className="page-flow">
         <AboutHero data={sections.hero} />
+        <AboutWhatWeDo data={sections.whatWeDo} />
         <AboutWhy data={sections.whyChooseUs} />
         <AboutMission mission={sections.mission} vision={sections.vision} />
         <AboutProcess data={sections.process} />

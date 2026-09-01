@@ -9,8 +9,8 @@ export default function AboutMission({ mission, vision }) {
   const m = mission || {};
   const v = vision || {};
 
-  const mPoints = m.bulletPoints || ['Empowering businesses', 'Digital excellence'];
-  const vPillars = v.pillars || ['Innovation', 'Integrity'];
+  const mPoints = m.bulletPoints || ['Quality service and practical solutions', 'Long-term client relationships', 'Professional technical and device repair support'];
+  const vPillars = v.pillars || ['Modern Solutions', 'Reliable & Scalable', 'Built to Grow With You'];
 
   const [missionRef, missionInView] = useInView('-60px');
   const [visionRef, visionInView] = useInView('-60px');

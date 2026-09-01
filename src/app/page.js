@@ -5,13 +5,13 @@ import Services from '@/components/sections/home/Services';
 import About from '@/components/sections/home/About';
 import AboutProcess from '@/components/sections/shared/AboutProcess';
 import ProjectsShowcase from '@/components/sections/home/ProjectsShowcase';
-import Gallery from '@/components/sections/home/Gallery';
 import Testimonials from '@/components/sections/home/Testimonials';
 import FAQ from '@/components/sections/home/FAQ';
 import Contact from '@/components/sections/home/Contact';
 import CTA from '@/components/sections/shared/CTA';
 import DiagonalBanners from '@/components/sections/home/DiagonalBanners';
 import { getPageContent, getGlobalContent } from '@/lib/content';
+import WorkingAreas from '@/components/sections/home/WorkingAreas';
 
 export const revalidate = 3600;
 
@@ -89,7 +89,7 @@ export default async function Home() {
         <AboutProcess data={sections.process} />
         <ProjectsShowcase data={projectsShowcaseData} />
         <DiagonalBanners data={sections.diagonalBanners} />
-        <Gallery data={sections.gallery} />
+        <WorkingAreas />
         <Testimonials data={sections.testimonials} />
         <FAQ data={sections.faqs} />
         <Contact data={sections.contact} />

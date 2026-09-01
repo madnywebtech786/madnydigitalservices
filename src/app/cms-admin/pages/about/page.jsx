@@ -30,26 +30,33 @@ export default function AboutEditor() {
       if (res.ok) {
         const json = await res.json();
         const defaultSections = {
-          hero: { badge: 'About Madny Digital', headingPart1: 'Crafting Digital', headingPart2: 'Excellence', description: "We're a team of passionate innovators transforming ideas into powerful digital experiences that drive real business growth", ctaPrimary: 'Our Projects', ctaSecondary: 'Contact Us' },
-          stats: [{ value: '500+', label: 'Happy Clients' }, { value: '50+', label: 'Awards Won' }, { value: '1000+', label: 'Projects Completed' }, { value: '99%', label: 'Success Rate' }],
+          hero: { badge: 'About Madny Digital', headingPart1: 'We Are', headingPart2: 'Madny Digital Services', description: "Madny Digital Services is a Calgary-based technology company providing professional computer systems and digital solutions to businesses and individuals. We specialize in computer systems design, custom software development, web application development, website development, database solutions, and ongoing technical support. Our digital services include e-commerce development, custom web portals, website maintenance, SEO, digital marketing, and Google Ads.", ctaPrimary: 'Our Projects', ctaSecondary: 'Contact Us' },
+          stats: [{ value: '1.5k+', label: 'Happy Clients' }, { value: '50+', label: 'Awards Won' }, { value: '1000+', label: 'Projects Completed' }, { value: '99%', label: 'Success Rate' }],
           whyChooseUs: {
-            badge: 'The Madny Edge', title: 'Engineered for Digital Dominance',
-            description: "We don't just build websites; we architect digital powerhouses.",
+            badge: 'Why Choose Us', title: 'Why Choose Madny Digital Services?',
+            description: 'Your local one-stop technology partner in Calgary.',
             features: [
-              { title: 'Technical Excellence', description: 'Zero-compromise code quality using the latest Next.js architectures.', metric: '99.9%', benefit: 'System Uptime' },
-              { title: 'Strategic Innovation', description: 'We align every pixel with your business objectives.', metric: '400%', benefit: 'Avg. Engagement' },
-              { title: 'Hyper-Performance', description: 'Optimized for core web vitals and conversion.', metric: '< 1s', benefit: 'LCP Speed' },
+              { title: 'Your Local One-Stop Technology Partner', description: 'From computer systems and software development to web solutions, digital services, device sales, and repairs, Madny Digital Services brings your technology needs together under one roof.' },
+              { title: 'Local Calgary Business', description: 'A locally based technology company proudly serving businesses and individuals in Calgary and nearby areas.' },
+              { title: 'One-Stop Technology Solutions', description: 'Computer systems, software development, web development, digital marketing, hardware, device sales, technical support, and repairs, all in one place.' },
+              { title: 'Custom Solutions for Your Needs', description: 'Technology solutions tailored to your business requirements, project goals, and individual needs.' },
+              { title: 'Onsite Service Option', description: 'Convenient onsite computer and IT support available for eligible business and technical service requirements.' },
+              { title: 'Same-Day Service Available', description: 'Fast diagnostics and same-day service available for many common computer and device issues, subject to service requirements and parts availability.' },
+              { title: 'Affordable & Transparent Pricing', description: 'Competitive pricing with clear recommendations and solutions designed around your requirements and budget.' },
+              { title: 'Reliable Professional Service', description: 'Professional support focused on dependable solutions, quality workmanship, and long-term customer relationships.' },
+              { title: 'Quality Replacement Parts', description: 'Carefully selected replacement parts for supported computer, laptop, and cellphone repairs.' },
+              { title: 'Business & Individual Solutions', description: 'From helping businesses build their digital presence and technology systems to assisting individuals with everyday technology needs, our team is ready to help.' },
             ],
           },
           mission: {
-            badge: 'Our Mission', title: 'Transforming Ideas Into Digital Reality',
-            description: "We exist to bridge the gap between imagination and execution.",
-            bulletPoints: ['Empower businesses with cutting-edge technology', 'Deliver measurable results and lasting value', 'Build partnerships based on trust and transparency'],
+            badge: 'Our Mission', title: 'Reliable Technology, Built to Last',
+            description: "To deliver reliable and innovative computer systems, software, web, and digital solutions that help businesses and individuals use technology more effectively. We are committed to quality service, practical solutions, and long-term client relationships, supported by professional technical and device repair services.",
+            bulletPoints: ['Quality service and practical solutions', 'Long-term client relationships', 'Professional technical and device repair support'],
           },
           vision: {
-            badge: 'Our Vision', titlePart1: 'A World Where Technology', titlePart2: 'Elevates Everyone',
-            description: 'We envision a future where innovative digital solutions are accessible to all businesses.',
-            pillars: [{ label: 'Global Impact' }, { label: 'Innovation First' }, { label: 'Human-Centered' }, { label: 'Sustainable Growth' }],
+            badge: 'Our Vision', titlePart1: 'A Trusted Technology', titlePart2: 'Partner for Growth',
+            description: 'To become a trusted technology and digital solutions provider recognized for delivering modern, reliable, and scalable solutions that help businesses grow, adapt, and succeed in an evolving digital world.',
+            pillars: [{ label: 'Modern Solutions' }, { label: 'Reliable & Scalable' }, { label: 'Built to Grow With You' }, { label: 'Trusted Locally' }],
           },
           process: {
             badge: 'Our Process', title: 'How We Transform Ideas',
@@ -63,9 +70,14 @@ export default function AboutEditor() {
           },
           faq: {
             badge: 'Frequently Asked Questions', title: 'Getting to Know Madny Digital',
-            subtitle: 'Common questions about who we are and how we work, before you book a repair or start a project.',
+            subtitle: 'Straightforward answers about who we are, what we do, and how we work with businesses and individuals in Calgary.',
             items: [
-              { question: 'Is Madny Digital Services a real Calgary company?', answer: 'Yes. Madny Digital Services is based in Calgary, Alberta, with a physical shop serving local residents and businesses.' },
+              { question: 'Who is Madny Digital Services?', answer: 'Madny Digital Services is a Calgary-based technology company providing professional computer systems and digital solutions to businesses and individuals, including software development, web development, digital marketing, and device sales and repair, all under one roof.' },
+              { question: 'What makes Madny Digital Services different from other agencies or repair shops?', answer: 'We combine technology and digital services with computer and device sales and repair in one company. Instead of coordinating between separate vendors, businesses and individuals can rely on the same trusted team for their systems, software, websites, and devices.' },
+              { question: 'Is your team experienced and qualified?', answer: 'Yes. Our developers and technicians follow modern industry standards across software development, web development, and device repair, and every project or service is carried out with a focus on quality, reliability, and long-term client relationships.' },
+              { question: 'Do you work with both businesses and individuals?', answer: 'Yes. We provide computer systems, software, and web solutions for businesses of all sizes, as well as device sales, repairs, and technical support for individuals.' },
+              { question: 'What areas do you serve?', answer: 'We are based in Calgary and provide technology, digital, computer, and device services to customers and businesses in Calgary and nearby areas.' },
+              { question: 'How do I get started with Madny Digital Services?', answer: 'Contact our team with your project or service details, whether it is a computer or device repair, a software or web development project, or an ongoing digital service, and we will guide you through the next steps.' },
             ],
           },
           cta: { badge: 'Ready to Build Something Amazing?', heading: 'Ready to Build Something Amazing?', description: "Let's collaborate and turn your vision into reality.", ctaPrimary: 'Start Your Project', ctaSecondary: 'Schedule a Call' }
@@ -255,23 +267,15 @@ export default function AboutEditor() {
                   <div className="pt-4 border-t border-gray-100">
                     <div className="flex items-center justify-between mb-2">
                       <label className="block text-sm font-bold">Feature Cards</label>
-                      <button onClick={() => addArrayItem('whyChooseUs', 'features', {title:'', description:'', metric:'', benefit:''})} className="text-sm flex items-center gap-1 text-primary font-medium hover:underline"><Plus className="w-4 h-4"/> Add Feature</button>
+                      <button onClick={() => addArrayItem('whyChooseUs', 'features', {title:'', description:''})} className="text-sm flex items-center gap-1 text-primary font-medium hover:underline"><Plus className="w-4 h-4"/> Add Feature</button>
                     </div>
                     <div className="grid gap-4">
                       {data.whyChooseUs.features && data.whyChooseUs.features.map((f, i) => (
                         <div key={i} className="bg-gray-50 p-4 rounded-xl border border-gray-100 relative pr-12">
                            <button onClick={() => removeArrayItem('whyChooseUs', 'features', i)} className="absolute top-4 right-4 p-2 text-red-500 hover:bg-red-50 rounded-lg"><Trash2 className="w-4 h-4"/></button>
-                           <div className="grid md:grid-cols-2 gap-4 mb-4">
+                           <div className="grid gap-4">
                              <div><label className="text-xs font-semibold text-gray-500 mb-1 block">Title</label><Input value={f.title || ''} onChange={(e) => updateArrayItem('whyChooseUs', 'features', i, 'title', e.target.value)} /></div>
-                             <div>
-                               <label className="text-xs font-semibold text-gray-500 mb-1 block">Metric Bubble Value (e.g. 40% Faster)</label>
-                               <Input value={f.metric || ''} onChange={(e) => updateArrayItem('whyChooseUs', 'features', i, 'metric', e.target.value)} />
-                             </div>
-                             <div className="md:col-span-2"><label className="text-xs font-semibold text-gray-500 mb-1 block">Description</label><TextareaAutosize value={f.description || ''} onChange={(e) => updateArrayItem('whyChooseUs', 'features', i, 'description', e.target.value)} /></div>
-                             <div className="md:col-span-2">
-                               <label className="text-xs font-semibold text-gray-500 mb-1 block">Metric Sub-label (e.g. Time Saved)</label>
-                               <Input value={f.benefit || ''} onChange={(e) => updateArrayItem('whyChooseUs', 'features', i, 'benefit', e.target.value)} />
-                             </div>
+                             <div><label className="text-xs font-semibold text-gray-500 mb-1 block">Description</label><TextareaAutosize value={f.description || ''} onChange={(e) => updateArrayItem('whyChooseUs', 'features', i, 'description', e.target.value)} /></div>
                            </div>
                         </div>
                       ))}

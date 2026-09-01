@@ -27,31 +27,30 @@ export default function About({ data }) {
   const d = data || {};
 
   const values = d.values ?? [
-    { title: 'Mission', description: 'To empower businesses in Calgary and beyond with innovative digital solutions that drive growth and success in the modern marketplace.' },
-    { title: 'Vision',  description: 'To be the leading digital agency in Canada, known for exceptional creativity, technical excellence, and unwavering commitment to client success.' },
+    { title: 'Mission', description: 'To deliver reliable and innovative computer systems, software, web, and digital solutions that help businesses and individuals use technology more effectively. We are committed to quality service, practical solutions, and long-term client relationships, supported by professional technical and device repair services.' },
+    { title: 'Vision',  description: 'To become a trusted technology and digital solutions provider recognized for delivering modern, reliable, and scalable solutions that help businesses grow, adapt, and succeed in an evolving digital world.' },
   ];
 
   const achievements = d.achievements ?? [
     { number: '150+', label: 'Projects Completed' },
-    { number: '50+',  label: 'Happy Clients' },
-    { number: '10+',  label: 'Years Experience' },
-    { number: '25+',  label: 'Team Members' },
+    { number: '1.5k+', label: 'Happy Clients' },
+    { number: '20+',  label: 'Years Experience' },
   ];
 
   const features = d.features ?? [
-    'Custom solutions tailored to your business',
-    'Cutting-edge technologies and frameworks',
-    'Transparent communication throughout',
-    'On-time delivery guaranteed',
-    'Post-launch support and maintenance',
-    'SEO and performance optimization',
+    'Free Diagnose',
+    'Warranty on all repairs and devices sold',
+    'Transparent, upfront pricing',
+    'Same-day service available',
+    'Onsite service option available',
+    'Quality replacement parts',
   ];
 
   const [sectionRef, inView] = useInView('-80px');
 
   const featureDelays  = ['anim-delay-9', 'anim-delay-10', 'anim-delay-11', 'anim-delay-12', 'anim-delay-13', 'anim-delay-14'];
   const valueDelays    = ['anim-delay-2', 'anim-delay-4'];
-  const achieveDelays  = ['anim-delay-2', 'anim-delay-4', 'anim-delay-6', 'anim-delay-8'];
+  const achieveDelays  = ['anim-delay-2', 'anim-delay-4', 'anim-delay-6'];
 
   return (
     <section
@@ -113,7 +112,7 @@ export default function About({ data }) {
                       <Award className="w-7 h-7 text-white" />
                     </div>
                     <div>
-                      <div className="text-3xl font-bold text-gradient">{d.floatingCard1Value || '10+'}</div>
+                      <div className="text-3xl font-bold text-gradient">{d.floatingCard1Value || '20+'}</div>
                       <div className="text-sm text-muted-foreground">{d.floatingCard1Label || 'Years of Excellence'}</div>
                     </div>
                   </div>
@@ -131,7 +130,7 @@ export default function About({ data }) {
                       <Users className="w-7 h-7 text-white" />
                     </div>
                     <div>
-                      <div className="text-3xl font-bold text-gradient">{d.floatingCard2Value || '50+'}</div>
+                      <div className="text-3xl font-bold text-gradient">{d.floatingCard2Value || '1.5k+'}</div>
                       <div className="text-sm text-muted-foreground">{d.floatingCard2Label || 'Happy Clients'}</div>
                     </div>
                   </div>
@@ -170,13 +169,13 @@ export default function About({ data }) {
               data-inview={inView ? 'true' : ''}
               className="reveal-blur anim-delay-5 text-lg text-muted-foreground leading-relaxed mb-6"
             >
-              {d.paragraph1 || "Based in Calgary, Canada, we are a full-service digital agency specializing in creating exceptional digital experiences. With over a decade of experience, we've helped businesses in the mobile, laptop, and accessories industry establish powerful online presences."}
+              {d.paragraph1 || "Madny Digital Services is a Calgary-based technology company providing professional computer systems and digital solutions to businesses and individuals. We specialize in computer systems design, custom software development, web application development, website development, database solutions, and ongoing technical support."}
             </p>
             <p
               data-inview={inView ? 'true' : ''}
               className="reveal-blur anim-delay-6 text-muted-foreground leading-relaxed mb-8"
             >
-              {d.paragraph2 || 'Our team of designers, developers, and strategists work together to deliver solutions that not only look stunning but also drive real business results.'}
+              {d.paragraph2 || 'Our digital services include e-commerce development, custom web portals, website maintenance, SEO, digital marketing, and Google Ads. We focus on developing reliable, practical, and scalable technology solutions tailored to the needs of each client. In addition to our core technology and digital services, we provide computer and cellphone sales, hardware and software support, system upgrades, data backup and recovery, and professional device repair services.'}
             </p>
 
             {/* Feature list */}
@@ -249,7 +248,7 @@ export default function About({ data }) {
             aria-hidden="true"
           />
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 relative z-10">
+          <div className="grid grid-cols-3 gap-8 relative z-10">
             {achievements.map((item, index) => (
               <div
                 key={item.label}
