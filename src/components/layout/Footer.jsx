@@ -27,24 +27,16 @@ const footerLinks = {
   ],
 };
 
-// A short curated list for the single footer "Our Services" column — the
-// 4 top-level categories plus a few of their most-searched children, read
-// directly off servicesNav.js (the real tree the header mega menu uses) so
-// names/hrefs can't drift out of sync with the actual service pages.
-function findChild(categoryId, childId) {
-  const category = servicesNav.find((c) => c.id === categoryId);
-  const child = category?.children.find((c) => c.id === childId);
-  return child ? { name: child.name, href: `/services/${categoryId}/${childId}` } : null;
-}
+// The footer "Our Services" column shows the 4 top-level categories, in a
+// fixed display order, read directly off servicesNav.js (the real tree the
+// header mega menu uses) so names/hrefs can't drift out of sync with the
+// actual service pages.
+const FOOTER_SERVICE_ORDER = ['computer', 'software-development', 'web-development', 'cellphone'];
 
-const popularServices = [
-  { name: 'Computer Repair', href: '/services/computer' },
-  { name: 'Cellphone Repair', href: '/services/cellphone' },
-  findChild('web-development', 'website-design-development'),
-  findChild('software-development', 'custom-software-development'),
-  findChild('web-development', 'ecommerce-development'),
-  findChild('web-development', 'seo'),
-].filter(Boolean);
+const popularServices = FOOTER_SERVICE_ORDER
+  .map((categoryId) => servicesNav.find((c) => c.id === categoryId))
+  .filter(Boolean)
+  .map((category) => ({ name: category.name, href: `/services/${category.id}` }));
 
 const socialLinks = [
   { icon: Instagram, href: 'https://www.instagram.com/madnydigitalservices', label: 'Instagram' },

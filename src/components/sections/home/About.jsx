@@ -32,7 +32,7 @@ export default function About({ data }) {
   ];
 
   const achievements = d.achievements ?? [
-    { number: '150+', label: 'Projects Completed' },
+    { number: '1k+', label: 'Projects Completed' },
     { number: '1.5k+', label: 'Happy Clients' },
     { number: '20+',  label: 'Years Experience' },
   ];

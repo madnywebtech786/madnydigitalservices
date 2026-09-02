@@ -35,9 +35,11 @@ function Tile({ city, hero = false, index }) {
         <h3 className={`font-black text-white tracking-tight ${hero ? 'text-3xl lg:text-4xl' : 'text-lg lg:text-xl'}`}>
           {city.name}
         </h3>
-        <p className={`text-white/70 font-medium mt-0.5 ${hero ? 'text-sm' : 'text-[11px] lg:text-xs'}`}>
-          {city.description || 'Serving local homes & businesses'}
-        </p>
+        {hero && (
+          <p className="text-white/70 font-medium mt-0.5 text-sm">
+            {city.description || 'Serving local homes & businesses'}
+          </p>
+        )}
       </div>
     </>
   );

@@ -11,6 +11,10 @@ export const servicesNav = [
     name: 'Computer',
     accent: 'primary',
     children: [
+      { id: 'computer-system-design', name: 'Computer System Design' },
+      { id: 'hardware-software', name: 'Hardware & Software' },
+      { id: 'data-backup-recovery', name: 'Data Backup & Recovery' },
+      { id: 'sales-and-service', name: 'Sales and Service' },
       {
         id: 'repair',
         name: 'Repair',
@@ -25,10 +29,6 @@ export const servicesNav = [
           { id: 'upgrade-your-computer', name: 'Upgrade Your Computer' },
         ],
       },
-      { id: 'computer-system-design', name: 'Computer System Design' },
-      { id: 'hardware-software', name: 'Hardware & Software' },
-      { id: 'data-backup-recovery', name: 'Data Backup & Recovery' },
-      { id: 'sales-and-service', name: 'Sales and Service' },
     ],
   },
   {

@@ -37,7 +37,7 @@ const heroSlides = [
     ctaSecondaryHref: 'tel:+14037088214',
     stat1: { icon: Shield, value: '20+', label: 'Years of Experience', color: 'primary' },
     stat2: { icon: Star, value: '1.5k+', label: 'Happy Customers', color: 'secondary' },
-    image: '/images/hero.webp',
+    image: '/images/complete-digital-solutions.webp',
     imageAlt: 'Complete digital and IT solutions',
   },
   {
@@ -51,7 +51,7 @@ const heroSlides = [
     ctaSecondaryHref: 'tel:+14034937500',
     stat1: { icon: Wrench, value: '5k+', label: 'Devices Repaired', color: 'primary' },
     stat2: { icon: Star, value: '1.5k+', label: 'Happy Customers', color: 'secondary' },
-    image: '/images/hero.webp',
+    image: '/images/computer-sales-img.webp',
     imageAlt: 'Computer sales, repair and upgrades',
   },
   {
@@ -65,7 +65,7 @@ const heroSlides = [
     ctaSecondaryHref: '/contact',
     stat1: { icon: Monitor, value: '1k+', label: 'Web Projects', color: 'primary' },
     stat2: { icon: Shield, value: '20+', label: 'Years of Experience', color: 'secondary' },
-    image: '/images/hero.webp',
+    image: '/images/software-development.webp',
     imageAlt: 'Software and web development',
   },
   {
@@ -79,7 +79,7 @@ const heroSlides = [
     ctaSecondaryHref: '/contact',
     stat1: { icon: Wrench, value: '5k+', label: 'Devices Repaired', color: 'primary' },
     stat2: { icon: Star, value: '1.5k+', label: 'Happy Customers', color: 'secondary' },
-    image: '/images/hero.webp',
+    image: '/images/cell-phone-sell-repair.webp',
     imageAlt: 'Cellphone sales and repair',
   },
 ];
