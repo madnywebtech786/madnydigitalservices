@@ -57,23 +57,23 @@ function ServiceCard({ service, index, inView }) {
         </p>
 
         {/* Description */}
-        <p className="text-muted-foreground leading-relaxed mb-8">
+        <p className="text-muted-foreground leading-relaxed mb-5 text-sm">
           {service.description}
         </p>
 
         {/* Features */}
-        <div className="flex flex-wrap gap-2">
-          {service.features?.slice(0, 4).map((feature) => (
+        <div className="flex flex-wrap gap-1.5">
+          {service.features?.map((feature) => (
             <span
               key={feature}
               className="
                 inline-flex
                 items-center
-                gap-1.5
-                text-xs
+                gap-1
+                text-[11px]
                 font-semibold
-                px-3
-                py-1.5
+                px-2.5
+                py-1
                 rounded-full
                 bg-background
                 border
@@ -375,8 +375,8 @@ export default function ServicesCarousel({ services, inView }) {
                 key={service.id}
                 className="
                 shrink-0
-                h-110
-                md:h-130 lg:h-115
+                h-115
+                md:h-140 lg:h-125
               "
                 style={{
                   width: slotWidth,
@@ -394,9 +394,9 @@ export default function ServicesCarousel({ services, inView }) {
             <div
               className="
               shrink-0
-              h-110
-              md:h-130 
-              lg:h-115
+              h-115
+              md:h-140
+              lg:h-125
             "
               style={{
                 width: slotWidth,

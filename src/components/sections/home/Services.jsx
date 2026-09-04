@@ -37,40 +37,61 @@ const servicesMeta = {
 const defaultServices = [
   {
     id: "computer",
-    title: "Computer Repair",
-    shortDesc: "Diagnostics, upgrades & data backup",
+    title: "Computer Services",
+    shortDesc: "Computer systems, sales, support & repair",
     description:
-      "Professional computer repair and systems design: hardware, software, RAM/SSD upgrades, data recovery.",
-    features: ["Hardware Repair", "System Design", "Data Recovery", "Upgrades"],
+      "Complete computer solutions for businesses and individuals in Calgary. From computer systems design and hardware and software support to laptop sales, upgrades, data backup and recovery, and professional repair services, we help keep your technology reliable and working efficiently.",
+    features: [
+      "Computer Systems Design",
+      "Hardware & Software",
+      "Sales & Service",
+      "Upgrades & Repairs",
+      "Data Backup & Recovery",
+    ],
   },
   {
     id: "cellphone",
-    title: "Cell Phone Repair",
-    shortDesc: "Screen repair & carrier unlocking",
+    title: "Cellphone Services",
+    shortDesc: "Sales, setup, support & repair",
     description:
-      "Fast, reliable phone repair: screens, batteries, charging ports, cameras, and carrier unlocking.",
+      "Complete cellphone solutions for everyday and business needs. We offer brand-new and refurbished phones, professional device setup, accessories, unlocking, troubleshooting, and repair services for many supported cellphone models.",
     features: [
-      "Screen Repair",
-      "Battery Replacement",
-      "Unlocking",
-      "Liquid Damage",
+      "Brand-New & Refurbished Phones",
+      "Cellphone Setup & Support",
+      "Screen & Battery Replacement",
+      "Charging Port & Audio Repair",
+      "Liquid Damage Service",
+      "Unlocking & Accessories",
     ],
   },
   {
     id: "software-development",
     title: "Software Development",
-    shortDesc: "Custom business software & apps",
+    shortDesc: "Custom software built for your business",
     description:
-      "Custom software built around your business: management systems, web apps, portals, and databases.",
-    features: ["Custom Software", "Web Apps", "Databases", "Automation"],
+      "Custom software solutions designed to improve business operations, streamline workflows, and support growth. We develop reliable web applications, business management systems, databases, dashboards, portals, and other software tailored to your requirements.",
+    features: [
+      "Custom Software Development",
+      "Web Application Development",
+      "Database Development",
+      "Software Testing & Maintenance",
+      "Business Systems & Automation",
+    ],
   },
   {
     id: "web-development",
     title: "Web Development",
-    shortDesc: "Custom websites & online stores",
+    shortDesc: "Professional websites built for your business",
     description:
-      "Business websites and e-commerce platforms: modern, responsive, built with SEO in mind.",
-    features: ["Custom Websites", "E-Commerce", "SEO Ready", "Responsive"],
+      "Modern, responsive, and user-friendly web solutions designed to strengthen your online presence. We build business websites, e-commerce stores, custom web portals, and provide ongoing website maintenance and digital marketing solutions.",
+    features: [
+      "Website Design & Development",
+      "ECommerce Development",
+      "Custom Web Portals",
+      "Website Maintenance",
+      "SEO & Digital Marketing",
+      "PPC & Google Ads",
+    ],
   },
 ];
 
@@ -122,7 +143,7 @@ export default function Services({ data }) {
               className="reveal-up anim-delay-2 text-muted-foreground leading-relaxed"
             >
               {d.subtitle ||
-                "From device repairs to web solutions, comprehensive tech services to keep you connected and your business growing."}
+                "Computer systems design, software development, web development, digital solutions, computer and cellphone sales, technical support, and professional repair services for businesses and individuals in Calgary and nearby areas."}
             </p>
             <p className="text-xs text-muted-foreground/50 mt-4 hidden lg:block">
               Scroll to explore →
