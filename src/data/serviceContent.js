@@ -2979,10 +2979,10 @@ export const serviceContent = {
   },
 
   "cellphone/sales-and-service": {
-    "metaTitle": "Cellphone Sales &amp; Service in Calgary | Madny Digital",
+    "metaTitle": "Cellphone Sales & Service in Calgary | Madny Digital",
     "metaDescription": "Buy new or refurbished cellphones in Calgary, get professional setup, data transfer, virus removal, and unlocking at Madny Digital Services. Contact us today.",
     "eyebrow": "Serving Calgary and Nearby Areas",
-    "h1": "Cellphone Sales &amp; Service in Calgary",
+    "h1": "Cellphone Sales & Service in Calgary",
     "intro": "Shopping for a new phone or need a hand getting your mobile device ready to use? Madny Digital Services offers cellphone sales and professional mobile services for customers throughout Calgary and the surrounding area. Our team sells a selection of brand-new and refurbished cellphones and helps customers pick a device that fits their needs and budget, then sets it up, installs apps, configures accounts, transfers supported data, removes unwanted software, and gets it ready for everyday use.",
     "problemsHeading": "Common Reasons Customers Visit Us",
     "problems": [
@@ -2995,10 +2995,10 @@ export const serviceContent = {
       "Phone is locked to a carrier and needs unlocking",
       "Need cases, chargers, cables, or other accessories for your device"
     ],
-    "servicesHeading": "What Our Cellphone Sales &amp; Service Includes",
+    "servicesHeading": "What Our Cellphone Sales & Service Includes",
     "services": [
       {
-        "title": "Brand-New &amp; Refurbished Cellphones",
+        "title": "Brand-New & Refurbished Cellphones",
         "description": "We carry a selection of smartphones with different models, specifications, storage capacities, and price options, including brand-new, refurbished, and unlocked iPhones and Android devices for both everyday and business use. Inventory and availability may vary."
       },
       {
@@ -3006,7 +3006,7 @@ export const serviceContent = {
         "description": "We help set up new cellphones, including Apple ID or Google account setup, email configuration, app installation, software updates, contact and supported data transfer, photo and file transfer, Wi-Fi and Bluetooth setup, and security and privacy settings. Customers are responsible for providing or creating their own account credentials where required."
       },
       {
-        "title": "Virus &amp; Unwanted Software Removal",
+        "title": "Virus & Unwanted Software Removal",
         "description": "If your phone shows unwanted pop-ups, unusual advertisements, suspicious applications, or other unexpected behaviour, we assess the device and help remove supported malicious or unwanted software, along with browser cleanup, security checks, and general performance cleanup."
       },
       {
@@ -3022,14 +3022,14 @@ export const serviceContent = {
         "description": "Alongside sales and setup, we provide professional repair services for supported cellphones, including screen replacement, battery replacement, charging port service, camera and speaker issues, back glass replacement, liquid damage assessment, and general diagnostics."
       }
     ],
-    "processHeading": "How Our Cellphone Sales &amp; Setup Works",
+    "processHeading": "How Our Cellphone Sales & Setup Works",
     "process": [
       {
         "step": "Choose Your Device",
         "description": "We help you choose a brand-new, refurbished, or unlocked phone based on your needs and budget from our available selection."
       },
       {
-        "step": "Account &amp; Software Setup",
+        "step": "Account & Software Setup",
         "description": "Our team sets up your phone, installs applications, configures your Apple ID or Google account, and adjusts device settings."
       },
       {
@@ -3037,7 +3037,7 @@ export const serviceContent = {
         "description": "We transfer supported contacts, photos, and files from your previous device and remove unwanted software."
       },
       {
-        "step": "Final Configuration &amp; Support",
+        "step": "Final Configuration & Support",
         "description": "We finish with Wi-Fi and Bluetooth setup, security and privacy settings, general troubleshooting, and phone optimization to get your device ready for everyday use."
       }
     ],
