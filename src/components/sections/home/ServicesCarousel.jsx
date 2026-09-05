@@ -377,8 +377,8 @@ export default function ServicesCarousel({ services, inView }) {
                 key={service.id}
                 className="
                 shrink-0
-                h-115
-                md:h-140 lg:h-125
+                h-105
+                md:h-125 lg:h-115
               "
                 style={{
                   width: slotWidth,
@@ -396,9 +396,9 @@ export default function ServicesCarousel({ services, inView }) {
             <div
               className="
               shrink-0
-              h-115
-              md:h-140
-              lg:h-125
+              h-105
+              md:h-125
+              lg:h-115
             "
               style={{
                 width: slotWidth,
