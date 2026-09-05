@@ -21,7 +21,7 @@ const DOT_POSITIONS = [
   { left: '82%', top: '38%', dur: 4.8, delay: 0.4 },
 ];
 
-const SLIDE_INTERVAL_MS = 4000;
+const SLIDE_INTERVAL_MS = 7000;
 
 // Rotating slide content — text, the two floating stat cards, and the main
 // hero image all change together every 4s.

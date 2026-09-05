@@ -66,7 +66,7 @@ export default function Footer({ data }) {
           {/* Brand */}
           <div className="md:col-span-2 lg:col-span-1">
             <a href="/" className="inline-flex items-center mb-6 hover:opacity-90 transition-opacity">
-              <Image src="/mds-logo.png" alt="Madny Digital Services" width={500} height={200} className="bg-white rounded-2xl p-3 h-20 w-auto object-contain" />
+              <Image src="/madny-digital-services-logo.webp" alt="Madny Digital Services" width={500} height={200} className="bg-white rounded-md  p-3 h-26 w-auto object-contain" />
             </a>
 
             <p className="text-white/70 leading-relaxed mb-4 max-w-sm">

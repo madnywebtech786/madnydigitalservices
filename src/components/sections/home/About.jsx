@@ -10,6 +10,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import Container from '@/components/ui/Container';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Button from '@/components/ui/Button';
@@ -194,11 +195,13 @@ export default function About({ data }) {
 
             <div
               data-inview={inView ? 'true' : ''}
-              className="reveal-up anim-delay-15 hover-lift inline-block"
+              className="reveal-up anim-delay-15 hover-lift inline-block rounded-full"
             >
-              <Button size="lg" icon={<ArrowRight className="w-5 h-5" />}>
-                Learn More About Us
-              </Button>
+              <Link href="/about">
+                <Button size="lg" icon={<ArrowRight className="w-5 h-5" />}>
+                  Learn More About Us
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

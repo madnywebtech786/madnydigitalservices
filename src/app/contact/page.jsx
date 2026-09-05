@@ -18,7 +18,7 @@ export async function generateMetadata() {
       title: d.ogTitle || d.title || 'Contact Us | Madny Digital Services',
       description: d.ogDescription || d.description || 'Get in touch with Madny Digital Services. We would love to hear about your project and how we can help bring your vision to life.',
       url: 'https://www.madnydigitalservices.com/contact',
-      images: [d.ogImage || '/mds-logo.png'],
+      images: [d.ogImage || '/og-image.png'],
     },
     twitter: {
       card: 'summary_large_image',

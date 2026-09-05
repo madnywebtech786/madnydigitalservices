@@ -217,7 +217,7 @@ export default function Contact({ data, showHeader = true }) {
                     />
                   </div>
 
-                  <div className="hover-lift">
+                  <div className="hover-lift rounded-full">
                     <Button
                       type="submit"
                       size="lg"

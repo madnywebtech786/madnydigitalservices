@@ -29,13 +29,13 @@ export const metadata = {
     type: "website",
     locale: "en_CA",
     siteName: "Madny Digital Services",
-    images: ['/mds-logo.png'],
+    images: ['/og-image.png'],
   },
   twitter: {
     card: "summary_large_image",
     title: "Madny Digital Services | Calgary's Premier Digital Agency",
     description: "Transform your business with stunning websites, powerful e-commerce solutions, and cutting-edge digital experiences.",
-    images: ['/mds-logo.png'],
+    images: ['/og-image.png'],
   },
 };
 
@@ -101,7 +101,7 @@ const organizationJsonLd = {
   name: 'Madny Digital Services',
   legalName: 'Madny Digital Services Group Ltd.',
   url: 'https://www.madnydigitalservices.com',
-  logo: 'https://www.madnydigitalservices.com/mds-logo.png',
+  logo: 'https://www.madnydigitalservices.com/og-image.png',
   contactPoint: [
     {
       '@type': 'ContactPoint',

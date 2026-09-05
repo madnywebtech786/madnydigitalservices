@@ -154,19 +154,21 @@ function CtaCard({ inView, delay }) {
         We tailor solutions beyond the list . Tell us what you need.
       </h3>
 
-      <Button href="/contact" variant="primary" className="group">
-        Get In Touch
-        <ArrowUpRight
-          className="
-            w-4
-            h-4
-            transition-transform
-            duration-300
-            group-hover:translate-x-1
-            group-hover:-translate-y-1
-          "
-        />
-      </Button>
+      <Link href="/contact">
+        <Button variant="primary" className="group">
+          Get In Touch
+          <ArrowUpRight
+            className="
+              w-4
+              h-4
+              transition-transform
+              duration-300
+              group-hover:translate-x-1
+              group-hover:-translate-y-1
+            "
+          />
+        </Button>
+      </Link>
     </div>
   );
 }

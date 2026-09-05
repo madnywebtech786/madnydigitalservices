@@ -70,7 +70,7 @@ export default function CTA({ data }) {
               data-inview={inView ? 'true' : ''}
               className="reveal-up anim-delay-5 flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <div className="hover-lift">
+              <div className="hover-lift rounded-full">
                 <Link href="/contact">
                   <Button
                     variant="outline"
@@ -82,7 +82,7 @@ export default function CTA({ data }) {
                   </Button>
                 </Link>
               </div>
-              <div className="hover-lift">
+              <div className="hover-lift rounded-full">
                 <Link href="/contact">
                   <Button
                     variant="ghost"

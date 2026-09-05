@@ -56,7 +56,7 @@ export default function AboutHero({ data }) {
 
           {/* CTAs */}
           <div className="anim-fade-up anim-delay-7 flex flex-wrap justify-center gap-3 sm:gap-6">
-            <div className="hover-lift">
+            <div className="hover-lift rounded-xl sm:rounded-2xl">
               <Link href="/projects">
                 <Button size="lg" className="h-11 px-6 text-sm rounded-xl sm:h-16 sm:px-10 sm:text-lg sm:rounded-2xl font-black group">
                   <span className="flex items-center gap-2">
@@ -66,7 +66,7 @@ export default function AboutHero({ data }) {
                 </Button>
               </Link>
             </div>
-            <div className="hover-lift">
+            <div className="hover-lift rounded-xl sm:rounded-2xl">
               <Link href="/contact">
                 <Button variant="secondary" size="lg" className="h-11 px-6 text-sm rounded-xl sm:h-16 sm:px-10 sm:text-lg sm:rounded-2xl font-black group bg-white/50 backdrop-blur-xl border-gray-200">
                   <span className="flex items-center gap-2">

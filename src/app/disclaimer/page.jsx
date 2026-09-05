@@ -17,13 +17,13 @@ export const metadata = {
     title: TITLE,
     description: DESCRIPTION,
     url: `${BASE_URL}/disclaimer`,
-    images: ['/mds-logo.png'],
+    images: ['/og-image.png'],
   },
   twitter: {
     card: 'summary_large_image',
     title: TITLE,
     description: DESCRIPTION,
-    images: ['/mds-logo.png'],
+    images: ['/og-image.png'],
   },
 };
 

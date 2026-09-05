@@ -23,7 +23,7 @@ export async function generateMetadata() {
       title: d.ogTitle || d.title || 'About Us | Madny Digital Services',
       description: d.ogDescription || d.description || 'Learn about Madny Digital Services, our mission, vision, and the team driving digital excellence in Calgary.',
       url: 'https://www.madnydigitalservices.com/about',
-      images: [d.ogImage || '/mds-logo.png'],
+      images: [d.ogImage || '/og-image.png'],
     },
     twitter: {
       card: 'summary_large_image',

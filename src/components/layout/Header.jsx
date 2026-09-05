@@ -166,7 +166,7 @@ export default function Header({ data }) {
           <nav className="flex items-center justify-between h-20">
             {/* Logo */}
             <a href="/" className="flex items-center hover:opacity-90 transition-opacity">
-              <Image src="/mds-logo.png" alt="Madny Digital Services" width={500} height={500} className="h-20 w-32 -my-6" priority />
+              <Image src="/madny-digital-services-logo.webp" alt="Madny Digital Services" width={500} height={500} className="h-16 w-32 -my-6" priority />
             </a>
 
             {/* Desktop Navigation */}
@@ -252,7 +252,7 @@ export default function Header({ data }) {
           >
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-border shrink-0">
-              <Image src="/mds-logo.png" alt="Madny Digital Services" width={500} height={500} className="h-24 w-24 -my-6" />
+              <Image src="/madny-digital-services-logo.webp" alt="Madny Digital Services" width={500} height={500} className="h-16 w-32 -my-6" />
               <button
                 onClick={closeMenu}
                 className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center active:scale-95 transition-transform"

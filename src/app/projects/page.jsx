@@ -17,7 +17,7 @@ export async function generateMetadata() {
       title: d.ogTitle || d.title || 'Our Projects | Madny Digital Services',
       description: d.ogDescription || d.description || 'Discover cutting-edge digital solutions built by Madny Digital Services. Browse our portfolio of web development, e-commerce, mobile app, and SaaS projects.',
       url: 'https://www.madnydigitalservices.com/projects',
-      images: [d.ogImage || '/mds-logo.png'],
+      images: [d.ogImage || '/og-image.png'],
     },
     twitter: {
       card: 'summary_large_image',

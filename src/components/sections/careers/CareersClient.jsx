@@ -115,7 +115,7 @@ export default function CareersClient() {
                 Interested in building your career with Madny Digital Services? Send us your resume and tell us about your skills, experience, and area of interest.
               </p>
 
-              <div className="hover-lift inline-block">
+              <div className="hover-lift inline-block rounded-full">
                 <a href={APPLY_MAILTO}>
                   <Button
                     variant="outline"

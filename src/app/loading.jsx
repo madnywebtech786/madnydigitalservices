@@ -81,7 +81,7 @@ export default function Loading() {
           <div className="loader-logo-wrap">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/mds-logo.png"
+              src="/madny-digital-services-logo.webp"
               alt="Madny Digital Services"
               className="loader-logo-img"
             />
